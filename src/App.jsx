@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './App.css'
 
 function App() {
@@ -38,11 +38,34 @@ function App() {
   ]
 
   const stats = [
-    { value: "500+", label: "Clients Worldwide" },
-    { value: "98%", label: "Client Satisfaction" },
-    { value: "15+", label: "Years Experience" },
-    { value: "24/7", label: "Support Available" }
+      { value: 5, suffix: '+', label: "Clients Worldwide" },
+      { value: 98, suffix: '%', label: "Client Satisfaction" },
+      { value: 1, suffix: '+', label: "Years Experience" },
+      { value: 24, suffix: '/7', label: "Support Available" }
   ]
+
+    // Custom hook for animated count-up
+    function useCountUp(target, duration = 2000) {
+      const [count, setCount] = useState(0);
+      const startTimestamp = useRef(null);
+
+      useEffect(() => {
+        let rafId;
+        function step(timestamp) {
+          if (!startTimestamp.current) startTimestamp.current = timestamp;
+          const progress = Math.min((timestamp - startTimestamp.current) / duration, 1);
+          setCount(Math.floor(progress * target));
+          if (progress < 1) {
+            rafId = requestAnimationFrame(step);
+          } else {
+            setCount(target);
+          }
+        }
+        rafId = requestAnimationFrame(step);
+        return () => cancelAnimationFrame(rafId);
+      }, [target, duration]);
+      return count;
+    }
 
   const testimonials = [
     {
@@ -132,12 +155,18 @@ function App() {
       <section className="stats">
         <div className="container">
           <div className="stats-grid">
-            {stats.map((stat, index) => (
-              <div key={index} className="stat-item">
-                <span className="stat-value">{stat.value}</span>
-                <span className="stat-label">{stat.label}</span>
-              </div>
-            ))}
+            {stats.map((stat, index) => {
+                const animatedValue = useCountUp(stat.value, 2000 + index * 300);
+                return (
+                  <div key={index} className="stat-item">
+                    <span className="stat-value">
+                      {animatedValue}
+                      {stat.suffix}
+                    </span>
+                    <span className="stat-label">{stat.label}</span>
+                  </div>
+                );
+            })}
           </div>
         </div>
       </section>
@@ -174,14 +203,14 @@ function App() {
           <div className="about-grid">
             <div className="about-content">
               <span className="section-badge">About ZYTRONA</span>
-              <h2 className="section-title">Pioneering Digital Excellence Since 2010</h2>
+              <h2 className="section-title">Pioneering Digital Excellence Since 2025</h2>
               <p className="about-text">
                 At ZYTRONA, we believe in the transformative power of technology. 
                 Our team of experts combines deep industry knowledge with cutting-edge 
                 innovation to deliver solutions that drive real business results.
               </p>
               <p className="about-text">
-                With over 15 years of experience serving Fortune 500 companies and 
+                With over 1 years of experience serving Fortune 2 companies and 
                 ambitious startups alike, we've built a reputation for excellence, 
                 reliability, and forward-thinking solutions.
               </p>
@@ -262,7 +291,7 @@ function App() {
                 Schedule Consultation
               </a>
               <a href="tel:+1234567890" className="btn btn-outline btn-lg">
-                Call Us: +1 (234) 567-890
+                Call Us: +91 8667273159
               </a>
             </div>
           </div>
