@@ -1,39 +1,87 @@
 import { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import './App.css'
+import logo from './assets/logo.svg'
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState('home')
+
+  // Track active section on scroll
+  useEffect(() => {
+    const sections = ['home', 'services', 'about', 'testimonials', 'contact']
+    
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 100
+      
+      for (const sectionId of sections) {
+        const element = document.getElementById(sectionId)
+        if (element) {
+          const offsetTop = element.offsetTop
+          const offsetHeight = element.offsetHeight
+          
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(sectionId)
+            break
+          }
+        }
+      }
+    }
+    
+    window.addEventListener('scroll', handleScroll)
+    handleScroll() // Check initial position
+    
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const services = [
     {
-      icon: "💡",
-      title: "Innovation Consulting",
-      description: "Transform your business with cutting-edge strategies and innovative solutions tailored to your needs."
+      id: "website-development",
+      icon: "🌐",
+      title: "Website Development",
+      description: "Build stunning, responsive websites that captivate your audience and drive business growth."
     },
     {
-      icon: "⚡",
-      title: "Digital Transformation",
-      description: "Accelerate your digital journey with our comprehensive transformation services and expertise."
+      id: "app-development",
+      icon: "📱",
+      title: "App Development",
+      description: "Create powerful mobile applications for iOS and Android that deliver exceptional user experiences."
     },
     {
-      icon: "🛡️",
-      title: "Cybersecurity",
-      description: "Protect your assets with enterprise-grade security solutions and 24/7 monitoring services."
+      id: "video-editing",
+      icon: "🎬",
+      title: "Video Editing",
+      description: "Professional video editing services to bring your visual content to life with stunning effects."
     },
     {
-      icon: "☁️",
-      title: "Cloud Solutions",
-      description: "Scale effortlessly with our cloud infrastructure and migration services for modern businesses."
+      id: "game-development",
+      icon: "🎮",
+      title: "Game Development",
+      description: "Develop immersive and engaging games across multiple platforms with cutting-edge technology."
     },
     {
-      icon: "📊",
-      title: "Data Analytics",
-      description: "Unlock insights from your data with advanced analytics and AI-powered business intelligence."
+      id: "freelancing",
+      icon: "💼",
+      title: "Freelancing",
+      description: "Flexible freelance solutions for all your project needs with dedicated expert professionals."
     },
     {
-      icon: "🔧",
-      title: "Custom Development",
-      description: "Build tailored software solutions that perfectly align with your unique business requirements."
+      id: "devops-linux",
+      icon: "🐧",
+      title: "DevOps & Linux Operations",
+      description: "Streamline your infrastructure with DevOps practices and expert Linux system administration."
+    },
+    {
+      id: "ui-designs",
+      icon: "🎨",
+      title: "UI Designs",
+      description: "Craft beautiful and intuitive user interfaces that enhance user engagement and satisfaction."
+    },
+    {
+      id: "tensorflow-ai",
+      icon: "🤖",
+      title: "TensorFlow & AI Solutions",
+      description: "Leverage machine learning and AI with TensorFlow to build intelligent, data-driven applications."
     }
   ]
 
@@ -47,10 +95,11 @@ function App() {
     // Custom hook for animated count-up
     function useCountUp(target, duration = 2000) {
       const [count, setCount] = useState(0);
-      const startTimestamp = useRef(null);
+      const startTimestamp = useRef(0);
 
       useEffect(() => {
-        let rafId;
+        let rafId = 0;
+        startTimestamp.current = 0;
         function step(timestamp) {
           if (!startTimestamp.current) startTimestamp.current = timestamp;
           const progress = Math.min((timestamp - startTimestamp.current) / duration, 1);
@@ -91,16 +140,16 @@ function App() {
       <nav className="navbar">
         <div className="nav-container">
           <a href="#" className="nav-logo">
-            <span className="logo-icon">Z</span>
+            <img src={logo} alt="ZYTRONA Logo" className="logo-icon" />
             <span className="logo-text">ZYTRONA</span>
           </a>
           
           <div className={`nav-menu ${mobileMenuOpen ? 'active' : ''}`}>
-            <a href="#home" className="nav-link">Home</a>
-            <a href="#services" className="nav-link">Services</a>
-            <a href="#about" className="nav-link">About</a>
-            <a href="#testimonials" className="nav-link">Testimonials</a>
-            <a href="#contact" className="nav-link">Contact</a>
+            <a href="#home" className={`nav-link ${activeSection === 'home' ? 'active' : ''}`}>Home</a>
+            <a href="#services" className={`nav-link ${activeSection === 'services' ? 'active' : ''}`}>Services</a>
+            <a href="#about" className={`nav-link ${activeSection === 'about' ? 'active' : ''}`}>About</a>
+            <a href="#testimonials" className={`nav-link ${activeSection === 'testimonials' ? 'active' : ''}`}>Testimonials</a>
+            <a href="#contact" className={`nav-link ${activeSection === 'contact' ? 'active' : ''}`}>Contact</a>
           </div>
 
           <div className="nav-actions">
@@ -188,9 +237,9 @@ function App() {
                 <div className="service-icon">{service.icon}</div>
                 <h3 className="service-title">{service.title}</h3>
                 <p className="service-description">{service.description}</p>
-                <a href="#contact" className="service-link">
+                <Link to={`/service/${service.id}`} className="service-link">
                   Learn More <span>→</span>
-                </a>
+                </Link>
               </div>
             ))}
           </div>
@@ -328,7 +377,7 @@ function App() {
                   <span className="contact-icon">📞</span>
                   <div>
                     <strong>Phone</strong>
-                    <p>+1 (234) 567-890</p>
+                    <p>+91 8667273159</p>
                   </div>
                 </div>
               </div>
@@ -345,7 +394,7 @@ function App() {
                   <input type="text" placeholder="Subject" />
                 </div>
                 <div className="form-group">
-                  <textarea placeholder="Your Message" rows="5" required></textarea>
+                  <textarea placeholder="Your Message" rows={5} required></textarea>
                 </div>
                 <button type="submit" className="btn btn-primary btn-full">
                   Send Message
@@ -363,7 +412,7 @@ function App() {
           <div className="footer-grid">
             <div className="footer-brand">
               <a href="#" className="nav-logo">
-                <span className="logo-icon">Z</span>
+                <img src={logo} alt="ZYTRONA Logo" className="logo-icon" />
                 <span className="logo-text">ZYTRONA</span>
               </a>
               <p className="footer-description">
