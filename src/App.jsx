@@ -292,7 +292,7 @@ function App() {
                   <span className="contact-icon">📧</span>
                   <div>
                     <strong>Email</strong>
-                    <p>hello@zytrona.com</p>
+                    <p>zytronabusiness@gmail.com</p>
                   </div>
                 </div>
                 <div className="contact-item">
