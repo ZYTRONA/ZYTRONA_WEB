@@ -1,5 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { 
+  FaGlobe, FaMobileAlt, FaVideo, FaGamepad, FaBriefcase, FaLinux, FaPalette, FaBrain,
+  FaBuilding, FaMapMarkerAlt, FaEnvelope, FaPhone, FaCheck, FaRocket
+} from 'react-icons/fa'
 import './App.css'
 import logo from './assets/logo.svg'
 
@@ -37,49 +41,49 @@ function App() {
   const services = [
     {
       id: "website-development",
-      icon: "🌐",
+      icon: <FaGlobe />,
       title: "Website Development",
       description: "Build stunning, responsive websites that captivate your audience and drive business growth."
     },
     {
       id: "app-development",
-      icon: "📱",
+      icon: <FaMobileAlt />,
       title: "App Development",
       description: "Create powerful mobile applications for iOS and Android that deliver exceptional user experiences."
     },
     {
       id: "video-editing",
-      icon: "🎬",
+      icon: <FaVideo />,
       title: "Video Editing",
       description: "Professional video editing services to bring your visual content to life with stunning effects."
     },
     {
       id: "game-development",
-      icon: "🎮",
+      icon: <FaGamepad />,
       title: "Game Development",
       description: "Develop immersive and engaging games across multiple platforms with cutting-edge technology."
     },
     {
       id: "freelancing",
-      icon: "💼",
+      icon: <FaBriefcase />,
       title: "Freelancing",
       description: "Flexible freelance solutions for all your project needs with dedicated expert professionals."
     },
     {
       id: "devops-linux",
-      icon: "🐧",
+      icon: <FaLinux />,
       title: "DevOps & Linux Operations",
       description: "Streamline your infrastructure with DevOps practices and expert Linux system administration."
     },
     {
       id: "ui-designs",
-      icon: "🎨",
+      icon: <FaPalette />,
       title: "UI Designs",
       description: "Craft beautiful and intuitive user interfaces that enhance user engagement and satisfaction."
     },
     {
       id: "tensorflow-ai",
-      icon: "🤖",
+      icon: <FaBrain />,
       title: "TensorFlow & AI Solutions",
       description: "Leverage machine learning and AI with TensorFlow to build intelligent, data-driven applications."
     }
@@ -171,7 +175,7 @@ function App() {
         <div className="hero-bg"></div>
         <div className="container">
           <div className="hero-content">
-            <span className="hero-badge">🚀 Welcome to the Future</span>
+            <span className="hero-badge"><FaRocket /> Welcome to the Future</span>
             <h1 className="hero-title">
               Innovating Tomorrow's
               <span className="gradient-text"> Technology Today</span>
@@ -265,19 +269,19 @@ function App() {
               </p>
               <div className="about-features">
                 <div className="about-feature">
-                  <span className="feature-check">✓</span>
+                  <span className="feature-check"><FaCheck /></span>
                   <span>Industry-Leading Expertise</span>
                 </div>
                 <div className="about-feature">
-                  <span className="feature-check">✓</span>
+                  <span className="feature-check"><FaCheck /></span>
                   <span>Tailored Solutions</span>
                 </div>
                 <div className="about-feature">
-                  <span className="feature-check">✓</span>
+                  <span className="feature-check"><FaCheck /></span>
                   <span>24/7 Dedicated Support</span>
                 </div>
                 <div className="about-feature">
-                  <span className="feature-check">✓</span>
+                  <span className="feature-check"><FaCheck /></span>
                   <span>Proven Track Record</span>
                 </div>
               </div>
@@ -286,7 +290,7 @@ function App() {
             <div className="about-visual">
               <div className="about-image">
                 <div className="image-placeholder">
-                  <span className="placeholder-icon">🏢</span>
+                  <span className="placeholder-icon"><FaBuilding /></span>
                   <span className="placeholder-text">Innovation Hub</span>
                 </div>
               </div>
@@ -360,21 +364,21 @@ function App() {
               </p>
               <div className="contact-details">
                 <div className="contact-item">
-                  <span className="contact-icon">📍</span>
+                  <span className="contact-icon"><FaMapMarkerAlt /></span>
                   <div>
                     <strong>Address</strong>
                     <p>123 Innovation Drive, Tech City, TC 12345</p>
                   </div>
                 </div>
                 <div className="contact-item">
-                  <span className="contact-icon">📧</span>
+                  <span className="contact-icon"><FaEnvelope /></span>
                   <div>
                     <strong>Email</strong>
                     <p>zytronabusiness@gmail.com</p>
                   </div>
                 </div>
                 <div className="contact-item">
-                  <span className="contact-icon">📞</span>
+                  <span className="contact-icon"><FaPhone /></span>
                   <div>
                     <strong>Phone</strong>
                     <p>+91 8667273159</p>
@@ -428,10 +432,14 @@ function App() {
             </div>
             <div className="footer-links">
               <h4>Services</h4>
-              <a href="#">Innovation Consulting</a>
-              <a href="#">Digital Transformation</a>
-              <a href="#">Cybersecurity</a>
-              <a href="#">Cloud Solutions</a>
+              <Link to="/service/website-development">Website Development</Link>
+              <Link to="/service/app-development">App Development</Link>
+              <Link to="/service/video-editing">Video Editing</Link>
+              <Link to="/service/game-development">Game Development</Link>
+              <Link to="/service/freelancing">Freelancing</Link>
+              <Link to="/service/devops-linux">DevOps & Linux Operations</Link>
+              <Link to="/service/ui-designs">UI Designs</Link>
+              <Link to="/service/tensorflow-ai">TensorFlow & AI Solutions</Link>
             </div>
             <div className="footer-links">
               <h4>Company</h4>
