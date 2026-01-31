@@ -1,21 +1,30 @@
+/* ============================================
+   ZYTRONA App Styles - Sleek Theme
+   ============================================ */
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 3rem 2rem;
   text-align: center;
 }
 
+/* Logo Styles */
 .logo {
-  height: 6em;
+  height: 7em;
   padding: 1.5em;
   will-change: filter;
-  transition: filter 300ms;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: grayscale(100%) brightness(1.2);
 }
+
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: grayscale(0%) drop-shadow(0 0 2.5em var(--color-cyan-glow));
+  transform: scale(1.05);
 }
+
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  filter: grayscale(0%) drop-shadow(0 0 2.5em var(--color-cyan-glow));
 }
 
 @keyframes logo-spin {
@@ -27,16 +36,116 @@
   }
 }
 
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px var(--color-cyan-glow);
+  }
+  50% {
+    box-shadow: 0 0 40px var(--color-cyan-glow), 0 0 60px rgba(0, 212, 255, 0.2);
+  }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {
     animation: logo-spin infinite 20s linear;
   }
 }
 
+/* Card Component */
 .card {
-  padding: 2em;
+  padding: 2.5em;
+  background: rgba(26, 26, 26, 0.6);
+  border: 1px solid var(--color-grey);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  margin: 2rem 0;
+  transition: all 0.3s ease;
 }
 
+.card:hover {
+  border-color: var(--color-cyan);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px var(--color-cyan-glow);
+  transform: translateY(-4px);
+}
+
+.card p {
+  color: var(--color-light-grey);
+  margin: 1rem 0 0;
+}
+
+.card code {
+  background: var(--color-grey);
+  padding: 0.2em 0.5em;
+  border-radius: 6px;
+  font-family: 'Fira Code', 'Consolas', monospace;
+  color: var(--color-cyan);
+  font-size: 0.9em;
+}
+
+/* Read the docs text */
 .read-the-docs {
-  color: #888;
+  color: var(--color-light-grey);
+  font-size: 0.95em;
+  margin-top: 2rem;
+  transition: color 0.3s ease;
+}
+
+.read-the-docs:hover {
+  color: var(--color-cyan);
+}
+
+/* Counter Button Special Styling */
+.card button {
+  font-size: 1.1em;
+  min-width: 180px;
+  background: linear-gradient(135deg, var(--color-dark-grey) 0%, var(--color-grey) 100%);
+  border: 2px solid var(--color-medium-grey);
+}
+
+.card button:hover {
+  background: linear-gradient(135deg, var(--color-grey) 0%, var(--color-dark-grey) 100%);
+  border-color: var(--color-cyan);
+  color: var(--color-cyan);
+}
+
+/* Utility Classes */
+.text-cyan {
+  color: var(--color-cyan);
+}
+
+.text-white {
+  color: var(--color-white);
+}
+
+.bg-dark {
+  background: var(--color-dark-grey);
+}
+
+.glow-cyan {
+  box-shadow: 0 0 20px var(--color-cyan-glow);
+}
+
+/* Light mode adjustments */
+@media (prefers-color-scheme: light) {
+  .card {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: #ddd;
+  }
+  
+  .card:hover {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), 0 0 20px rgba(0, 212, 255, 0.2);
+  }
+  
+  .card code {
+    background: #f0f0f0;
+  }
+  
+  .read-the-docs {
+    color: var(--color-medium-grey);
+  }
+  
+  .card button {
+    background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+  }
 }
