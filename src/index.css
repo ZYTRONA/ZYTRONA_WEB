@@ -41,6 +41,14 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
 a {
   font-weight: 500;
   color: var(--color-cyan);
@@ -55,11 +63,13 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background: var(--gradient-dark);
+  background: #000000;
+}
+
+#root {
+  width: 100%;
 }
 
 h1 {
