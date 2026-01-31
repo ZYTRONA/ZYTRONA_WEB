@@ -37,49 +37,49 @@ function App() {
   const services = [
     {
       id: "website-development",
-      icon: "🌐",
+      icon: "",
       title: "Website Development",
       description: "Build stunning, responsive websites that captivate your audience and drive business growth."
     },
     {
       id: "app-development",
-      icon: "📱",
+      icon: "",
       title: "App Development",
       description: "Create powerful mobile applications for iOS and Android that deliver exceptional user experiences."
     },
     {
       id: "video-editing",
-      icon: "🎬",
+      icon: "",
       title: "Video Editing",
       description: "Professional video editing services to bring your visual content to life with stunning effects."
     },
     {
       id: "game-development",
-      icon: "🎮",
+      icon: "",
       title: "Game Development",
       description: "Develop immersive and engaging games across multiple platforms with cutting-edge technology."
     },
     {
       id: "freelancing",
-      icon: "💼",
+      icon: "",
       title: "Freelancing",
       description: "Flexible freelance solutions for all your project needs with dedicated expert professionals."
     },
     {
       id: "devops-linux",
-      icon: "🐧",
+      icon: "",
       title: "DevOps & Linux Operations",
       description: "Streamline your infrastructure with DevOps practices and expert Linux system administration."
     },
     {
       id: "ui-designs",
-      icon: "🎨",
+      icon: "",
       title: "UI Designs",
       description: "Craft beautiful and intuitive user interfaces that enhance user engagement and satisfaction."
     },
     {
       id: "tensorflow-ai",
-      icon: "🤖",
+      icon: "",
       title: "TensorFlow & AI Solutions",
       description: "Leverage machine learning and AI with TensorFlow to build intelligent, data-driven applications."
     }
@@ -171,7 +171,7 @@ function App() {
         <div className="hero-bg"></div>
         <div className="container">
           <div className="hero-content">
-            <span className="hero-badge">🚀 Welcome to the Future</span>
+            <span className="hero-badge">Welcome to the Future</span>
             <h1 className="hero-title">
               Innovating Tomorrow's
               <span className="gradient-text"> Technology Today</span>
@@ -265,19 +265,19 @@ function App() {
               </p>
               <div className="about-features">
                 <div className="about-feature">
-                  <span className="feature-check">✓</span>
+                  <span className="feature-check"></span>
                   <span>Industry-Leading Expertise</span>
                 </div>
                 <div className="about-feature">
-                  <span className="feature-check">✓</span>
+                  <span className="feature-check"></span>
                   <span>Tailored Solutions</span>
                 </div>
                 <div className="about-feature">
-                  <span className="feature-check">✓</span>
+                  <span className="feature-check"></span>
                   <span>24/7 Dedicated Support</span>
                 </div>
                 <div className="about-feature">
-                  <span className="feature-check">✓</span>
+                  <span className="feature-check"></span>
                   <span>Proven Track Record</span>
                 </div>
               </div>
@@ -286,7 +286,7 @@ function App() {
             <div className="about-visual">
               <div className="about-image">
                 <div className="image-placeholder">
-                  <span className="placeholder-icon">🏢</span>
+                  <span className="placeholder-icon"></span>
                   <span className="placeholder-text">Innovation Hub</span>
                 </div>
               </div>
@@ -360,21 +360,21 @@ function App() {
               </p>
               <div className="contact-details">
                 <div className="contact-item">
-                  <span className="contact-icon">📍</span>
+                  <span className="contact-icon"></span>
                   <div>
                     <strong>Address</strong>
                     <p>123 Innovation Drive, Tech City, TC 12345</p>
                   </div>
                 </div>
                 <div className="contact-item">
-                  <span className="contact-icon">📧</span>
+                  <span className="contact-icon"></span>
                   <div>
                     <strong>Email</strong>
                     <p>zytronabusiness@gmail.com</p>
                   </div>
                 </div>
                 <div className="contact-item">
-                  <span className="contact-icon">📞</span>
+                  <span className="contact-icon"></span>
                   <div>
                     <strong>Phone</strong>
                     <p>+91 8667273159</p>
