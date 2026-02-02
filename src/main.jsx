@@ -5,6 +5,7 @@ import './index.css'
 import App from './App.jsx'
 import ServiceDetail from './pages/ServiceDetail.jsx'
 import AnimatedCursor from './components/AnimatedCursor'
+import ClickSpark from './components/ClickSpark'
 
 // Component to handle scroll on route change - supports hash navigation
 function ScrollToSection() {
@@ -34,18 +35,24 @@ if (rootElement) {
   createRoot(rootElement).render(
     <StrictMode>
       <BrowserRouter>
-        <AnimatedCursor 
-          color="#ffffff"
-          cursorSize={24}
-          label="Explorer"
-          sideOffset={18}
-          alignOffset={8}
-        />
-        <ScrollToSection />
-        <Routes>
-          <Route path="/" element={<App />} />
-          <Route path="/service/:serviceId" element={<ServiceDetail />} />
-        </Routes>
+        <ClickSpark
+          sparkColor="#00d4ff"
+          sparkSize={12}
+          sparkRadius={20}
+          sparkCount={10}
+          duration={500}
+          extraScale={1.2}
+        >
+          <AnimatedCursor 
+            color="#ffffff"
+            cursorSize={24}
+          />
+          <ScrollToSection />
+          <Routes>
+            <Route path="/" element={<App />} />
+            <Route path="/service/:serviceId" element={<ServiceDetail />} />
+          </Routes>
+        </ClickSpark>
       </BrowserRouter>
     </StrictMode>,
   )
