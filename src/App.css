@@ -89,8 +89,8 @@
 }
 
 .carousel-card-v2 {
-  background: #0a0a0a;
-  border: 2px solid rgba(80, 80, 80, 0.5);
+  background: #030304;
+  border: 2px solid rgba(60, 60, 65, 0.4);
   border-radius: 1.25rem;
   padding: 2.5rem 2rem;
   height: 100%;
@@ -284,8 +284,8 @@
 }
 
 .carousel-feature-card {
-  background: linear-gradient(135deg, rgba(30, 30, 30, 0.9), rgba(20, 20, 20, 0.95));
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, rgba(12, 12, 14, 0.95), rgba(6, 6, 8, 0.98));
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 1rem;
   padding: 2rem;
   height: 100%;
@@ -327,8 +327,8 @@
 }
 
 .carousel-process-card {
-  background: linear-gradient(135deg, rgba(30, 30, 30, 0.9), rgba(20, 20, 20, 0.95));
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, rgba(12, 12, 14, 0.95), rgba(6, 6, 8, 0.98));
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 1rem;
   padding: 2rem;
   height: 100%;
@@ -682,7 +682,7 @@
     radial-gradient(ellipse at 10% 40%, rgba(0, 212, 255, 0.15) 0%, transparent 50%),
     radial-gradient(ellipse at 90% 20%, rgba(0, 168, 204, 0.12) 0%, transparent 45%),
     radial-gradient(ellipse at 50% 80%, rgba(0, 212, 255, 0.08) 0%, transparent 40%),
-    linear-gradient(180deg, #000000 0%, #0a0a0a 50%, #0d1117 100%);
+    linear-gradient(180deg, #020203 0%, #030304 50%, #050507 100%);
   z-index: -1;
 }
 
@@ -1052,7 +1052,7 @@
    ============================================ */
 .stats {
   width: 100vw;
-  background: linear-gradient(180deg, var(--color-dark-grey) 0%, #0d0d0d 100%);
+  background: linear-gradient(180deg, var(--color-dark-grey) 0%, #050507 100%);
   padding: 5rem 0;
   border-top: 1px solid rgba(0, 212, 255, 0.1);
   border-bottom: 1px solid rgba(0, 212, 255, 0.1);
@@ -1141,7 +1141,7 @@
 .services {
   width: 100vw;
   padding: 8rem 0;
-  background: linear-gradient(180deg, #0d0d0d 0%, #000000 50%, #0a0a0a 100%);
+  background: linear-gradient(180deg, #050507 0%, #020203 50%, #030304 100%);
 }
 
 .services .container {
@@ -1155,7 +1155,7 @@
 }
 
 .service-card {
-  background: rgba(26, 26, 26, 0.6);
+  background: rgba(10, 10, 12, 0.7);
   border: 1px solid var(--color-grey);
   border-radius: 16px;
   padding: 2.5rem;
@@ -1208,7 +1208,7 @@
 .about {
   width: 100vw;
   padding: 8rem 0;
-  background: linear-gradient(180deg, #0a0a0a 0%, var(--color-dark-grey) 50%, #0a0a0a 100%);
+  background: linear-gradient(180deg, #030304 0%, var(--color-dark-grey) 50%, #030304 100%);
 }
 
 .about .container {
@@ -1298,7 +1298,7 @@
 .testimonials {
   width: 100vw;
   padding: 8rem 0;
-  background: linear-gradient(180deg, #0a0a0a 0%, #000000 100%);
+  background: linear-gradient(180deg, #030304 0%, #020203 100%);
 }
 
 .testimonials .container {
@@ -1312,7 +1312,7 @@
 }
 
 .testimonial-card {
-  background: rgba(26, 26, 26, 0.6);
+  background: rgba(10, 10, 12, 0.7);
   border: 1px solid var(--color-grey);
   border-radius: 16px;
   padding: 2.5rem;
@@ -1454,7 +1454,7 @@
 .contact {
   width: 100vw;
   padding: 8rem 0;
-  background: linear-gradient(180deg, #0a0a0a 0%, var(--color-dark-grey) 100%);
+  background: linear-gradient(180deg, #030304 0%, var(--color-dark-grey) 100%);
 }
 
 .contact .container {
@@ -1558,7 +1558,7 @@
    ============================================ */
 .footer {
   width: 100vw;
-  background: linear-gradient(180deg, var(--color-dark-grey) 0%, #000000 100%);
+  background: linear-gradient(180deg, var(--color-dark-grey) 0%, #020203 100%);
   padding: 5rem 0 2rem;
   border-top: 1px solid rgba(0, 212, 255, 0.1);
 }
@@ -1823,7 +1823,7 @@
 
 .service-detail-hero {
   padding: 10rem 0 5rem;
-  background: #000000;
+  background: #020203;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -1855,7 +1855,7 @@
 
 .service-features {
   padding: 5rem 0;
-  background: #000000;
+  background: #020203;
 }
 
 .features-grid {
@@ -1871,7 +1871,7 @@
   align-items: center;
   gap: 1rem;
   padding: 1.25rem 1.5rem;
-  background: rgba(20, 20, 20, 0.8);
+  background: rgba(6, 6, 8, 0.9);
   border: 1px solid rgba(0, 212, 255, 0.1);
   border-radius: 10px;
   color: var(--color-white);
@@ -1886,7 +1886,7 @@
 
 .service-process {
   padding: 5rem 0;
-  background: #000000;
+  background: #020203;
 }
 
 .process-grid {
@@ -1899,7 +1899,7 @@
 .process-item {
   text-align: center;
   padding: 2rem;
-  background: rgba(20, 20, 20, 0.8);
+  background: rgba(6, 6, 8, 0.9);
   border-radius: 15px;
   border: 1px solid rgba(0, 212, 255, 0.15);
 }
@@ -1933,7 +1933,7 @@
 
 .service-technologies {
   padding: 5rem 0;
-  background: #000000;
+  background: #020203;
   text-align: center;
 }
 
@@ -1947,7 +1947,7 @@
 
 .tech-tag {
   padding: 0.75rem 1.5rem;
-  background: rgba(20, 20, 20, 0.8);
+  background: rgba(6, 6, 8, 0.9);
   border: 1px solid var(--color-cyan);
   border-radius: 50px;
   color: var(--color-cyan);
@@ -2257,8 +2257,8 @@
 .feature-card-enhanced {
   position: relative;
   padding: 2rem;
-  background: rgba(20, 20, 20, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(6, 6, 8, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 20px;
   overflow: hidden;
   transition: all 0.4s ease;
@@ -2378,8 +2378,8 @@
 .process-content {
   text-align: center;
   padding: 1.5rem;
-  background: rgba(20, 20, 20, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(6, 6, 8, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 15px;
   transition: all 0.3s ease;
 }
@@ -2428,8 +2428,8 @@
   align-items: center;
   gap: 0.75rem;
   padding: 1.5rem 2rem;
-  background: rgba(20, 20, 20, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(6, 6, 8, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 15px;
   transition: all 0.3s ease;
   animation: scaleIn 0.5s ease-out both;

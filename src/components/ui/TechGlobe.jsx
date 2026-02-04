@@ -24,7 +24,7 @@ const TechGlobe = () => {
       primaryColor: 0x0077bb,      // Dark cyan
       secondaryColor: 0x004488,    // Dark blue
       accentColor: 0x00aadd,       // Visible accent
-      darkColor: 0x001833,         // Very dark blue core
+      darkColor: 0x030507,         // Very dark sleek black
     };
 
     // Scene
@@ -62,8 +62,8 @@ const TechGlobe = () => {
     const coreMaterial = new THREE.ShaderMaterial({
       uniforms: {
         uTime: { value: 0 },
-        uColor1: { value: new THREE.Color(0x000810) },
-        uColor2: { value: new THREE.Color(0x001525) },
+        uColor1: { value: new THREE.Color(0x020304) },
+        uColor2: { value: new THREE.Color(0x050708) },
       },
       vertexShader: `
         varying vec3 vNormal;
