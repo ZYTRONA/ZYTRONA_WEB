@@ -36,6 +36,7 @@ function CursorProvider({
 
   const onMouseMove = useCallback((e) => {
     setCoords({ x: e.clientX, y: e.clientY })
+    setIsVisible(true)
   }, [])
 
   const onMouseEnter = useCallback(() => setIsVisible(true), [])
@@ -143,7 +144,7 @@ function Cursor({
 
   const style = {
     opacity: isVisible ? 1 : 0,
-    transform: `translate(${coords.x}px, ${coords.y}px) scale(${currentScale})`,
+    transform: `translate(${coords.x - size / 2}px, ${coords.y - size / 2}px) scale(${currentScale})`,
     transition: 'transform 50ms ease-out, opacity 150ms ease-in-out'
   }
 
