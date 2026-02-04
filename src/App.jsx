@@ -6,6 +6,7 @@ import {
 } from 'react-icons/fa'
 import './App.css'
 import logo from './assets/logo.svg'
+import TechGlobe from './components/ui/TechGlobe'
 
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -194,55 +195,9 @@ function App() {
               </a>
             </div>
           </div>
-          <div className="hero-visual">
-            <div className="hero-graphic">
-              {/* 3D Perspective Container */}
-              <div className="perspective-container">
-                {/* Hexagonal Core */}
-                <div className="hex-core">
-                  <div className="hex-inner"></div>
-                  <div className="hex-ring hex-ring-1"></div>
-                  <div className="hex-ring hex-ring-2"></div>
-                  <div className="hex-ring hex-ring-3"></div>
-                </div>
-                
-                {/* Neural Network Nodes */}
-                <div className="neural-network">
-                  <div className="node node-1"><span></span></div>
-                  <div className="node node-2"><span></span></div>
-                  <div className="node node-3"><span></span></div>
-                  <div className="node node-4"><span></span></div>
-                  <div className="node node-5"><span></span></div>
-                  <div className="node node-6"><span></span></div>
-                  
-                  {/* Connection Lines */}
-                  <svg className="connections" viewBox="0 0 500 500">
-                    <defs>
-                      <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="rgba(0,212,255,0)" />
-                        <stop offset="50%" stopColor="rgba(0,212,255,0.8)" />
-                        <stop offset="100%" stopColor="rgba(0,212,255,0)" />
-                      </linearGradient>
-                    </defs>
-                    <line className="conn conn-1" x1="250" y1="250" x2="250" y2="60" />
-                    <line className="conn conn-2" x1="250" y1="250" x2="415" y2="155" />
-                    <line className="conn conn-3" x1="250" y1="250" x2="415" y2="345" />
-                    <line className="conn conn-4" x1="250" y1="250" x2="250" y2="440" />
-                    <line className="conn conn-5" x1="250" y1="250" x2="85" y2="345" />
-                    <line className="conn conn-6" x1="250" y1="250" x2="85" y2="155" />
-                  </svg>
-                </div>
-                
-                {/* Data Streams */}
-                <div className="data-stream stream-1"></div>
-                <div className="data-stream stream-2"></div>
-                <div className="data-stream stream-3"></div>
-              </div>
-              
-              {/* Ambient Glow */}
-              <div className="ambient-glow"></div>
-            </div>
-          </div>
+        </div>
+        <div className="hero-globe-fullscreen">
+          <TechGlobe />
         </div>
       </section>
 
