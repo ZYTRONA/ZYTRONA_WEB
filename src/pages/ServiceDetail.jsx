@@ -17,7 +17,7 @@ import {
   SiAdobeillustrator, SiAdobephotoshop, SiTensorflow, SiPytorch, SiKeras, SiOpencv, SiScikitlearn,
   SiDocker, SiKubernetes, SiTerraform, SiPrometheus, SiSharp
 } from 'react-icons/si'
-import { FeatureCarousel, ProcessCarousel } from '../components/MotionCarousel'
+import { FeatureCarousel, ProcessCarousel } from '../components/ui/MotionCarousel'
 import '../App.css'
 import logo from '../assets/logo.svg'
 

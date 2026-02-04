@@ -2,7 +2,7 @@ import * as React from 'react'
 import { motion } from 'motion/react'
 import useEmblaCarousel from 'embla-carousel-react'
 import { ChevronRight, ChevronLeft } from 'lucide-react'
-import { RippleButton } from './ui/ripple-button'
+import { RippleButton } from './ripple-button'
 
 const useEmblaControls = (emblaApi) => {
   const [selectedIndex, setSelectedIndex] = React.useState(0)
