@@ -221,6 +221,11 @@ function App() {
         </div>
       </section>
 
+      {/* Section Divider */}
+      <div className="section-divider">
+        <div className="section-divider-line"></div>
+      </div>
+
       {/* Services Section */}
       <section id="services" className="services">
         <div className="container">
@@ -246,6 +251,11 @@ function App() {
           </div>
         </div>
       </section>
+
+      {/* Section Divider */}
+      <div className="section-divider">
+        <div className="section-divider-line"></div>
+      </div>
 
       {/* About Section */}
       <section id="about" className="about">
@@ -296,6 +306,11 @@ function App() {
         </div>
       </section>
 
+      {/* Section Divider */}
+      <div className="section-divider">
+        <div className="section-divider-line"></div>
+      </div>
+
       {/* Testimonials Section */}
       <section id="testimonials" className="testimonials">
         <div className="container">
@@ -327,6 +342,11 @@ function App() {
         </div>
       </section>
 
+      {/* Section Divider */}
+      <div className="section-divider">
+        <div className="section-divider-line"></div>
+      </div>
+
       {/* CTA Section */}
       <section className="cta">
         <div className="container">
@@ -347,6 +367,11 @@ function App() {
           </div>
         </div>
       </section>
+
+      {/* Section Divider */}
+      <div className="section-divider">
+        <div className="section-divider-line"></div>
+      </div>
 
       {/* Contact Section */}
       <section id="contact" className="contact">

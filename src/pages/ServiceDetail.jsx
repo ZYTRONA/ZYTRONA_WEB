@@ -506,6 +506,11 @@ function ServiceDetail() {
         </div>
       </section>
 
+      {/* Section Divider */}
+      <div className="section-divider">
+        <div className="section-divider-line"></div>
+      </div>
+
       {/* Features Section */}
       <section className="service-features">
         <div className="container">
@@ -518,6 +523,11 @@ function ServiceDetail() {
         </div>
       </section>
 
+      {/* Section Divider */}
+      <div className="section-divider">
+        <div className="section-divider-line"></div>
+      </div>
+
       {/* Process Section */}
       <section className="service-process">
         <div className="container">
@@ -529,6 +539,11 @@ function ServiceDetail() {
           <ProcessCarousel process={service.process} getIcon={getIcon} />
         </div>
       </section>
+
+      {/* Section Divider */}
+      <div className="section-divider">
+        <div className="section-divider-line"></div>
+      </div>
 
       {/* Technologies Section */}
       <section className="service-technologies">
@@ -548,6 +563,11 @@ function ServiceDetail() {
           </div>
         </div>
       </section>
+
+      {/* Section Divider */}
+      <div className="section-divider">
+        <div className="section-divider-line"></div>
+      </div>
 
       {/* CTA Section */}
       <section className="cta service-cta">
