@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import './index.css'
 import App from './App.jsx'
 import ServiceDetail from './pages/ServiceDetail.jsx'
-import AnimatedCursor from './components/ui/AnimatedCursor'
 import ClickSpark from './components/ui/ClickSpark'
 
 // Component to handle scroll on route change - supports hash navigation
@@ -43,10 +42,6 @@ if (rootElement) {
           duration={500}
           extraScale={1.2}
         >
-          <AnimatedCursor 
-            color="#ffffff"
-            cursorSize={24}
-          />
           <ScrollToSection />
           <Routes>
             <Route path="/" element={<App />} />
