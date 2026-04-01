@@ -37,7 +37,7 @@ const rippleColorVariants = {
   outline: 'rgba(255,255,255,0.2)',
   secondary: 'rgba(255,255,255,0.2)',
   ghost: 'rgba(255,255,255,0.2)',
-  link: 'rgba(0,255,255,0.3)',
+  link: 'rgba(0, 229, 255,0.3)',
 }
 
 function RippleButton({ children, className = '', variant = 'default', size = 'default', style = {}, onClick, ...props }) {

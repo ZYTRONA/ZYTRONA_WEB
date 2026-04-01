@@ -6,32 +6,33 @@
 
 :root {
   /* Core Black + Neon Blue Palette */
-  --color-black: #050507;
-  --color-dark-grey: #0b0d12;
-  --color-grey: #121722;
-  --color-medium-grey: #6e7a91;
-  --color-light-grey: #a9b4c7;
+  --color-black: #0a0a0a;
+  --color-dark-grey: #111111;
+  --color-grey: #1a1a1a;
+  --color-medium-grey: #222222;
+  --color-light-grey: #666666;
 
   /* Text + Accent */
-  --color-white: #f5f8ff;
-  --color-off-white: #e6ebf5;
-  --color-cyan: #00d4ff;
-  --color-cyan-dark: #00aeef;
-  --color-cyan-light: #40e5ff;
-  --color-cyan-glow: rgba(0, 212, 255, 0.28);
+  --color-white: #ffffff;
+  --color-off-white: #ffffff;
+  --color-cyan: #00c8ff;
+  --color-cyan-dark: #0099cc;
+  --color-cyan-light: #00e5ff;
+  --color-cyan-glow: rgba(0, 200, 255, 0.28);
+  --color-cyan-tint: #002233;
 
   /* Compatibility alias used in App.css */
   --cyan: var(--color-cyan);
 
   /* Status accents */
-  --color-success: #19e68c;
+  --color-success: #00ff94;
   --color-warning: #ffb020;
-  --color-error: #ff4d6d;
+  --color-error: #ff4560;
 
   /* Gradients */
-  --gradient-dark: linear-gradient(135deg, #050507 0%, #0b0d12 55%, #121722 100%);
-  --gradient-cyan: linear-gradient(135deg, #00aeef 0%, #00d4ff 55%, #40e5ff 100%);
-  --gradient-sleek: linear-gradient(180deg, #050507 0%, #0b0d12 100%);
+  --gradient-dark: linear-gradient(135deg, #000000 0%, #0a0a0a 55%, #1a1a1a 100%);
+  --gradient-cyan: linear-gradient(135deg, #0099cc 0%, #00c8ff 55%, #00e5ff 100%);
+  --gradient-sleek: linear-gradient(180deg, #0a0a0a 0%, #111111 100%);
   
   font-family: 'Bebas Neue', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.6;
@@ -76,7 +77,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: #050507;
+  background: #0a0a0a;
 }
 
 #root {
@@ -121,13 +122,13 @@ button::before {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.2), transparent);
+  background: linear-gradient(90deg, transparent, rgba(0, 200, 255, 0.2), transparent);
   transition: left 0.5s ease;
 }
 
 button:hover {
   border-color: var(--color-cyan);
-  box-shadow: 0 0 20px var(--color-cyan-glow), inset 0 0 20px rgba(0, 212, 255, 0.1);
+  box-shadow: 0 0 20px var(--color-cyan-glow), inset 0 0 20px rgba(0, 200, 255, 0.1);
   transform: translateY(-2px);
 }
 
@@ -179,7 +180,7 @@ button:active {
 /* Selection */
 ::selection {
   background: var(--color-cyan);
-  color: var(--color-black);
+  color: #000000;
 }
 
 /* Light mode with white & cyan accents */

@@ -165,36 +165,41 @@ function App() {
     {
       name: 'ZOCA Crimson Charm',
       purpose: 'Modern client project site designed for engaging interactions and clear conversion-focused layout.',
+      background: 'Built for a fashion and lifestyle audience that needed a premium digital identity with strong visual storytelling.',
       stack: 'Web App',
-      bgImage: 'https://api.microlink.io/?url=https://zoca-crimson-charm.lovable.app&screenshot=true&meta=false',
+      bgImage: 'https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=1400&q=80',
       url: 'https://zoca-crimson-charm.lovable.app'
     },
     {
       name: 'Blue Base Family Saloon',
       purpose: 'Brand website implementation delivered with responsive structure and accessible content hierarchy.',
+      background: 'Created for a family salon business aiming to showcase services clearly and turn local visitors into bookings.',
       stack: 'Web App',
-      bgImage: 'https://api.microlink.io/?url=https://bluebase-family-spot.lovable.app&screenshot=true&meta=false',
+      bgImage: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=1400&q=80',
       url: 'https://bluebase-family-spot.lovable.app'
     },
     {
       name: 'Fly Studio Showcase',
       purpose: 'Portfolio-style digital presence built to highlight services, offerings, and brand identity.',
+      background: 'Designed for a creative studio that needed a portfolio-first experience to present work and attract collaborations.',
       stack: 'Web App',
-      bgImage: 'https://api.microlink.io/?url=https://fly-studio-showcase.lovable.app/&screenshot=true&meta=false',
+      bgImage: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1400&q=80',
       url: 'https://fly-studio-showcase.lovable.app/'
     },
     {
       name: 'Cakes & Bites',
       purpose: 'Showcase website crafted for a brand-led product experience with polished visual presentation.',
+      background: 'Developed for a bakery brand focused on product discovery, visual appeal, and easy customer contact.',
       stack: 'Web App',
-      bgImage: 'https://api.microlink.io/?url=https://bites-artisanal-charm.lovable.app&screenshot=true&meta=false',
+      bgImage: 'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?auto=format&fit=crop&w=1400&q=80',
       url: 'https://bites-artisanal-charm.lovable.app'
     },
     {
       name: '11 TO 11 Family Restaurant',
       purpose: 'Client-facing website experience focused on clean storytelling and smooth user navigation.',
+      background: 'Launched for a restaurant business that wanted a trustworthy online presence to communicate menu, vibe, and location.',
       stack: 'Web App',
-      bgImage: 'https://api.microlink.io/?url=https://a-11to11family.lovable.app&screenshot=true&meta=false',
+      bgImage: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=80',
       url: 'https://a-11to11family.lovable.app'
     }
   ]
@@ -540,6 +545,7 @@ function App() {
               >
                 <h3 className="service-title">{project.name}</h3>
                 <p className="service-description">{project.purpose}</p>
+                <p className="service-description"><strong>Background:</strong> {project.background}</p>
                 <p className="service-description"><strong>Type:</strong> {project.stack}</p>
                 <span className="service-link">
                   View Live Site <span><FaExternalLinkAlt /></span>

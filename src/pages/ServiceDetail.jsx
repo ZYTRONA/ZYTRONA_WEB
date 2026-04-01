@@ -17,7 +17,6 @@ import {
   SiTensorflow, SiPytorch, SiKeras, SiOpencv, SiScikitlearn,
   SiDocker, SiKubernetes, SiTerraform, SiPrometheus, SiSharp
 } from 'react-icons/si'
-import { FeatureCarousel, ProcessCarousel } from '../components/ui/MotionCarousel'
 import '../App.css'
 import logo from '../assets/logo.svg'
 
@@ -503,40 +502,6 @@ function ServiceDetail() {
               ))}
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Section Divider */}
-      <div className="section-divider">
-        <div className="section-divider-line"></div>
-      </div>
-
-      {/* Features Section */}
-      <section className="service-features">
-        <div className="container">
-          <div className="section-header-detail">
-            <span className="section-badge">What We Offer</span>
-            <h2 className="section-title-large">Comprehensive Solutions</h2>
-            <p className="section-desc">Everything you need to succeed with {service.title.toLowerCase()}</p>
-          </div>
-          <FeatureCarousel features={service.features} getIcon={getIcon} />
-        </div>
-      </section>
-
-      {/* Section Divider */}
-      <div className="section-divider">
-        <div className="section-divider-line"></div>
-      </div>
-
-      {/* Process Section */}
-      <section className="service-process">
-        <div className="container">
-          <div className="section-header-detail">
-            <span className="section-badge">Our Process</span>
-            <h2 className="section-title-large">How We Work</h2>
-            <p className="section-desc">A proven methodology for delivering exceptional results</p>
-          </div>
-          <ProcessCarousel process={service.process} getIcon={getIcon} />
         </div>
       </section>
 

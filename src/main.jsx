@@ -47,7 +47,7 @@ if (rootElement) {
     <StrictMode>
       <BrowserRouter>
         <ClickSpark
-          sparkColor="#00d4ff"
+          sparkColor="#00c8ff"
           sparkSize={12}
           sparkRadius={20}
           sparkCount={10}
