@@ -1,4 +1,4 @@
-import { StrictMode, useEffect } from 'react'
+import { StrictMode, useEffect, useRef } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import './index.css'
@@ -9,8 +9,20 @@ import ClickSpark from './components/ui/ClickSpark'
 // Component to handle scroll on route change - supports hash navigation
 function ScrollToSection() {
   const { pathname, hash } = useLocation()
+  const isInitialLoad = useRef(true)
   
   useEffect(() => {
+    if (isInitialLoad.current) {
+      isInitialLoad.current = false
+
+      // Always start from home/top on first load or browser reload.
+      if (hash) {
+        window.history.replaceState(null, '', pathname)
+      }
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+      return
+    }
+
     // If there's a hash, scroll to that element
     if (hash) {
       // Wait for the page to render

@@ -1287,6 +1287,49 @@ textarea {
   transition: all 0.3s ease;
 }
 
+.service-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.project-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  min-height: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--project-bg);
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.02);
+  z-index: -2;
+}
+
+.project-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, rgba(0, 0, 0, 0.78) 60%, rgba(0, 0, 0, 0.9) 100%),
+    radial-gradient(circle at top right, rgba(0, 212, 255, 0.22) 0%, transparent 45%);
+  z-index: -1;
+}
+
+.project-card .service-title,
+.project-card .service-description,
+.project-card .service-link {
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
+}
+
 .service-card:hover {
   border-color: var(--color-cyan);
   transform: translateY(-8px);

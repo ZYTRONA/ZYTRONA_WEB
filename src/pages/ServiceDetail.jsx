@@ -12,9 +12,9 @@ import {
 } from 'react-icons/fa'
 import { 
   SiNextdotjs, SiTypescript, SiTailwindcss, SiFlutter, SiKotlin, SiFirebase, SiGraphql, SiMongodb,
-  SiAdobepremierepro, SiAdobeaftereffects, SiDavinciresolve, SiBlender, SiUnity, SiUnrealengine,
-  SiGodotengine, SiCplusplus, SiFigma, SiAdobexd, SiSketch, SiInvision, SiFramer,
-  SiAdobeillustrator, SiAdobephotoshop, SiTensorflow, SiPytorch, SiKeras, SiOpencv, SiScikitlearn,
+  SiDavinciresolve, SiBlender, SiUnity, SiUnrealengine,
+  SiGodotengine, SiCplusplus, SiFigma, SiSketch, SiInvision, SiFramer,
+  SiTensorflow, SiPytorch, SiKeras, SiOpencv, SiScikitlearn,
   SiDocker, SiKubernetes, SiTerraform, SiPrometheus, SiSharp
 } from 'react-icons/si'
 import { FeatureCarousel, ProcessCarousel } from '../components/ui/MotionCarousel'
@@ -103,8 +103,8 @@ const iconMap = {
   firebase: <SiFirebase />,
   graphql: <SiGraphql />,
   mongodb: <SiMongodb />,
-  premiere: <SiAdobepremierepro />,
-  aftereffects: <SiAdobeaftereffects />,
+  premiere: <FaFilm />,
+  aftereffects: <FaMagic />,
   davinci: <SiDavinciresolve />,
   blender: <SiBlender />,
   unity: <SiUnity />,
@@ -113,12 +113,12 @@ const iconMap = {
   cpp: <SiCplusplus />,
   csharp: <SiSharp />,
   figma: <SiFigma />,
-  xd: <SiAdobexd />,
+  xd: <FaPencilRuler />,
   sketch: <SiSketch />,
   invision: <SiInvision />,
   framer: <SiFramer />,
-  illustrator: <SiAdobeillustrator />,
-  photoshop: <SiAdobephotoshop />,
+  illustrator: <FaPalette />,
+  photoshop: <FaPalette />,
   tensorflow: <SiTensorflow />,
   pytorch: <SiPytorch />,
   keras: <SiKeras />,

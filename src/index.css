@@ -5,25 +5,33 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
 :root {
-  /* Primary Colors - Very Dark Sleek Black */
-  --color-black: #030304;
-  --color-dark-grey: #0a0a0c;
-  --color-grey: #141416;
-  --color-medium-grey: #2a2a2e;
-  --color-light-grey: #5a5a60;
-  
-  /* Accent Colors - White & Cyan */
-  --color-white: #ffffff;
-  --color-off-white: #f0f0f0;
+  /* Core Black + Neon Blue Palette */
+  --color-black: #050507;
+  --color-dark-grey: #0b0d12;
+  --color-grey: #121722;
+  --color-medium-grey: #6e7a91;
+  --color-light-grey: #a9b4c7;
+
+  /* Text + Accent */
+  --color-white: #f5f8ff;
+  --color-off-white: #e6ebf5;
   --color-cyan: #00d4ff;
-  --color-cyan-dark: #00a8cc;
-  --color-cyan-light: #5ce1ff;
-  --color-cyan-glow: rgba(0, 212, 255, 0.4);
-  
+  --color-cyan-dark: #00aeef;
+  --color-cyan-light: #40e5ff;
+  --color-cyan-glow: rgba(0, 212, 255, 0.28);
+
+  /* Compatibility alias used in App.css */
+  --cyan: var(--color-cyan);
+
+  /* Status accents */
+  --color-success: #19e68c;
+  --color-warning: #ffb020;
+  --color-error: #ff4d6d;
+
   /* Gradients */
-  --gradient-dark: linear-gradient(135deg, #030304 0%, #0a0a0c 50%, #141416 100%);
-  --gradient-cyan: linear-gradient(135deg, #00a8cc 0%, #00d4ff 50%, #5ce1ff 100%);
-  --gradient-sleek: linear-gradient(180deg, #030304 0%, #0a0a0c 100%);
+  --gradient-dark: linear-gradient(135deg, #050507 0%, #0b0d12 55%, #121722 100%);
+  --gradient-cyan: linear-gradient(135deg, #00aeef 0%, #00d4ff 55%, #40e5ff 100%);
+  --gradient-sleek: linear-gradient(180deg, #050507 0%, #0b0d12 100%);
   
   font-family: 'Bebas Neue', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.6;
@@ -68,7 +76,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: #020203;
+  background: #050507;
 }
 
 #root {

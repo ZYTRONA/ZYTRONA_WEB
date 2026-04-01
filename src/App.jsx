@@ -4,7 +4,7 @@ import emailjs from '@emailjs/browser'
 import { 
   FaGlobe, FaMobileAlt, FaVideo, FaGamepad, FaBriefcase, FaLinux, FaPalette, FaBrain,
   FaBuilding, FaMapMarkerAlt, FaEnvelope, FaPhone, FaCheck, FaRocket,
-  FaLinkedinIn, FaGithub, FaInstagram
+  FaLinkedinIn, FaGithub, FaInstagram, FaExternalLinkAlt
 } from 'react-icons/fa'
 import './App.css'
 import logo from './assets/logo.svg'
@@ -24,7 +24,7 @@ function App() {
 
   // Track active section on scroll
   useEffect(() => {
-    const sections = ['home', 'services', 'about', 'testimonials', 'faq', 'contact']
+    const sections = ['home', 'services', 'projects', 'about', 'testimonials', 'faq', 'contact']
     
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 100
@@ -109,34 +109,10 @@ function App() {
       description: "Professional video editing services to bring your visual content to life with stunning effects."
     },
     {
-      id: "game-development",
-      icon: <FaGamepad />,
-      title: "Game Development",
-      description: "Develop immersive and engaging games across multiple platforms with cutting-edge technology."
-    },
-    {
-      id: "freelancing",
-      icon: <FaBriefcase />,
-      title: "Freelancing",
-      description: "Flexible freelance solutions for all your project needs with dedicated expert professionals."
-    },
-    {
-      id: "devops-linux",
-      icon: <FaLinux />,
-      title: "DevOps & Linux Operations",
-      description: "Streamline your infrastructure with DevOps practices and expert Linux system administration."
-    },
-    {
       id: "ui-designs",
       icon: <FaPalette />,
       title: "UI Designs",
       description: "Craft beautiful and intuitive user interfaces that enhance user engagement and satisfaction."
-    },
-    {
-      id: "tensorflow-ai",
-      icon: <FaBrain />,
-      title: "TensorFlow & AI Solutions",
-      description: "Leverage machine learning and AI with TensorFlow to build intelligent, data-driven applications."
     }
   ]
 
@@ -145,6 +121,44 @@ function App() {
       { value: 98, suffix: '%', label: "Client Satisfaction" },
       { value: 1, suffix: '+', label: "Years Experience" },
       { value: 24, suffix: '/7', label: "Support Available" }
+  ]
+
+  const projectsDone = [
+    {
+      name: 'ZYCARE',
+      purpose: 'Healthcare-focused platform designed to streamline care workflows and digital patient interactions.',
+      stack: 'TypeScript',
+      bgImage: 'https://images.unsplash.com/photo-1584982751601-97dcc096659c?auto=format&fit=crop&w=1200&q=80',
+      url: 'https://github.com/ZYTRONA/ZYCARE'
+    },
+    {
+      name: 'ZYGLASS',
+      purpose: 'Python project for practical automation and data-driven workflows in real-world business use cases.',
+      stack: 'Python',
+      bgImage: 'https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&w=1200&q=80',
+      url: 'https://github.com/ZYTRONA/ZYGLASS'
+    },
+    {
+      name: 'ZYCROP',
+      purpose: 'Web application initiative focused on domain-specific workflows and user-first functionality.',
+      stack: 'JavaScript',
+      bgImage: 'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1200&q=80',
+      url: 'https://github.com/ZYTRONA/ZYCROP'
+    },
+    {
+      name: 'NUMMAZE',
+      purpose: 'Interactive logic and number-based web experience built to improve engagement and problem-solving.',
+      stack: 'JavaScript',
+      bgImage: 'https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?auto=format&fit=crop&w=1200&q=80',
+      url: 'https://github.com/ZYTRONA/NUMMAZE'
+    },
+    {
+      name: 'ZYNC-CHAT',
+      purpose: 'Real-time communication application prototype built around fast, lightweight messaging interactions.',
+      stack: 'JavaScript',
+      bgImage: 'https://images.unsplash.com/photo-1611746872915-64382b5c76da?auto=format&fit=crop&w=1200&q=80',
+      url: 'https://github.com/ZYTRONA/ZYNC-CHAT'
+    }
   ]
 
     // Custom hook for animated count-up
@@ -293,6 +307,10 @@ function App() {
     }
   }
 
+  const handleMenuLinkClick = () => {
+    setMobileMenuOpen(false)
+  }
+
   return (
     <div className="app">
       <div className="bg-marquee" aria-hidden="true">
@@ -307,22 +325,23 @@ function App() {
       {/* Navigation */}
       <nav className="navbar">
         <div className="nav-container">
-          <a href="#" className="nav-logo">
+          <Link to="/#home" className="nav-logo" onClick={handleMenuLinkClick}>
             <img src={logo} alt="ZYTRONA Logo" className="logo-icon" />
             <span className="logo-text">ZYTRONA</span>
-          </a>
+          </Link>
           
           <div className={`nav-menu ${mobileMenuOpen ? 'active' : ''}`}>
-            <a href="#home" className={`nav-link ${activeSection === 'home' ? 'active' : ''}`}>Home</a>
-            <a href="#services" className={`nav-link ${activeSection === 'services' ? 'active' : ''}`}>Services</a>
-            <a href="#about" className={`nav-link ${activeSection === 'about' ? 'active' : ''}`}>About</a>
-            <a href="#testimonials" className={`nav-link ${activeSection === 'testimonials' ? 'active' : ''}`}>Testimonials</a>
-            <a href="#faq" className={`nav-link ${activeSection === 'faq' ? 'active' : ''}`}>FAQ</a>
-            <a href="#contact" className={`nav-link ${activeSection === 'contact' ? 'active' : ''}`}>Contact</a>
+            <Link to="/#home" onClick={handleMenuLinkClick} className={`nav-link ${activeSection === 'home' ? 'active' : ''}`}>Home</Link>
+            <Link to="/#services" onClick={handleMenuLinkClick} className={`nav-link ${activeSection === 'services' ? 'active' : ''}`}>Services</Link>
+            <Link to="/#projects" onClick={handleMenuLinkClick} className={`nav-link ${activeSection === 'projects' ? 'active' : ''}`}>Projects</Link>
+            <Link to="/#about" onClick={handleMenuLinkClick} className={`nav-link ${activeSection === 'about' ? 'active' : ''}`}>About</Link>
+            <Link to="/#testimonials" onClick={handleMenuLinkClick} className={`nav-link ${activeSection === 'testimonials' ? 'active' : ''}`}>Testimonials</Link>
+            <Link to="/#faq" onClick={handleMenuLinkClick} className={`nav-link ${activeSection === 'faq' ? 'active' : ''}`}>FAQ</Link>
+            <Link to="/#contact" onClick={handleMenuLinkClick} className={`nav-link ${activeSection === 'contact' ? 'active' : ''}`}>Contact</Link>
           </div>
 
           <div className="nav-actions">
-            <a href="#contact" className="btn btn-primary">Get Started</a>
+            <Link to="/#contact" className="btn btn-primary" onClick={handleMenuLinkClick}>Get Started</Link>
             <button 
               className="mobile-menu-btn"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -350,13 +369,13 @@ function App() {
               to thrive in the digital age. Transform, innovate, and lead with ZYTRONA.
             </p>
             <div className="hero-buttons">
-              <a href="#contact" className="btn btn-primary btn-lg">
+              <Link to="/#contact" className="btn btn-primary btn-lg">
                 Start Your Journey
                 <span className="btn-arrow">→</span>
-              </a>
-              <a href="#services" className="btn btn-secondary btn-lg">
+              </Link>
+              <Link to="/#services" className="btn btn-secondary btn-lg">
                 Explore Services
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -400,14 +419,52 @@ function App() {
           </div>
           <div className="services-grid">
             {services.map((service, index) => (
-              <div key={index} className="service-card">
+              <Link key={index} to={`/service/${service.id}`} className="service-card service-card-link">
                 <div className="service-icon">{service.icon}</div>
                 <h3 className="service-title">{service.title}</h3>
                 <p className="service-description">{service.description}</p>
-                <Link to={`/service/${service.id}`} className="service-link">
+                <span className="service-link">
                   Learn More <span>→</span>
-                </Link>
-              </div>
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Section Divider */}
+      <div className="section-divider">
+        <div className="section-divider-line"></div>
+      </div>
+
+      {/* Projects Done Section */}
+      <section id="projects" className="services">
+        <div className="container">
+          <div className="section-header">
+            <span className="section-badge">Projects Done</span>
+            <h2 className="section-title">GitHub Repositories Built By ZYTRONA</h2>
+            <p className="section-subtitle">
+              A curated list of our completed public repositories, showcasing practical engineering across healthcare,
+              automation, productivity, and communication products.
+            </p>
+          </div>
+          <div className="services-grid">
+            {projectsDone.map((project) => (
+              <a
+                key={project.name}
+                className="service-card project-card"
+                style={{ '--project-bg': `url('${project.bgImage}')` }}
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <h3 className="service-title">{project.name}</h3>
+                <p className="service-description">{project.purpose}</p>
+                <p className="service-description"><strong>Tech Stack:</strong> {project.stack}</p>
+                <span className="service-link">
+                  View Repository <span><FaExternalLinkAlt /></span>
+                </span>
+              </a>
             ))}
           </div>
         </div>
@@ -453,7 +510,7 @@ function App() {
                   <span>Proven Track Record</span>
                 </div>
               </div>
-              <a href="#contact" className="btn btn-primary">Partner With Us</a>
+              <Link to="/#contact" className="btn btn-primary">Partner With Us</Link>
             </div>
             <div className="about-visual">
               <div className="about-image">
@@ -565,9 +622,9 @@ function App() {
               Schedule a free consultation with our experts today.
             </p>
             <div className="cta-buttons">
-              <a href="#contact" className="btn btn-white btn-lg">
+              <Link to="/#contact" className="btn btn-white btn-lg">
                 Schedule Consultation
-              </a>
+              </Link>
               <a href="tel:+1234567890" className="btn btn-outline btn-lg">
                 Call Us: +91 8667273159
               </a>
@@ -648,10 +705,10 @@ function App() {
         <div className="container">
           <div className="footer-grid">
             <div className="footer-brand">
-              <a href="#" className="nav-logo">
+              <Link to="/#home" className="nav-logo">
                 <img src={logo} alt="ZYTRONA Logo" className="logo-icon" />
                 <span className="logo-text">ZYTRONA</span>
-              </a>
+              </Link>
               <p className="footer-description">
                 Empowering businesses with innovative technology solutions 
                 for a digital-first world.
@@ -691,18 +748,15 @@ function App() {
               <Link to="/service/website-development">Website Development</Link>
               <Link to="/service/app-development">App Development</Link>
               <Link to="/service/video-editing">Video Editing</Link>
-              <Link to="/service/game-development">Game Development</Link>
-              <Link to="/service/freelancing">Freelancing</Link>
-              <Link to="/service/devops-linux">DevOps & Linux Operations</Link>
               <Link to="/service/ui-designs">UI Designs</Link>
-              <Link to="/service/tensorflow-ai">TensorFlow & AI Solutions</Link>
             </div>
             <div className="footer-links">
               <h4>Company</h4>
-              <a href="#">About Us</a>
+              <Link to="/#about">About Us</Link>
+              <Link to="/#projects">Projects Done</Link>
               <a href="#">Careers</a>
               <a href="#">Blog</a>
-              <a href="#">Contact</a>
+              <Link to="/#contact">Contact</Link>
             </div>
             <div className="footer-links">
               <h4>Legal</h4>
