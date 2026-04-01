@@ -7,7 +7,7 @@ import {
   FaLinkedinIn, FaGithub, FaInstagram, FaExternalLinkAlt
 } from 'react-icons/fa'
 import './App.css'
-import logo from './assets/logo.svg'
+const LOGO_SRC = '/Logo.png'
 
 function App() {
   const EMAILJS_SERVICE_ID = 'service_bo5zjco'
@@ -158,6 +158,44 @@ function App() {
       stack: 'JavaScript',
       bgImage: 'https://images.unsplash.com/photo-1611746872915-64382b5c76da?auto=format&fit=crop&w=1200&q=80',
       url: 'https://github.com/ZYTRONA/ZYNC-CHAT'
+    }
+  ]
+
+  const clientProjects = [
+    {
+      name: 'ZOCA Crimson Charm',
+      purpose: 'Modern client project site designed for engaging interactions and clear conversion-focused layout.',
+      stack: 'Web App',
+      bgImage: 'https://api.microlink.io/?url=https://zoca-crimson-charm.lovable.app&screenshot=true&meta=false',
+      url: 'https://zoca-crimson-charm.lovable.app'
+    },
+    {
+      name: 'Blue Base Family Saloon',
+      purpose: 'Brand website implementation delivered with responsive structure and accessible content hierarchy.',
+      stack: 'Web App',
+      bgImage: 'https://api.microlink.io/?url=https://bluebase-family-spot.lovable.app&screenshot=true&meta=false',
+      url: 'https://bluebase-family-spot.lovable.app'
+    },
+    {
+      name: 'Fly Studio Showcase',
+      purpose: 'Portfolio-style digital presence built to highlight services, offerings, and brand identity.',
+      stack: 'Web App',
+      bgImage: 'https://api.microlink.io/?url=https://fly-studio-showcase.lovable.app/&screenshot=true&meta=false',
+      url: 'https://fly-studio-showcase.lovable.app/'
+    },
+    {
+      name: 'Cakes & Bites',
+      purpose: 'Showcase website crafted for a brand-led product experience with polished visual presentation.',
+      stack: 'Web App',
+      bgImage: 'https://api.microlink.io/?url=https://bites-artisanal-charm.lovable.app&screenshot=true&meta=false',
+      url: 'https://bites-artisanal-charm.lovable.app'
+    },
+    {
+      name: '11 TO 11 Family Restaurant',
+      purpose: 'Client-facing website experience focused on clean storytelling and smooth user navigation.',
+      stack: 'Web App',
+      bgImage: 'https://api.microlink.io/?url=https://a-11to11family.lovable.app&screenshot=true&meta=false',
+      url: 'https://a-11to11family.lovable.app'
     }
   ]
 
@@ -326,7 +364,11 @@ function App() {
       <nav className="navbar">
         <div className="nav-container">
           <Link to="/#home" className="nav-logo" onClick={handleMenuLinkClick}>
-            <img src={logo} alt="ZYTRONA Logo" className="logo-icon" />
+            <img
+              src={LOGO_SRC}
+              alt="ZYTRONA Logo"
+              className="logo-icon"
+            />
             <span className="logo-text">ZYTRONA</span>
           </Link>
           
@@ -463,6 +505,44 @@ function App() {
                 <p className="service-description"><strong>Tech Stack:</strong> {project.stack}</p>
                 <span className="service-link">
                   View Repository <span><FaExternalLinkAlt /></span>
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Section Divider */}
+      <div className="section-divider">
+        <div className="section-divider-line"></div>
+      </div>
+
+      {/* Client Projects Section */}
+      <section id="client-projects" className="services">
+        <div className="container">
+          <div className="section-header">
+            <span className="section-badge">Client Projects</span>
+            <h2 className="section-title">Live Client Websites Delivered by ZYTRONA</h2>
+            <p className="section-subtitle">
+              A selection of client websites we have delivered, each built for usability, brand impact,
+              and real-world business outcomes.
+            </p>
+          </div>
+          <div className="services-grid">
+            {clientProjects.map((project) => (
+              <a
+                key={project.name}
+                className="service-card project-card"
+                style={{ '--project-bg': `url('${project.bgImage}')` }}
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <h3 className="service-title">{project.name}</h3>
+                <p className="service-description">{project.purpose}</p>
+                <p className="service-description"><strong>Type:</strong> {project.stack}</p>
+                <span className="service-link">
+                  View Live Site <span><FaExternalLinkAlt /></span>
                 </span>
               </a>
             ))}
@@ -706,7 +786,11 @@ function App() {
           <div className="footer-grid">
             <div className="footer-brand">
               <Link to="/#home" className="nav-logo">
-                <img src={logo} alt="ZYTRONA Logo" className="logo-icon" />
+                <img
+                  src={LOGO_SRC}
+                  alt="ZYTRONA Logo"
+                  className="logo-icon"
+                />
                 <span className="logo-text">ZYTRONA</span>
               </Link>
               <p className="footer-description">
