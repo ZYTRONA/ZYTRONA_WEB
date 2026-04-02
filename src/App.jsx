@@ -269,12 +269,6 @@ function App() {
     }
   ]
 
-  const backgroundMarqueeLines = [
-    'Innovation • Technology • Solutions • Digital Growth • Transforming Ideas • Innovacion • Innovazione • Innovation',
-    'Tecnologia • Technologie • Tecnologia • Takneek • தொழில்நுட்பம் • تقنية • 科技 • テクノロジー',
-    'Future Ready • Build Better • Global Vision • AI Driven • Client Success • Precision • Excellence • Progress'
-  ]
-
   const handleContactSubmit = async (event) => {
     event.preventDefault()
 
@@ -356,15 +350,6 @@ function App() {
 
   return (
     <div className="app">
-      <div className="bg-marquee" aria-hidden="true">
-        {backgroundMarqueeLines.map((line, index) => (
-          <div key={index} className={`bg-marquee-row ${index % 2 === 0 ? 'left' : 'right'}`}>
-            <span>{line}</span>
-            <span>{line}</span>
-          </div>
-        ))}
-      </div>
-
       {/* Navigation */}
       <nav className="navbar">
         <div className="nav-container">
@@ -740,7 +725,7 @@ function App() {
                   <span className="contact-icon"><FaMapMarkerAlt /></span>
                   <div>
                     <strong>Address</strong>
-                    <p>123 Innovation Drive, Tech City, TC 12345</p>
+                    <p>Tamilnadu, India</p>
                   </div>
                 </div>
                 <div className="contact-item">

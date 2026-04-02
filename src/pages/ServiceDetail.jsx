@@ -526,30 +526,6 @@ function ServiceDetail() {
         <div className="section-divider-line"></div>
       </div>
 
-      {/* Technologies Section */}
-      <section className="service-technologies">
-        <div className="container">
-          <div className="section-header-detail">
-            <span className="section-badge">Technologies We Use</span>
-            <h2 className="section-title-large">Powered By The Best</h2>
-            <p className="section-desc">Industry-leading tools and frameworks for optimal results</p>
-          </div>
-          <div className="tech-grid-enhanced">
-            {service.technologies.map((tech, index) => (
-              <div key={index} className="tech-card">
-                <span className="tech-icon">{getIcon(tech.icon)}</span>
-                <span className="tech-name">{tech.name}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Section Divider */}
-      <div className="section-divider">
-        <div className="section-divider-line"></div>
-      </div>
-
       {/* Google Form Section */}
       <section className="service-form-section">
         <div className="container">
@@ -570,6 +546,30 @@ function ServiceDetail() {
             >
               Open Google Form
             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Section Divider */}
+      <div className="section-divider">
+        <div className="section-divider-line"></div>
+      </div>
+
+      {/* Technologies Section */}
+      <section className="service-technologies">
+        <div className="container">
+          <div className="section-header-detail">
+            <span className="section-badge">Technologies We Use</span>
+            <h2 className="section-title-large">Powered By The Best</h2>
+            <p className="section-desc">Industry-leading tools and frameworks for optimal results</p>
+          </div>
+          <div className="tech-grid-enhanced">
+            {service.technologies.map((tech, index) => (
+              <div key={index} className="tech-card">
+                <span className="tech-icon">{getIcon(tech.icon)}</span>
+                <span className="tech-name">{tech.name}</span>
+              </div>
+            ))}
           </div>
         </div>
       </section>
