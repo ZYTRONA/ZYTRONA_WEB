@@ -2870,3 +2870,28 @@ textarea {
     font-size: 2rem;
   }
 }
+
+/* Service Google Form */
+.service-form-section {
+  padding: 3rem 0 4rem;
+}
+
+.service-form-actions {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.service-form-embed {
+  width: 100%;
+  min-height: 760px;
+  border: 1px solid rgba(0, 200, 255, 0.25);
+  border-radius: 12px;
+  background: #fff;
+}
+
+@media (max-width: 768px) {
+  .service-form-embed {
+    min-height: 680px;
+  }
+}

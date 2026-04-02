@@ -429,9 +429,25 @@ const servicesData = {
   }
 }
 
+const googleFormsByService = {
+  'website-development': 'https://docs.google.com/forms/d/e/YOUR_WEBSITE_FORM_ID/viewform',
+  'app-development': 'https://docs.google.com/forms/d/e/YOUR_APP_FORM_ID/viewform',
+  'video-editing': 'https://docs.google.com/forms/d/e/YOUR_VIDEO_FORM_ID/viewform',
+  'game-development': 'https://docs.google.com/forms/d/e/YOUR_GAME_FORM_ID/viewform',
+  'freelancing': 'https://docs.google.com/forms/d/e/YOUR_FREELANCING_FORM_ID/viewform',
+  'devops-linux': 'https://docs.google.com/forms/d/e/YOUR_DEVOPS_FORM_ID/viewform',
+  'ui-designs': 'https://docs.google.com/forms/d/e/YOUR_UI_FORM_ID/viewform',
+  'tensorflow-ai': 'https://docs.google.com/forms/d/e/YOUR_AI_FORM_ID/viewform',
+  default: 'https://docs.google.com/forms/d/e/YOUR_DEFAULT_FORM_ID/viewform'
+}
+
 function ServiceDetail() {
   const { serviceId } = useParams()
   const service = servicesData[serviceId]
+  const serviceFormUrl = googleFormsByService[serviceId] || googleFormsByService.default
+  const serviceFormEmbedUrl = serviceFormUrl.includes('?')
+    ? `${serviceFormUrl}&embedded=true`
+    : `${serviceFormUrl}?embedded=true`
 
   // Scroll to top immediately when page loads
   useEffect(() => {
@@ -533,6 +549,40 @@ function ServiceDetail() {
       <div className="section-divider">
         <div className="section-divider-line"></div>
       </div>
+
+      {/* Google Form Section */}
+      <section className="service-form-section">
+        <div className="container">
+          <div className="section-header-detail">
+            <span className="section-badge">Service Request Form</span>
+            <h2 className="section-title-large">Book {service.title}</h2>
+            <p className="section-desc">
+              Fill out this form and our team will get back with a tailored plan.
+            </p>
+          </div>
+
+          <div className="service-form-actions">
+            <a
+              href={serviceFormUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-primary btn-lg"
+            >
+              Open Google Form
+            </a>
+          </div>
+
+          <iframe
+            className="service-form-embed"
+            title={`${service.title} Google form`}
+            src={serviceFormEmbedUrl}
+            loading="lazy"
+            referrerPolicy="no-referrer"
+          >
+            Loading form...
+          </iframe>
+        </div>
+      </section>
 
       {/* CTA Section */}
       <section className="cta service-cta">
