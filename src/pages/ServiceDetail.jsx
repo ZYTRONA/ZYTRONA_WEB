@@ -430,13 +430,13 @@ const servicesData = {
 }
 
 const googleFormsByService = {
-  'website-development': 'https://docs.google.com/forms/d/e/YOUR_WEBSITE_FORM_ID/viewform',
-  'app-development': 'https://docs.google.com/forms/d/e/YOUR_APP_FORM_ID/viewform',
-  'video-editing': 'https://docs.google.com/forms/d/e/YOUR_VIDEO_FORM_ID/viewform',
+  'website-development': 'https://docs.google.com/forms/d/e/1FAIpQLSdIU0cad3tXkHi2iBtrbldq-anCN6q_1Q_u_VBKayayEpMy8A/viewform',
+  'app-development': 'https://docs.google.com/forms/d/e/1FAIpQLSceprsDvLFszsIulki2pNUNPwRvtStCCLcToKwQ-Liu73SDdQ/viewform',
+  'video-editing': 'https://docs.google.com/forms/d/e/1FAIpQLScrLJDMs5Jn3yU_GR6kMmmXmLZMZ-WWxymEKdaqP6yDrPzw_A/viewform',
   'game-development': 'https://docs.google.com/forms/d/e/YOUR_GAME_FORM_ID/viewform',
   'freelancing': 'https://docs.google.com/forms/d/e/YOUR_FREELANCING_FORM_ID/viewform',
   'devops-linux': 'https://docs.google.com/forms/d/e/YOUR_DEVOPS_FORM_ID/viewform',
-  'ui-designs': 'https://docs.google.com/forms/d/e/YOUR_UI_FORM_ID/viewform',
+  'ui-designs': 'https://docs.google.com/forms/d/e/1FAIpQLSfBtjyBkSwqQfQB_1TemqW8Kek6DF7-QbVyeSEqqs4o2zDk_A/viewform',
   'tensorflow-ai': 'https://docs.google.com/forms/d/e/YOUR_AI_FORM_ID/viewform',
   default: 'https://docs.google.com/forms/d/e/YOUR_DEFAULT_FORM_ID/viewform'
 }
