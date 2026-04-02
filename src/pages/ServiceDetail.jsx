@@ -557,7 +557,7 @@ function ServiceDetail() {
             <span className="section-badge">Service Request Form</span>
             <h2 className="section-title-large">Book {service.title}</h2>
             <p className="section-desc">
-              Fill out this form and our team will get back with a tailored plan.
+                Open the form in a new tab to avoid browser embed issues and submit your request directly.
             </p>
           </div>
 
@@ -571,16 +571,6 @@ function ServiceDetail() {
               Open Google Form
             </a>
           </div>
-
-          <iframe
-            className="service-form-embed"
-            title={`${service.title} Google form`}
-            src={serviceFormEmbedUrl}
-            loading="lazy"
-            referrerPolicy="no-referrer"
-          >
-            Loading form...
-          </iframe>
         </div>
       </section>
 
