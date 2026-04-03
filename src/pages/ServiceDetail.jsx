@@ -526,6 +526,58 @@ function ServiceDetail() {
         <div className="section-divider-line"></div>
       </div>
 
+      {/* Features Section */}
+      <section className="service-features">
+        <div className="container">
+          <div className="section-header-detail">
+            <span className="section-badge">Key Features</span>
+            <h2 className="section-title-large">What You'll Get</h2>
+            <p className="section-desc">Comprehensive solutions tailored to your needs</p>
+          </div>
+          <div className="features-grid">
+            {service.features.map((feature, index) => (
+              <div key={index} className="feature-card">
+                <span className="feature-icon">{getIcon(feature.icon)}</span>
+                <h4>{feature.title}</h4>
+                <p>{feature.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Section Divider */}
+      <div className="section-divider">
+        <div className="section-divider-line"></div>
+      </div>
+
+      {/* Process Section */}
+      <section className="service-process">
+        <div className="container">
+          <div className="section-header-detail">
+            <span className="section-badge">Our Process</span>
+            <h2 className="section-title-large">How We Work</h2>
+            <p className="section-desc">A structured approach to deliver excellence</p>
+          </div>
+          <div className="process-timeline">
+            {service.process.map((step, index) => (
+              <div key={index} className="process-step">
+                <div className="step-content">
+                  <span className="process-icon">{getIcon(step.icon)}</span>
+                  <h4>{step.step}</h4>
+                  <p>{step.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Section Divider */}
+      <div className="section-divider">
+        <div className="section-divider-line"></div>
+      </div>
+
       {/* Google Form Section */}
       <section className="service-form-section">
         <div className="container">

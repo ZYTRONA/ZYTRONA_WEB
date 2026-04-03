@@ -18,7 +18,7 @@ function App() {
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
-  const [openFaqIndex, setOpenFaqIndex] = useState(0)
+  const [openFaqIndex, setOpenFaqIndex] = useState(-1)
   const [contactReplyMessage, setContactReplyMessage] = useState('')
   const [isContactSending, setIsContactSending] = useState(false)
 
