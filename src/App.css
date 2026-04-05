@@ -105,7 +105,7 @@
   position: relative;
   contain: content;
 }
-  overflow::after hidden 
+
 .carousel-card-v2.active {
   border-color: rgba(100, 100, 100, 0.6);
 }
