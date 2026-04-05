@@ -21,12 +21,18 @@ function App() {
   const [openFaqIndex, setOpenFaqIndex] = useState(-1)
   const [contactReplyMessage, setContactReplyMessage] = useState('')
   const [isContactSending, setIsContactSending] = useState(false)
+  const lastScrollRunRef = useRef(Date.now())
 
-  // Track active section on scroll
+  // Track active section on scroll with throttling for performance
   useEffect(() => {
     const sections = ['home', 'services', 'projects', 'about', 'testimonials', 'faq', 'contact']
     
     const handleScroll = () => {
+      const now = Date.now()
+      // Throttle to 150ms to avoid excessive re-renders
+      if (now - lastScrollRunRef.current < 150) return
+      lastScrollRunRef.current = now
+      
       const scrollPosition = window.scrollY + 100
       
       for (const sectionId of sections) {
@@ -43,7 +49,7 @@ function App() {
       }
     }
     
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     handleScroll() // Check initial position
     
     return () => window.removeEventListener('scroll', handleScroll)

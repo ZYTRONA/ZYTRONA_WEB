@@ -55,6 +55,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  contain: layout;
 }
 
 .carousel-wrapper-v2 {
@@ -64,6 +65,7 @@
   align-items: center;
   justify-content: center;
   gap: 1rem;
+  contain: layout style paint;
 }
 
 .carousel-viewport-v2 {
@@ -71,17 +73,20 @@
   padding: 2rem 0;
   flex: 1;
   max-width: calc(100% - 120px);
+  will-change: transform;
 }
 
 .carousel-container-v2 {
   display: flex;
   touch-action: pan-y pinch-zoom;
+  will-change: transform;
 }
 
 .carousel-slide-v2 {
   flex: 0 0 50%;
   min-width: 0;
   padding: 0 1rem;
+  will-change: transform;
 }
 
 .carousel-card-v2 {
@@ -98,9 +103,9 @@
   text-align: center;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
   position: relative;
-  overflow: hidden;
+  contain: content;
 }
-
+  overflow::after hidden 
 .carousel-card-v2.active {
   border-color: rgba(100, 100, 100, 0.6);
 }
@@ -1327,6 +1332,7 @@ textarea {
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  contain: layout;
   gap: 3rem;
 }
 
@@ -1417,6 +1423,7 @@ textarea {
   width: 100vw;
   padding: 8rem 0;
   background: linear-gradient(180deg, #0a0a0a 0%, #020203 50%, #030304 100%);
+  contain: layout style;
 }
 
 .services .container {
@@ -1427,6 +1434,7 @@ textarea {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
+  contain: layout;
 }
 
 .service-card {
@@ -1455,6 +1463,8 @@ textarea {
   justify-content: flex-end;
   background: transparent;
   padding: 1.75rem;
+  will-change: transform;
+  contain: content;
 }
 
 .project-card::before {
@@ -1464,8 +1474,10 @@ textarea {
   background-image: var(--project-bg);
   background-size: cover;
   background-position: center;
+  background-attachment: fixed;
   transform: scale(1.02);
   z-index: 0;
+  will-change: transform;
 }
 
 .project-card::after {
@@ -1571,6 +1583,7 @@ textarea {
 .about-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  contain: layout;
   gap: 6rem;
   align-items: center;
 }
@@ -1596,6 +1609,7 @@ textarea {
 .about-features {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  contain: layout;
   gap: 1rem;
   margin: 2rem 0;
 }
@@ -1666,6 +1680,7 @@ textarea {
 .testimonials-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  contain: layout;
   gap: 2.5rem;
 }
 
@@ -1981,6 +1996,7 @@ textarea {
 .contact-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  contain: layout;
   gap: 6rem;
 }
 
