@@ -1,27 +1,5 @@
-import { createContext, useContext, useState, useEffect, useCallback } from 'react'
-
-// Context for cursor state
-const CursorContext = createContext(null)
-
-// Hook to use cursor context
-function useCursor() {
-  const context = useContext(CursorContext)
-  if (!context) {
-    throw new Error('useCursor must be used within CursorProvider')
-  }
-  return context
-}
-
-// Utility function for classnames
-function cn(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
-
-// Check if touch device
-function isTouchDevice() {
-  if (typeof window === 'undefined') return false
-  return 'ontouchstart' in window || navigator.maxTouchPoints > 0
-}
+import { useState, useEffect, useCallback } from 'react'
+import { CursorContext, useCursor, cn, isTouchDevice } from './cursor-utils'
 
 // CursorProvider - Manages cursor state globally
 function CursorProvider({ 
@@ -233,6 +211,5 @@ export {
   CursorProvider,
   CursorContainer,
   Cursor,
-  CursorFollow,
-  useCursor
+  CursorFollow
 }

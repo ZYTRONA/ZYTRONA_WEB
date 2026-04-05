@@ -1,34 +1,7 @@
 import * as React from 'react'
+// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'motion/react'
-
-// Ripple state management hook
-function useRipple() {
-  const [ripples, setRipples] = React.useState([])
-
-  const addRipple = React.useCallback((event) => {
-    const button = event.currentTarget
-    const rect = button.getBoundingClientRect()
-    const size = Math.max(rect.width, rect.height) * 2
-    const x = event.clientX - rect.left - size / 2
-    const y = event.clientY - rect.top - size / 2
-    
-    const newRipple = {
-      id: Date.now(),
-      x,
-      y,
-      size,
-    }
-    
-    setRipples((prev) => [...prev, newRipple])
-    
-    // Remove ripple after animation
-    setTimeout(() => {
-      setRipples((prev) => prev.filter((r) => r.id !== newRipple.id))
-    }, 600)
-  }, [])
-
-  return { ripples, addRipple }
-}
+import { useRipple } from './use-ripple'
 
 // Ripple Button Primitive
 function RippleButtonPrimitive({ children, className = '', onClick = null, style = {}, ...props }) {
@@ -85,5 +58,5 @@ function RippleButtonRipplesPrimitive({ ripples, className = '' }) {
 export {
   RippleButtonPrimitive,
   RippleButtonRipplesPrimitive,
-  useRipple,
 }
+

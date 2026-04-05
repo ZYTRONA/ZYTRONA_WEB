@@ -228,6 +228,20 @@ function App() {
       return count;
     }
 
+  // Stat Item Component
+  function StatItem({ stat, index }) {
+    const animatedValue = useCountUp(stat.value, 2000 + index * 300);
+    return (
+      <div className="stat-item">
+        <span className="stat-value">
+          {animatedValue}
+          {stat.suffix}
+        </span>
+        <span className="stat-label">{stat.label}</span>
+      </div>
+    );
+  }
+
   const testimonials = [
     {
       quote: "ZYTRONA transformed our entire digital infrastructure. Their expertise and dedication are unmatched.",
@@ -417,18 +431,9 @@ function App() {
       <section className="stats">
         <div className="container">
           <div className="stats-grid">
-            {stats.map((stat, index) => {
-                const animatedValue = useCountUp(stat.value, 2000 + index * 300);
-                return (
-                  <div key={index} className="stat-item">
-                    <span className="stat-value">
-                      {animatedValue}
-                      {stat.suffix}
-                    </span>
-                    <span className="stat-label">{stat.label}</span>
-                  </div>
-                );
-            })}
+            {stats.map((stat, index) => (
+              <StatItem key={index} stat={stat} index={index} />
+            ))}
           </div>
         </div>
       </section>

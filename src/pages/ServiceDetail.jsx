@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { 
   FaGlobe, FaMobileAlt, FaVideo, FaGamepad, FaBriefcase, FaLinux, FaPalette, FaBrain,
   FaBolt, FaLock, FaChartLine, FaFileAlt, FaShoppingCart, FaChartBar, FaSearch, FaClipboardList,
@@ -445,9 +445,6 @@ function ServiceDetail() {
   const { serviceId } = useParams()
   const service = servicesData[serviceId]
   const serviceFormUrl = googleFormsByService[serviceId] || googleFormsByService.default
-  const serviceFormEmbedUrl = serviceFormUrl.includes('?')
-    ? `${serviceFormUrl}&embedded=true`
-    : `${serviceFormUrl}?embedded=true`
 
   // Scroll to top immediately when page loads
   useEffect(() => {

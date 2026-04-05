@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { motion } from 'motion/react'
 import useEmblaCarousel from 'embla-carousel-react'
 import { ChevronRight, ChevronLeft } from 'lucide-react'
 import { RippleButton } from './ripple-button'
