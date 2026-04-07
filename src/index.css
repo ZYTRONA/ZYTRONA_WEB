@@ -9,12 +9,12 @@
   --color-black: #0a0a0a;
   --color-dark-grey: #111111;
   --color-grey: #1a1a1a;
-  --color-medium-grey: #8a8a8a;
-  --color-light-grey: #b9c2cc;
+  --color-medium-grey: #6bcfe6;
+  --color-light-grey: #a9e7f7;
 
   /* Text + Accent */
   --color-white: #ffffff;
-  --color-off-white: #ffffff;
+  --color-off-white: #eafcff;
   --color-cyan: #00c8ff;
   --color-cyan-dark: #0099cc;
   --color-cyan-light: #00e5ff;

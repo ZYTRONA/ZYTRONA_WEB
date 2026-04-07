@@ -12,6 +12,9 @@ const LOGO_SRC = '/Logo.png'
 function useNearViewport(rootMargin = '280px 0px') {
   const ref = useRef(null)
   const [isNear, setIsNear] = useState(false)
+  const isLowPerfMode =
+    typeof document !== 'undefined' &&
+    document.documentElement.classList.contains('low-perf-mobile')
 
   useEffect(() => {
     const node = ref.current
@@ -30,12 +33,12 @@ function useNearViewport(rootMargin = '280px 0px') {
           observer.disconnect()
         }
       },
-      { rootMargin }
+      { rootMargin: isLowPerfMode ? '160px 0px' : rootMargin }
     )
 
     observer.observe(node)
     return () => observer.disconnect()
-  }, [rootMargin])
+  }, [rootMargin, isLowPerfMode])
 
   return { ref, isNear }
 }
@@ -105,7 +108,7 @@ function App() {
     const isLowPerfMobile =
       typeof document !== 'undefined' &&
       document.documentElement.classList.contains('low-perf-mobile')
-    const throttleMs = isLowPerfMobile ? 220 : 120
+    const throttleMs = isLowPerfMobile ? 320 : 120
     const sectionBounds = []
     let rafId = 0
     let isTicking = false
@@ -513,6 +516,7 @@ function App() {
           </div>
 
           <div className="nav-actions">
+            <Link to="/#services" className="btn btn-secondary nav-explore-btn" onClick={handleMenuLinkClick}>Explore Services</Link>
             <Link to="/#contact" className="btn btn-primary" onClick={handleMenuLinkClick}>Get Started</Link>
             <button 
               className="mobile-menu-btn"
@@ -545,7 +549,7 @@ function App() {
                 Start Your Journey
                 <span className="btn-arrow">→</span>
               </Link>
-              <Link to="/#services" className="btn btn-secondary btn-lg">
+              <Link to="/#services" className="btn btn-secondary btn-lg hero-explore-btn">
                 Explore Services
               </Link>
             </div>
@@ -838,7 +842,7 @@ function App() {
                   </div>
                 </div>
                 <div className="contact-item">
-                  <span className="contact-icon"><FaPhone /></span>
+                  <span className="contact-icon phone-icon-flip"><FaPhone /></span>
                   <div>
                     <strong>Phone</strong>
                     <p>+91 8667273159</p>

@@ -650,6 +650,32 @@ html.low-perf-mobile .cta * {
   animation: none !important;
 }
 
+html.low-perf-mobile .hero-graphic,
+html.low-perf-mobile .ambient-glow,
+html.low-perf-mobile .hex-core,
+html.low-perf-mobile .hex-ring,
+html.low-perf-mobile .connections,
+html.low-perf-mobile .data-stream {
+  display: none !important;
+}
+
+html.low-perf-mobile .hero-badge,
+html.low-perf-mobile .hero-title,
+html.low-perf-mobile .hero-subtitle,
+html.low-perf-mobile .hero-buttons,
+html.low-perf-mobile .nav-link,
+html.low-perf-mobile .btn,
+html.low-perf-mobile .service-card,
+html.low-perf-mobile .faq-item,
+html.low-perf-mobile .testimonial-card {
+  animation: none !important;
+  transition: none !important;
+}
+
+html.low-perf-mobile .navbar {
+  animation: none !important;
+}
+
 body {
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -778,12 +804,8 @@ textarea {
   font-family: 'Allerta Stencil', sans-serif;
   font-size: 1.4rem;
   font-weight: 400;
-  color: var(--color-white);
+  color: #ffffff;
   letter-spacing: 0.06em;
-  background: linear-gradient(135deg, #ffffff 0%, var(--color-cyan-light) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
   transition: all 0.3s ease;
 }
 
@@ -960,11 +982,32 @@ textarea {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.nav-explore-btn {
+  border-color: rgba(0, 200, 255, 0.65);
+  background: rgba(0, 200, 255, 0.12);
+  color: #ffffff;
+  box-shadow: 0 0 0 1px rgba(0, 200, 255, 0.22) inset;
+}
+
 .btn-secondary:hover {
   border-color: var(--color-cyan);
   color: var(--color-cyan);
   box-shadow: 0 8px 24px rgba(0, 200, 255, 0.15);
   transform: translateY(-3px);
+}
+
+.hero-explore-btn {
+  border-color: rgba(0, 200, 255, 0.75);
+  background: rgba(0, 200, 255, 0.14);
+  color: #ffffff;
+  box-shadow: 0 10px 26px rgba(0, 170, 210, 0.22);
+}
+
+.hero-explore-btn:hover {
+  border-color: #7be8ff;
+  background: rgba(0, 200, 255, 0.22);
+  color: #ffffff;
+  box-shadow: 0 14px 30px rgba(0, 190, 230, 0.28);
 }
 
 .btn-white {
@@ -1027,10 +1070,10 @@ textarea {
   right: 0;
   bottom: 0;
   background: 
-    radial-gradient(ellipse at 10% 40%, rgba(0, 200, 255, 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 90% 20%, rgba(0, 168, 204, 0.12) 0%, transparent 45%),
-    radial-gradient(ellipse at 50% 80%, rgba(0, 200, 255, 0.08) 0%, transparent 40%),
-    linear-gradient(180deg, #020203 0%, #030304 50%, #0a0a0a 100%);
+    radial-gradient(ellipse at 12% 24%, rgba(0, 229, 255, 0.2) 0%, rgba(0, 120, 160, 0.06) 36%, transparent 62%),
+    radial-gradient(ellipse at 84% 18%, rgba(0, 185, 245, 0.16) 0%, rgba(0, 92, 130, 0.08) 32%, transparent 58%),
+    radial-gradient(ellipse at 50% 84%, rgba(145, 232, 255, 0.1) 0%, transparent 48%),
+    linear-gradient(165deg, #020203 0%, #04070c 45%, #071018 70%, #070b0f 100%);
   z-index: -1;
 }
 
@@ -1067,13 +1110,14 @@ textarea {
 .hero-badge {
   display: inline-block;
   padding: 0.6rem 1.5rem;
-  background: rgba(0, 200, 255, 0.08);
-  border: 1px solid rgba(0, 200, 255, 0.3);
+  background: linear-gradient(135deg, rgba(234, 252, 255, 0.12) 0%, rgba(0, 200, 255, 0.08) 100%);
+  border: 1px solid rgba(123, 223, 245, 0.5);
   border-radius: 50px;
   font-size: 0.85rem;
   color: var(--color-cyan);
   margin-bottom: 2rem;
   backdrop-filter: blur(10px);
+  box-shadow: 0 8px 24px rgba(0, 145, 180, 0.2);
   animation: fadeInUp 0.8s ease-out;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -1085,9 +1129,10 @@ textarea {
   font-size: clamp(3rem, 6vw, 5rem);
   font-weight: 800;
   line-height: 1.05;
-  color: var(--color-white);
+  color: var(--color-cyan);
   margin-bottom: 2rem;
   letter-spacing: -0.03em;
+  text-shadow: 0 10px 35px rgba(0, 0, 0, 0.45);
   animation: fadeInUp 0.8s ease-out 0.2s both;
 }
 
@@ -1103,17 +1148,15 @@ textarea {
 }
 
 .gradient-text {
-  color: var(--color-cyan-light);
-  background: var(--gradient-cyan);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--color-cyan);
+  background: none;
+  -webkit-text-fill-color: currentColor;
 }
 
 .hero-subtitle {
   font-family: var(--font-body);
   font-size: 1.35rem;
-  color: var(--color-light-grey);
+  color: #ffffff;
   line-height: 1.8;
   margin-bottom: 3rem;
   max-width: 700px;
@@ -2113,6 +2156,11 @@ textarea {
   font-size: 1.5rem;
 }
 
+.phone-icon-flip {
+  display: inline-flex;
+  transform: scaleX(-1);
+}
+
 .contact-item strong {
   font-family: var(--font-body);
   display: block;
@@ -2389,6 +2437,12 @@ textarea {
   
   .nav-actions .btn {
     display: none;
+  }
+
+  .nav-actions .nav-explore-btn {
+    display: inline-flex;
+    padding: 0.55rem 1rem;
+    font-size: 0.8rem;
   }
   
   .mobile-menu-btn {

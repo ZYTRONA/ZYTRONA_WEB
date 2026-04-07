@@ -8,12 +8,16 @@ function isLowPerformanceMobile() {
   if (typeof window === 'undefined') return false
 
   const coarsePointer = window.matchMedia?.('(pointer: coarse)').matches
-  const smallViewport = window.matchMedia?.('(max-width: 900px)').matches
+  const smallViewport = window.matchMedia?.('(max-width: 1100px)').matches
+  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
   const memory = navigator.deviceMemory ?? 0
   const cores = navigator.hardwareConcurrency ?? 0
+  const connection = navigator.connection
+  const saveData = Boolean(connection?.saveData)
+  const slowNetwork = /2g|3g/.test(connection?.effectiveType ?? '')
   const lowHardware = (memory > 0 && memory <= 4) || (cores > 0 && cores <= 4)
 
-  return Boolean(coarsePointer && (smallViewport || lowHardware))
+  return Boolean(coarsePointer && (smallViewport || lowHardware || saveData || slowNetwork || reducedMotion))
 }
 
 // Component to handle scroll on route change - supports hash navigation
@@ -39,7 +43,8 @@ function ScrollToSection() {
       setTimeout(() => {
         const element = document.querySelector(hash)
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth' })
+          const lowPerfMode = document.documentElement.classList.contains('low-perf-mobile')
+          element.scrollIntoView({ behavior: lowPerfMode ? 'auto' : 'smooth' })
         }
       }, 100)
     } else {
@@ -53,6 +58,13 @@ function ScrollToSection() {
 
 export function RootApp() {
   useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual'
+    }
+
+    // Ensure a hard reload always starts at the hero section.
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+
     const applyPerformanceClass = () => {
       const html = document.documentElement
       html.classList.toggle('low-perf-mobile', isLowPerformanceMobile())
