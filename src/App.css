@@ -579,6 +579,77 @@
   }
 }
 
+/* Performance mode for low-end mobile devices */
+html.low-perf-mobile {
+  scroll-behavior: auto;
+}
+
+html.low-perf-mobile .app::before,
+html.low-perf-mobile .app::after,
+html.low-perf-mobile .bg-marquee {
+  display: none !important;
+  animation: none !important;
+}
+
+html.low-perf-mobile .navbar,
+html.low-perf-mobile .nav-menu,
+html.low-perf-mobile .stat-item,
+html.low-perf-mobile .testimonial-card,
+html.low-perf-mobile .contact-form-wrapper {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+html.low-perf-mobile .cta::before,
+html.low-perf-mobile .particle,
+html.low-perf-mobile .service-badge-glow,
+html.low-perf-mobile .cta-glow,
+html.low-perf-mobile .bg-marquee-row.left,
+html.low-perf-mobile .bg-marquee-row.right {
+  animation: none !important;
+}
+
+html.low-perf-mobile .services,
+html.low-perf-mobile .about,
+html.low-perf-mobile .testimonials,
+html.low-perf-mobile .faq,
+html.low-perf-mobile .contact,
+html.low-perf-mobile .cta,
+html.low-perf-mobile .footer {
+  content-visibility: auto;
+  contain-intrinsic-size: 900px;
+}
+
+html.low-perf-mobile .service-card,
+html.low-perf-mobile .testimonial-card,
+html.low-perf-mobile .faq-item,
+html.low-perf-mobile .feature-card,
+html.low-perf-mobile .process-step,
+html.low-perf-mobile .tech-card,
+html.low-perf-mobile .highlight-card {
+  box-shadow: none !important;
+  transform: none !important;
+  transition: border-color 0.2s ease, background-color 0.2s ease !important;
+}
+
+html.low-perf-mobile .project-card::before {
+  transform: none;
+  background-attachment: scroll !important;
+}
+
+html.low-perf-mobile .project-card::after {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.82) 100%);
+}
+
+html.low-perf-mobile .about *,
+html.low-perf-mobile .testimonials *,
+html.low-perf-mobile .faq *,
+html.low-perf-mobile .contact *,
+html.low-perf-mobile .footer *,
+html.low-perf-mobile .cta * {
+  animation: none !important;
+}
+
 body {
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -1474,10 +1545,9 @@ textarea {
   background-image: var(--project-bg);
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
+  background-attachment: scroll;
   transform: scale(1.02);
   z-index: 0;
-  will-change: transform;
 }
 
 .project-card::after {
@@ -1493,6 +1563,15 @@ textarea {
 .project-card > * {
   position: relative;
   z-index: 2;
+}
+
+.project-card-pending::before {
+  background-image: none;
+  background: linear-gradient(135deg, rgba(10, 10, 12, 0.9) 0%, rgba(14, 18, 22, 0.92) 100%);
+}
+
+.project-card-pending::after {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.78) 100%);
 }
 
 .project-card .service-title,

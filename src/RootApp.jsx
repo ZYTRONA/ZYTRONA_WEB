@@ -4,6 +4,18 @@ import App from './App.jsx'
 import ServiceDetail from './pages/ServiceDetail.jsx'
 import ClickSpark from './components/ui/ClickSpark'
 
+function isLowPerformanceMobile() {
+  if (typeof window === 'undefined') return false
+
+  const coarsePointer = window.matchMedia?.('(pointer: coarse)').matches
+  const smallViewport = window.matchMedia?.('(max-width: 900px)').matches
+  const memory = navigator.deviceMemory ?? 0
+  const cores = navigator.hardwareConcurrency ?? 0
+  const lowHardware = (memory > 0 && memory <= 4) || (cores > 0 && cores <= 4)
+
+  return Boolean(coarsePointer && (smallViewport || lowHardware))
+}
+
 // Component to handle scroll on route change - supports hash navigation
 function ScrollToSection() {
   const { pathname, hash } = useLocation()
@@ -40,6 +52,20 @@ function ScrollToSection() {
 }
 
 export function RootApp() {
+  useEffect(() => {
+    const applyPerformanceClass = () => {
+      const html = document.documentElement
+      html.classList.toggle('low-perf-mobile', isLowPerformanceMobile())
+    }
+
+    applyPerformanceClass()
+    window.addEventListener('resize', applyPerformanceClass, { passive: true })
+
+    return () => {
+      window.removeEventListener('resize', applyPerformanceClass)
+    }
+  }, [])
+
   return (
     <ClickSpark
       sparkColor="#00c8ff"

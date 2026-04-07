@@ -9,6 +9,82 @@ import {
 import './App.css'
 const LOGO_SRC = '/Logo.png'
 
+function useNearViewport(rootMargin = '280px 0px') {
+  const ref = useRef(null)
+  const [isNear, setIsNear] = useState(false)
+
+  useEffect(() => {
+    const node = ref.current
+    if (!node) return
+
+    if (typeof IntersectionObserver === 'undefined') {
+      setIsNear(true)
+      return
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries
+        if (entry?.isIntersecting) {
+          setIsNear(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin }
+    )
+
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [rootMargin])
+
+  return { ref, isNear }
+}
+
+function RepositoryProjectCard({ project }) {
+  const { ref, isNear } = useNearViewport('320px 0px')
+
+  return (
+    <a
+      ref={ref}
+      className={`service-card project-card ${isNear ? 'project-card-ready' : 'project-card-pending'}`}
+      style={isNear ? { '--project-bg': `url('${project.bgImage}')` } : undefined}
+      href={project.url}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <h3 className="service-title">{project.name}</h3>
+      <p className="service-description">{project.purpose}</p>
+      <p className="service-description"><strong>Tech Stack:</strong> {project.stack}</p>
+      <span className="service-link">
+        View Repository <span><FaExternalLinkAlt /></span>
+      </span>
+    </a>
+  )
+}
+
+function ClientProjectCard({ project }) {
+  const { ref, isNear } = useNearViewport('320px 0px')
+
+  return (
+    <a
+      ref={ref}
+      className={`service-card project-card ${isNear ? 'project-card-ready' : 'project-card-pending'}`}
+      style={isNear ? { '--project-bg': `url('${project.bgImage}')` } : undefined}
+      href={project.url}
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <h3 className="service-title">{project.name}</h3>
+      <p className="service-description">{project.purpose}</p>
+      <p className="service-description"><strong>Background:</strong> {project.background}</p>
+      <p className="service-description"><strong>Type:</strong> {project.stack}</p>
+      <span className="service-link">
+        View Live Site <span><FaExternalLinkAlt /></span>
+      </span>
+    </a>
+  )
+}
+
 function App() {
   const EMAILJS_SERVICE_ID = 'service_bo5zjco'
   const EMAILJS_TEMPLATE_ID_OWNER = import.meta.env.VITE_EMAILJS_TEMPLATE_ID_OWNER
@@ -26,33 +102,69 @@ function App() {
   // Track active section on scroll with throttling for performance
   useEffect(() => {
     const sections = ['home', 'services', 'projects', 'about', 'testimonials', 'faq', 'contact']
-    
-    const handleScroll = () => {
-      const now = Date.now()
-      // Throttle to 150ms to avoid excessive re-renders
-      if (now - lastScrollRunRef.current < 150) return
-      lastScrollRunRef.current = now
-      
-      const scrollPosition = window.scrollY + 100
-      
+    const isLowPerfMobile =
+      typeof document !== 'undefined' &&
+      document.documentElement.classList.contains('low-perf-mobile')
+    const throttleMs = isLowPerfMobile ? 220 : 120
+    const sectionBounds = []
+    let rafId = 0
+    let isTicking = false
+
+    const recomputeSectionBounds = () => {
+      sectionBounds.length = 0
       for (const sectionId of sections) {
         const element = document.getElementById(sectionId)
-        if (element) {
-          const offsetTop = element.offsetTop
-          const offsetHeight = element.offsetHeight
-          
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveSection(sectionId)
-            break
-          }
+        if (!element) continue
+        const offsetTop = element.offsetTop
+        sectionBounds.push({
+          sectionId,
+          start: offsetTop,
+          end: offsetTop + element.offsetHeight
+        })
+      }
+    }
+
+    const updateActiveSection = () => {
+      const scrollPosition = window.scrollY + 100
+      for (const section of sectionBounds) {
+        if (scrollPosition >= section.start && scrollPosition < section.end) {
+          setActiveSection((prev) => (prev === section.sectionId ? prev : section.sectionId))
+          break
         }
       }
     }
     
+    const handleScroll = () => {
+      const now = Date.now()
+      // Use heavier throttle on constrained mobile devices
+      if (now - lastScrollRunRef.current < throttleMs) return
+      lastScrollRunRef.current = now
+
+      if (isTicking) return
+      isTicking = true
+      rafId = requestAnimationFrame(() => {
+        updateActiveSection()
+        isTicking = false
+      })
+    }
+
+    const handleResize = () => {
+      recomputeSectionBounds()
+      updateActiveSection()
+    }
+
+    recomputeSectionBounds()
+    window.addEventListener('resize', handleResize, { passive: true })
     window.addEventListener('scroll', handleScroll, { passive: true })
-    handleScroll() // Check initial position
-    
-    return () => window.removeEventListener('scroll', handleScroll)
+    updateActiveSection()
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      window.removeEventListener('scroll', handleScroll)
+      if (rafId) {
+        cancelAnimationFrame(rafId)
+      }
+    }
   }, [])
 
   useEffect(() => {
@@ -134,35 +246,35 @@ function App() {
       name: 'ZYCARE',
       purpose: 'Healthcare-focused platform designed to streamline care workflows and digital patient interactions.',
       stack: 'TypeScript',
-      bgImage: 'https://images.unsplash.com/photo-1584982751601-97dcc096659c?auto=format&fit=crop&w=1200&q=80',
+      bgImage: 'https://images.unsplash.com/photo-1584982751601-97dcc096659c?auto=format&fit=crop&w=900&q=60',
       url: 'https://github.com/ZYTRONA/ZYCARE'
     },
     {
       name: 'ZYGLASS',
       purpose: 'Python project for practical automation and data-driven workflows in real-world business use cases.',
       stack: 'Python',
-      bgImage: 'https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&w=1200&q=80',
+      bgImage: 'https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&w=900&q=60',
       url: 'https://github.com/ZYTRONA/ZYGLASS'
     },
     {
       name: 'ZYCROP',
       purpose: 'Web application initiative focused on domain-specific workflows and user-first functionality.',
       stack: 'JavaScript',
-      bgImage: 'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1200&q=80',
+      bgImage: 'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=900&q=60',
       url: 'https://github.com/ZYTRONA/ZYCROP'
     },
     {
       name: 'NUMMAZE',
       purpose: 'Interactive logic and number-based web experience built to improve engagement and problem-solving.',
       stack: 'JavaScript',
-      bgImage: 'https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?auto=format&fit=crop&w=1200&q=80',
+      bgImage: 'https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?auto=format&fit=crop&w=900&q=60',
       url: 'https://github.com/ZYTRONA/NUMMAZE'
     },
     {
       name: 'ZYNC-CHAT',
       purpose: 'Real-time communication application prototype built around fast, lightweight messaging interactions.',
       stack: 'JavaScript',
-      bgImage: 'https://images.unsplash.com/photo-1611746872915-64382b5c76da?auto=format&fit=crop&w=1200&q=80',
+      bgImage: 'https://images.unsplash.com/photo-1611746872915-64382b5c76da?auto=format&fit=crop&w=900&q=60',
       url: 'https://github.com/ZYTRONA/ZYNC-CHAT'
     }
   ]
@@ -173,7 +285,7 @@ function App() {
       purpose: 'Modern client project site designed for engaging interactions and clear conversion-focused layout.',
       background: 'Built for a fashion and lifestyle audience that needed a premium digital identity with strong visual storytelling.',
       stack: 'Web App',
-      bgImage: 'https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=1400&q=80',
+      bgImage: 'https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=960&q=60',
       url: 'https://zoca-crimson-charm.lovable.app'
     },
     {
@@ -181,7 +293,7 @@ function App() {
       purpose: 'Brand website implementation delivered with responsive structure and accessible content hierarchy.',
       background: 'Created for a family salon business aiming to showcase services clearly and turn local visitors into bookings.',
       stack: 'Web App',
-      bgImage: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=1400&q=80',
+      bgImage: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=960&q=60',
       url: 'https://bluebase-family-spot.lovable.app'
     },
     {
@@ -189,7 +301,7 @@ function App() {
       purpose: 'Portfolio-style digital presence built to highlight services, offerings, and brand identity.',
       background: 'Designed for a creative studio that needed a portfolio-first experience to present work and attract collaborations.',
       stack: 'Web App',
-      bgImage: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1400&q=80',
+      bgImage: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=960&q=60',
       url: 'https://fly-studio-showcase.lovable.app/'
     },
     {
@@ -197,7 +309,7 @@ function App() {
       purpose: 'Showcase website crafted for a brand-led product experience with polished visual presentation.',
       background: 'Developed for a bakery brand focused on product discovery, visual appeal, and easy customer contact.',
       stack: 'Web App',
-      bgImage: 'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?auto=format&fit=crop&w=1400&q=80',
+      bgImage: 'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?auto=format&fit=crop&w=960&q=60',
       url: 'https://bites-artisanal-charm.lovable.app'
     },
     {
@@ -205,7 +317,7 @@ function App() {
       purpose: 'Client-facing website experience focused on clean storytelling and smooth user navigation.',
       background: 'Launched for a restaurant business that wanted a trustworthy online presence to communicate menu, vibe, and location.',
       stack: 'Web App',
-      bgImage: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=80',
+      bgImage: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=960&q=60',
       url: 'https://a-11to11family.lovable.app'
     }
   ]
@@ -214,8 +326,16 @@ function App() {
     function useCountUp(target, duration = 2000) {
       const [count, setCount] = useState(0);
       const startTimestamp = useRef(0);
+      const isLowPerfMobile =
+        typeof document !== 'undefined' &&
+        document.documentElement.classList.contains('low-perf-mobile')
 
       useEffect(() => {
+        if (isLowPerfMobile) {
+          setCount(target)
+          return
+        }
+
         let rafId = 0;
         startTimestamp.current = 0;
         function step(timestamp) {
@@ -230,7 +350,7 @@ function App() {
         }
         rafId = requestAnimationFrame(step);
         return () => cancelAnimationFrame(rafId);
-      }, [target, duration]);
+      }, [target, duration, isLowPerfMobile]);
       return count;
     }
 
@@ -493,21 +613,7 @@ function App() {
           </div>
           <div className="services-grid">
             {projectsDone.map((project) => (
-              <a
-                key={project.name}
-                className="service-card project-card"
-                style={{ '--project-bg': `url('${project.bgImage}')` }}
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <h3 className="service-title">{project.name}</h3>
-                <p className="service-description">{project.purpose}</p>
-                <p className="service-description"><strong>Tech Stack:</strong> {project.stack}</p>
-                <span className="service-link">
-                  View Repository <span><FaExternalLinkAlt /></span>
-                </span>
-              </a>
+              <RepositoryProjectCard key={project.name} project={project} />
             ))}
           </div>
         </div>
@@ -531,22 +637,7 @@ function App() {
           </div>
           <div className="services-grid">
             {clientProjects.map((project) => (
-              <a
-                key={project.name}
-                className="service-card project-card"
-                style={{ '--project-bg': `url('${project.bgImage}')` }}
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <h3 className="service-title">{project.name}</h3>
-                <p className="service-description">{project.purpose}</p>
-                <p className="service-description"><strong>Background:</strong> {project.background}</p>
-                <p className="service-description"><strong>Type:</strong> {project.stack}</p>
-                <span className="service-link">
-                  View Live Site <span><FaExternalLinkAlt /></span>
-                </span>
-              </a>
+              <ClientProjectCard key={project.name} project={project} />
             ))}
           </div>
         </div>

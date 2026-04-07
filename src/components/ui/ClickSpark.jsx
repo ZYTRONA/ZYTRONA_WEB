@@ -13,8 +13,18 @@ const ClickSpark = ({
   const canvasRef = useRef(null);
   const sparksRef = useRef([]);
   const startTimeRef = useRef(null);
+  const animationIdRef = useRef(0);
+  const isAnimatingRef = useRef(false);
+  const disabledRef = useRef(false);
+  const startAnimationRef = useRef(() => {});
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+      const coarsePointer = window.matchMedia?.('(pointer: coarse)').matches;
+      disabledRef.current = Boolean(prefersReducedMotion || coarsePointer);
+    }
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -67,8 +77,7 @@ const ClickSpark = ({
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
-
-    let animationId;
+    if (!ctx) return;
 
     const draw = timestamp => {
       if (!startTimeRef.current) {
@@ -103,17 +112,34 @@ const ClickSpark = ({
         return true;
       });
 
-      animationId = requestAnimationFrame(draw);
+      if (sparksRef.current.length > 0) {
+        animationIdRef.current = requestAnimationFrame(draw);
+      } else {
+        isAnimatingRef.current = false;
+        animationIdRef.current = 0;
+      }
     };
 
-    animationId = requestAnimationFrame(draw);
+    startAnimationRef.current = () => {
+      if (isAnimatingRef.current || disabledRef.current) return;
+      isAnimatingRef.current = true;
+      animationIdRef.current = requestAnimationFrame(draw);
+    };
 
     return () => {
-      cancelAnimationFrame(animationId);
+      if (animationIdRef.current) {
+        cancelAnimationFrame(animationIdRef.current);
+      }
+      animationIdRef.current = 0;
+      isAnimatingRef.current = false;
+      sparksRef.current = [];
+      startAnimationRef.current = () => {};
     };
-  }, [sparkColor, sparkSize, sparkRadius, sparkCount, duration, easeFunc, extraScale]);
+  }, [sparkColor, sparkSize, sparkRadius, duration, easeFunc, extraScale]);
 
   const handleClick = e => {
+    if (disabledRef.current) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
@@ -129,6 +155,8 @@ const ClickSpark = ({
     }));
 
     sparksRef.current.push(...newSparks);
+
+    startAnimationRef.current();
   };
 
   return (
