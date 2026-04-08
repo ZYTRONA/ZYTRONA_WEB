@@ -716,6 +716,7 @@ textarea {
   top: 0;
   left: 0;
   right: 0;
+  width: 100%;
   z-index: 1000;
   background: rgba(12, 12, 14, 0.95);
   border-bottom: 1px solid rgba(0, 200, 255, 0.2);
@@ -1057,7 +1058,7 @@ textarea {
 .hero {
   min-height: 100vh;
   height: 100vh;
-  width: 100vw;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1435,7 +1436,7 @@ textarea {
    Stats Section - Full Width
    ============================================ */
 .stats {
-  width: 100vw;
+  width: 100%;
   background: linear-gradient(180deg, var(--color-dark-grey) 0%, #0a0a0a 100%);
   padding: 5rem 0;
   border-top: 1px solid rgba(0, 200, 255, 0.1);
@@ -1537,7 +1538,7 @@ textarea {
    Services Section - Full Width
    ============================================ */
 .services {
-  width: 100vw;
+  width: 100%;
   padding: 8rem 0;
   background: linear-gradient(180deg, #0a0a0a 0%, #020203 50%, #030304 100%);
   contain: layout style;
@@ -1696,7 +1697,7 @@ textarea {
    About Section - Full Width
    ============================================ */
 .about {
-  width: 100vw;
+  width: 100%;
   padding: 8rem 0;
   background: linear-gradient(180deg, #030304 0%, var(--color-dark-grey) 50%, #030304 100%);
 }
@@ -1793,7 +1794,7 @@ textarea {
    Testimonials Section - Full Width
    ============================================ */
 .testimonials {
-  width: 100vw;
+  width: 100%;
   padding: 8rem 0;
   background: linear-gradient(180deg, #030304 0%, #020203 100%);
 }
@@ -1885,7 +1886,7 @@ textarea {
    FAQ Section - Full Width
    ============================================ */
 .faq {
-  width: 100vw;
+  width: 100%;
   padding: 8rem 0;
   background: linear-gradient(180deg, #020203 0%, #0a0a0a 100%);
 }
@@ -2030,7 +2031,7 @@ textarea {
    CTA Section - Full Width Immersive
    ============================================ */
 .cta {
-  width: 100vw;
+  width: 100%;
   padding: 8rem 0;
   background: var(--gradient-cyan);
   position: relative;
@@ -2109,7 +2110,7 @@ textarea {
    Contact Section - Full Width
    ============================================ */
 .contact {
-  width: 100vw;
+  width: 100%;
   padding: 8rem 0;
   background: linear-gradient(180deg, #030304 0%, var(--color-dark-grey) 100%);
 }
@@ -2244,7 +2245,7 @@ textarea {
    Footer - Full Width
    ============================================ */
 .footer {
-  width: 100vw;
+  width: 100%;
   background: linear-gradient(180deg, var(--color-dark-grey) 0%, #020203 100%);
   padding: 5rem 0 2rem;
   border-top: 1px solid rgba(0, 200, 255, 0.1);
