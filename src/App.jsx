@@ -935,7 +935,6 @@ function App() {
               <h4>Company</h4>
               <Link to="/#about">About Us</Link>
               <Link to="/#projects">Projects Done</Link>
-              <a href="#">Careers</a>
               <a href="#">Blog</a>
               <Link to="/#contact">Contact</Link>
             </div>
