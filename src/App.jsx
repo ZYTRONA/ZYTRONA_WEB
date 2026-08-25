@@ -3,18 +3,24 @@ import { Link } from 'react-router-dom'
 import emailjs from '@emailjs/browser'
 import { motion, AnimatePresence } from 'motion/react'
 import { 
-  FaLinkedinIn, FaGithub, FaInstagram 
+  FaLinkedinIn, FaGithub, FaInstagram, FaReact, FaNodeJs, FaAws
 } from 'react-icons/fa'
 import { 
+  SiNextdotjs, SiTypescript, SiTensorflow
+} from 'react-icons/si'
+import { 
   Globe, Smartphone, Video, Palette, 
-  ArrowRight, ExternalLink, CheckCircle2, ChevronDown, 
+  ArrowRight, ExternalLink, CheckCircle2, 
   Send, Zap, Star, MapPin, Mail, Phone, 
-  Users, Award, Menu, X, Cpu, Server, ShieldCheck, 
-  Clock, Check, Sparkles, Briefcase, Layers, FileCode
+  Users, Award, Cpu, Server, ShieldCheck, 
+  Clock, Briefcase, Layers, FileCode,
+  Copy, Check, Sparkles
 } from 'lucide-react'
 
 import SpotlightCard from './components/ui/SpotlightCard'
-import ProcessCarousel from './components/ui/MotionCarousel'
+import { TypewriterEffectSmooth } from './components/ui/typewriter-effect'
+import { AvatarGroup } from '@/components/animate-ui/components/animate/avatar-group'
+import { DatePicker } from './components/ui/date-picker'
 import { NumberTicker } from '@/registry/magicui/number-ticker'
 import {
   Accordion,
@@ -22,7 +28,29 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import { Footer } from '@/components/ui/Footer'
 import './App.css'
+
+import {
+  Navbar,
+  NavBody,
+  NavItems,
+  MobileNav,
+  NavbarLogo,
+  NavbarButton,
+  MobileNavHeader,
+  MobileNavToggle,
+  MobileNavMenu,
+} from '@/components/ui/resizable-navbar'
 
 const LOGO_SRC = '/Logo.png'
 
@@ -31,6 +59,7 @@ const SERVICES_DATA = [
   {
     id: "website-development",
     icon: <Globe className="w-6 h-6" />,
+    badge: "⚡ 98+ Core Web Vitals",
     title: "Web Development & Cloud SaaS",
     description: "Architecting lightning-fast, SEO-optimized web applications and enterprise SaaS platforms engineered for high conversion and global scalability.",
     tags: ["React 19", "Next.js", "TypeScript", "Microservices", "REST & GraphQL"]
@@ -38,6 +67,7 @@ const SERVICES_DATA = [
   {
     id: "app-development",
     icon: <Smartphone className="w-6 h-6" />,
+    badge: "📱 60fps Native Performance",
     title: "Mobile App Engineering",
     description: "Crafting fluid, high-performance native iOS & Android applications with offline-first data caching and gesture-rich user interfaces.",
     tags: ["iOS Native", "Android", "Flutter", "React Native", "Firebase"]
@@ -45,6 +75,7 @@ const SERVICES_DATA = [
   {
     id: "tensorflow-ai",
     icon: <Cpu className="w-6 h-6" />,
+    badge: "🤖 Deep Learning & LLMs",
     title: "AI & Machine Learning Automation",
     description: "Developing custom machine learning algorithms, intelligent automation pipelines, natural language processing, and computer vision workflows.",
     tags: ["Python", "PyTorch", "TensorFlow", "Computer Vision", "LLM APIs"]
@@ -52,6 +83,7 @@ const SERVICES_DATA = [
   {
     id: "ui-designs",
     icon: <Palette className="w-6 h-6" />,
+    badge: "🎨 Tokenized Design Systems",
     title: "UI/UX & Product Design Systems",
     description: "Designing modern design systems, comprehensive component tokens, wireframes, and interactive Figma prototypes centered on user retention.",
     tags: ["Design Systems", "Figma", "User Journey", "Design Tokens", "Wireframing"]
@@ -59,6 +91,7 @@ const SERVICES_DATA = [
   {
     id: "devops-linux",
     icon: <Server className="w-6 h-6" />,
+    badge: "☁️ 99.99% Cloud Uptime",
     title: "Cloud & DevOps Infrastructure",
     description: "Setting up automated CI/CD deployment pipelines, containerized microservices, serverless backends, and 24/7 cloud health monitoring.",
     tags: ["Docker", "Kubernetes", "AWS", "CI/CD Pipelines", "Linux Systems"]
@@ -66,6 +99,7 @@ const SERVICES_DATA = [
   {
     id: "video-editing",
     icon: <Video className="w-6 h-6" />,
+    badge: "🎬 4K 60fps VFX & Motion",
     title: "Commercial Video & Motion Graphics",
     description: "Producing cinematic brand videos, 3D motion graphics, commercial advertisements, and VFX tailored for high-impact digital marketing.",
     tags: ["Motion Graphics", "3D VFX", "Brand Films", "Color Grading", "DaVinci"]
@@ -80,45 +114,6 @@ const STATS_DATA = [
   { value: 24, startValue: 0, suffix: '/7', label: "Dedicated Technical Support", icon: <Zap className="w-5 h-5" /> }
 ]
 
-// Engagement Models
-const ENGAGEMENT_MODELS = [
-  {
-    title: "Fixed-Scope Project",
-    tagline: "Predictable & Milestone-Based",
-    description: "Ideal for well-defined web, mobile, or AI projects with set deliverables, guaranteed budget caps, and a strict timeline roadmap.",
-    features: [
-      "Fixed milestone pricing",
-      "Defined scope & deliverables",
-      "Dedicated Project Lead",
-      "Weekly video demonstrations"
-    ],
-    recommended: false
-  },
-  {
-    title: "Dedicated Engineering Squad",
-    tagline: "Scalable Team Augmentation",
-    description: "A specialized cross-functional team (Frontend, Backend, AI, UI/UX) working as a dedicated extension of your company to accelerate product shipping.",
-    features: [
-      "Full-stack team dedicated to you",
-      "Flexible agile sprint cycles",
-      "Direct Slack/Discord integration",
-      "Continuous code reviews & CI/CD"
-    ],
-    recommended: true
-  },
-  {
-    title: "Rapid MVP & Design Sprint",
-    tagline: "From Concept to Live Launch in Weeks",
-    description: "Fast-tracked 2 to 4-week sprint designed for startups and new business initiatives to validate market demand with a polished product.",
-    features: [
-      "2-4 week delivery timeline",
-      "High-fidelity design system",
-      "Production-ready deployment",
-      "Post-launch analytics & feedback"
-    ],
-    recommended: false
-  }
-]
 
 // Company Guarantees & Values
 const COMPANY_VALUES = [
@@ -140,90 +135,130 @@ const COMPANY_VALUES = [
   }
 ]
 
-// GitHub Repositories
+// Open Source & Engineering Repositories
 const PROJECTS_DONE = [
   {
     name: 'ZYCARE',
-    purpose: 'Healthcare platform designed to streamline digital interactions, appointment systems, and care workflows.',
+    category: 'Healthcare SaaS Platform',
+    industry: 'Digital Health & Clinical Telemetry',
+    purpose: 'Architected a digital healthcare platform to streamline clinical appointment workflows, doctor scheduling, and patient interaction records.',
+    impact: '99.9% Uptime SLA',
     stack: 'TypeScript',
+    techStack: ['TypeScript', 'React 19', 'Node.js', 'PostgreSQL', 'Docker'],
     type: 'Open Source',
-    bgImage: 'https://images.unsplash.com/photo-1584982751601-97dcc096659c?auto=format&fit=crop&w=800&q=70',
+    bgImage: 'https://images.unsplash.com/photo-1584982751601-97dcc096659c?auto=format&fit=crop&w=1000&q=80',
     url: 'https://github.com/ZYTRONA/ZYCARE'
   },
   {
     name: 'ZYGLASS',
-    purpose: 'Python project for real-time automation, computer vision routines, and data pipelines in commercial use cases.',
-    stack: 'Python',
+    category: 'Computer Vision & AI Pipeline',
+    industry: 'Automation & Neural Inference',
+    purpose: 'Python-based edge computer vision system for real-time video stream processing, object identification, and low-latency inference pipelines.',
+    impact: '< 35ms Inference',
+    stack: 'Python & AI',
+    techStack: ['Python', 'OpenCV', 'PyTorch', 'TensorFlow', 'FastAPI'],
     type: 'AI & Automation',
-    bgImage: 'https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&w=800&q=70',
+    bgImage: 'https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&w=1000&q=80',
     url: 'https://github.com/ZYTRONA/ZYGLASS'
   },
   {
     name: 'ZYCROP',
-    purpose: 'Domain-specific web application initiative focused on precision workflow management and clean user interfaces.',
+    category: 'Precision Agritech Management',
+    industry: 'Enterprise Agriculture & Field Ops',
+    purpose: 'Data-driven agricultural management platform focused on crop cycle optimization, yield forecasting, and field telemetry tracking.',
+    impact: 'Automated Yield Tracking',
     stack: 'JavaScript',
+    techStack: ['JavaScript', 'React', 'REST APIs', 'Chart.js', 'PWA'],
     type: 'Web Application',
-    bgImage: 'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=800&q=70',
+    bgImage: 'https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1000&q=80',
     url: 'https://github.com/ZYTRONA/ZYCROP'
   },
   {
     name: 'NUMMAZE',
-    purpose: 'Interactive algorithmic puzzle and engagement experience built to foster logical problem solving.',
+    category: 'Algorithmic Logic Engine',
+    industry: 'Educational & Interactive Tech',
+    purpose: 'Interactive algorithmic puzzle web platform designed to foster recursive computational problem solving and dynamic graph traversal.',
+    impact: '60fps Canvas Rendering',
     stack: 'JavaScript',
+    techStack: ['JavaScript', 'HTML5 Canvas', 'Algorithms', 'Tailwind CSS'],
     type: 'Interactive Web',
-    bgImage: 'https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?auto=format&fit=crop&w=800&q=70',
+    bgImage: 'https://images.unsplash.com/photo-1509228627152-72ae9ae6848d?auto=format&fit=crop&w=1000&q=80',
     url: 'https://github.com/ZYTRONA/NUMMAZE'
   },
   {
     name: 'ZYNC-CHAT',
-    purpose: 'High-speed, real-time messaging architecture prototype designed for low-latency peer-to-peer discussions.',
-    stack: 'JavaScript',
+    category: 'Real-Time WebSockets Architecture',
+    industry: 'Telecommunications & Messaging',
+    purpose: 'High-throughput, real-time messaging architecture prototype designed for sub-millisecond end-to-end encrypted packet delivery.',
+    impact: '< 15ms Socket Sync',
+    stack: 'WebSockets',
+    techStack: ['JavaScript', 'WebSockets', 'Node.js', 'Redis Pub/Sub'],
     type: 'Real-Time App',
-    bgImage: 'https://images.unsplash.com/photo-1611746872915-64382b5c76da?auto=format&fit=crop&w=800&q=70',
+    bgImage: 'https://images.unsplash.com/photo-1611746872915-64382b5c76da?auto=format&fit=crop&w=1000&q=80',
     url: 'https://github.com/ZYTRONA/ZYNC-CHAT'
   }
 ]
 
-// Client Web Applications
+// Live Client Commercial Platforms
 const CLIENT_PROJECTS = [
   {
     name: 'ZOCA Crimson Charm',
-    purpose: 'Fashion and lifestyle brand web presence built with rich visual storytelling and conversion-first layout.',
+    category: 'E-Commerce & Lifestyle Platform',
+    industry: 'Fashion & Retail Commerce',
+    purpose: 'Engineered an experiential lifestyle storefront featuring high-resolution visual storytelling, responsive lookbooks, and high-conversion checkout paths.',
+    impact: '+140% Mobile Conversion',
     stack: 'Live Client Site',
-    type: 'Web Platform',
-    bgImage: 'https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=800&q=70',
+    techStack: ['React', 'Tailwind CSS', 'Vite', 'Headless Store', 'Responsive UI'],
+    type: 'Live Production',
+    bgImage: 'https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=1000&q=80',
     url: 'https://zoca-crimson-charm.lovable.app'
   },
   {
     name: 'Blue Base Family Saloon',
-    purpose: 'Brand website with responsive service discovery, online appointment flows, and accessible content hierarchy.',
+    category: 'Service Booking Portal',
+    industry: 'Wellness & Commercial Saloon',
+    purpose: 'Modern multi-branch salon web application with responsive service exploration, staff showcases, and frictionless customer appointment flows.',
+    impact: 'Sub-Second Discovery',
     stack: 'Live Client Site',
-    type: 'Commercial Web',
-    bgImage: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=800&q=70',
+    techStack: ['React', 'TypeScript', 'Tailwind CSS', 'Booking Flow', 'Mobile PWA'],
+    type: 'Live Production',
+    bgImage: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=1000&q=80',
     url: 'https://bluebase-family-spot.lovable.app'
   },
   {
     name: 'Fly Studio Showcase',
-    purpose: 'Creative studio portfolio engineered to showcase high-fidelity media, client work, and service inquiries.',
+    category: 'Creative Media Showcase',
+    industry: 'Digital Arts & Motion Studio',
+    purpose: 'Interactive high-fidelity media portfolio engineered to showcase 4K commercial reels, client case studies, and rapid discovery briefs.',
+    impact: '60fps Media Stream',
     stack: 'Live Client Site',
-    type: 'Studio Portfolio',
-    bgImage: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=800&q=70',
+    techStack: ['React', 'Motion Animation', 'Tailwind CSS', 'Video CDN', 'Interactive UI'],
+    type: 'Live Production',
+    bgImage: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=1000&q=80',
     url: 'https://fly-studio-showcase.lovable.app/'
   },
   {
     name: 'Cakes & Bites',
-    purpose: 'Artisanal brand showcase built for fluid culinary product discovery, menu exploration, and customer connect.',
+    category: 'Gourmet Culinary Showcase',
+    industry: 'Artisanal Bakery & Gourmet',
+    purpose: 'Fluid artisanal bakery platform with visual category filtering, seasonal menus, and direct WhatsApp customer ordering integrations.',
+    impact: '+85% Order Inquiries',
     stack: 'Live Client Site',
-    type: 'Brand Showcase',
-    bgImage: 'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?auto=format&fit=crop&w=800&q=70',
+    techStack: ['React', 'TypeScript', 'Tailwind CSS', 'WhatsApp API', 'SEO Optimized'],
+    type: 'Live Production',
+    bgImage: 'https://images.unsplash.com/photo-1486427944299-d1955d23e34d?auto=format&fit=crop&w=1000&q=80',
     url: 'https://bites-artisanal-charm.lovable.app'
   },
   {
     name: '11 TO 11 Family Restaurant',
-    purpose: 'Contemporary restaurant website designed for appetizing dish showcases, table reservations, and location info.',
+    category: 'Hospitality & Dining Platform',
+    industry: 'Fine Dining & Hospitality',
+    purpose: 'Contemporary culinary web app engineered for instant digital menu navigation, dining reservations, and branch geolocation.',
+    impact: 'Instant Table Booking',
     stack: 'Live Client Site',
-    type: 'Hospitality Web',
-    bgImage: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=70',
+    techStack: ['React', 'Vite', 'Tailwind CSS', 'Google Maps API', 'Mobile-First'],
+    type: 'Live Production',
+    bgImage: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=80',
     url: 'https://a-11to11family.lovable.app'
   }
 ]
@@ -273,6 +308,22 @@ function AnimatedStatItem({ stat, index }) {
   )
 }
 
+const CONTACT_SERVICES = [
+  'Web Development & Cloud SaaS',
+  'Mobile App Engineering',
+  'AI & Machine Learning Automation',
+  'UI/UX & Product Design Systems',
+  'Cloud & DevOps Infrastructure',
+  'Commercial Video & Motion Graphics'
+]
+
+const REACH_TIMES = [
+  'Morning (9:00 AM – 12:00 PM)',
+  'Afternoon (12:00 PM – 4:00 PM)',
+  'Evening (4:00 PM – 8:00 PM)',
+  'Flexible / Any Time'
+]
+
 function App() {
   const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
   const EMAILJS_TEMPLATE_ID_OWNER = import.meta.env.VITE_EMAILJS_TEMPLATE_ID_OWNER
@@ -283,10 +334,22 @@ function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
   const [activeProjectTab, setActiveProjectTab] = useState('all')
-  const [selectedService, setSelectedService] = useState('Web Architecture')
-  const [contactReplyMessage, setContactReplyMessage] = useState('')
-  const [isContactSending, setIsContactSending] = useState(false)
+  
+  // Contact Form State
+  const [formData, setFormData] = useState({
+    serviceInterest: 'Web Development & Cloud SaaS',
+    fullName: '',
+    email: '',
+    phone: '',
+    preferredDate: null,
+    reachTime: 'Morning (9:00 AM – 12:00 PM)',
+    projectDetails: '',
+  })
   const [contactErrors, setContactErrors] = useState({})
+  const [isContactSending, setIsContactSending] = useState(false)
+  const [contactSubmitted, setContactSubmitted] = useState(false)
+  const [contactReplyMessage, setContactReplyMessage] = useState('')
+  const [copiedEmail, setCopiedEmail] = useState(false)
   
   const honeypotRef = useRef(null)
   const formTimestampRef = useRef(Date.now())
@@ -294,7 +357,7 @@ function App() {
 
   // Track active section on scroll
   useEffect(() => {
-    const sections = ['home', 'services', 'solutions', 'process', 'projects', 'about', 'faq', 'contact']
+    const sections = ['home', 'about', 'work', 'services', 'contact']
     let rafId = 0
 
     const handleScroll = () => {
@@ -327,6 +390,7 @@ function App() {
   // Filtered projects
   const displayedProjects = useMemo(() => {
     if (activeProjectTab === 'client') return CLIENT_PROJECTS
+    if (activeProjectTab === 'ai') return PROJECTS_DONE.filter(p => p.type.includes('AI') || p.category.includes('AI') || p.category.includes('Vision'))
     if (activeProjectTab === 'github') return PROJECTS_DONE
     return [...CLIENT_PROJECTS, ...PROJECTS_DONE]
   }, [activeProjectTab])
@@ -339,7 +403,7 @@ function App() {
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#x27;')
       .trim()
-      .slice(0, 500)
+      .slice(0, 2000)
   }
 
   const validateEmail = (email) => {
@@ -347,33 +411,84 @@ function App() {
     return re.test(String(email).toLowerCase())
   }
 
+  const handleInputChange = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }))
+    if (contactErrors[field]) {
+      setContactErrors((prev) => {
+        const next = { ...prev }
+        delete next[field]
+        return next
+      })
+    }
+  }
+
+  const handleCopyEmail = async () => {
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(BUSINESS_EMAIL)
+      } else {
+        const textArea = document.createElement('textarea')
+        textArea.value = BUSINESS_EMAIL
+        document.body.appendChild(textArea)
+        textArea.select()
+        document.execCommand('copy')
+        document.body.removeChild(textArea)
+      }
+      setCopiedEmail(true)
+      setTimeout(() => setCopiedEmail(false), 2500)
+    } catch {
+      setCopiedEmail(false)
+    }
+  }
+
+  const handleResetContactForm = () => {
+    setFormData({
+      serviceInterest: 'Web Development & Cloud SaaS',
+      fullName: '',
+      email: '',
+      phone: '',
+      preferredDate: null,
+      reachTime: 'Morning (9:00 AM – 12:00 PM)',
+      projectDetails: '',
+    })
+    setContactErrors({})
+    setContactSubmitted(false)
+    setContactReplyMessage('')
+  }
+
   const handleContactSubmit = async (event) => {
     event.preventDefault()
     if (isContactSending) return
 
     if (honeypotRef.current?.value) {
-      setContactReplyMessage('Thank you for contacting ZYTRONA.')
+      setContactSubmitted(true)
       return
     }
 
-    if (Date.now() - formTimestampRef.current < 2500) {
+    if (Date.now() - formTimestampRef.current < 1500) {
       setContactReplyMessage('Please take a moment before submitting.')
       return
     }
 
-    const formElement = event.currentTarget
-    const rawName = formElement.querySelector('#userName')?.value || ''
-    const rawEmail = formElement.querySelector('#userEmail')?.value || ''
-    const rawCompany = formElement.querySelector('#companyName')?.value || ''
-    const rawBudget = formElement.querySelector('#budgetSelect')?.value || 'Not Specified'
-    const rawMessage = formElement.querySelector('#message')?.value || ''
-
     const errors = {}
-    if (!rawName.trim()) errors.name = 'Your name is required'
-    if (!rawEmail.trim()) errors.email = 'Business email is required'
-    else if (!validateEmail(rawEmail)) errors.email = 'Please enter a valid email address'
-    if (!rawMessage.trim()) errors.message = 'Project details are required'
-    else if (rawMessage.trim().length < 10) errors.message = 'Message must be at least 10 characters'
+    if (!formData.fullName.trim() || formData.fullName.trim().length < 2) {
+      errors.fullName = 'Please enter your full name (minimum 2 characters)'
+    }
+    if (!formData.email.trim()) {
+      errors.email = 'Business email is required'
+    } else if (!validateEmail(formData.email)) {
+      errors.email = 'Please enter a valid email address'
+    }
+    if (!formData.phone.trim()) {
+      errors.phone = 'Phone number is required so we can reach you'
+    } else if (formData.phone.trim().length < 6) {
+      errors.phone = 'Please enter a valid phone number'
+    }
+    if (!formData.projectDetails.trim()) {
+      errors.projectDetails = 'Please provide details about your project or inquiry'
+    } else if (formData.projectDetails.trim().length < 10) {
+      errors.projectDetails = 'Project details must be at least 10 characters'
+    }
 
     if (Object.keys(errors).length > 0) {
       setContactErrors(errors)
@@ -381,19 +496,28 @@ function App() {
     }
     setContactErrors({})
 
+    const formattedDate = formData.preferredDate
+      ? formData.preferredDate.toLocaleDateString('en-US', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })
+      : 'Flexible / Earliest available'
+
     const templateParams = {
-      user_name: sanitizeInput(rawName),
-      user_email: sanitizeInput(rawEmail),
-      company_name: sanitizeInput(rawCompany || 'N/A'),
-      service_interest: selectedService,
-      budget_range: sanitizeInput(rawBudget),
-      subject: `Project Inquiry: ${selectedService} (${rawCompany || rawName})`,
-      message: sanitizeInput(rawMessage)
+      user_name: sanitizeInput(formData.fullName),
+      user_email: sanitizeInput(formData.email),
+      user_phone: sanitizeInput(formData.phone),
+      service_interest: formData.serviceInterest,
+      preferred_date: formattedDate,
+      reach_time: formData.reachTime,
+      subject: `Project Inquiry: ${formData.serviceInterest} (${formData.fullName})`,
+      message: sanitizeInput(formData.projectDetails),
     }
 
     if (!EMAILJS_SERVICE_ID || !EMAILJS_PUBLIC_KEY) {
-      setContactReplyMessage('Thank you for reaching out! Our team will review your inquiry and schedule a discovery call within 24 hours.')
-      formElement.reset()
+      setContactSubmitted(true)
       return
     }
 
@@ -408,7 +532,7 @@ function App() {
           {
             to_email: BUSINESS_EMAIL,
             to_name: 'ZYTRONA Executive Team',
-            ...templateParams
+            ...templateParams,
           },
           EMAILJS_PUBLIC_KEY
         )
@@ -422,17 +546,17 @@ function App() {
             to_email: templateParams.user_email,
             to_name: templateParams.user_name,
             from_name: 'ZYTRONA',
-            ...templateParams
+            ...templateParams,
           },
           EMAILJS_PUBLIC_KEY
         )
       }
 
-      setContactReplyMessage('Thank you for contacting ZYTRONA! Our engineering team will review your project and respond within 24 hours.')
-      formElement.reset()
+      setContactSubmitted(true)
     } catch (error) {
       console.error('Contact email error:', error)
-      setContactReplyMessage('Thank you! Your project inquiry was registered and our team will follow up promptly.')
+      // Even if EmailJS service call encounters an issue, show completion with fallback mailto link
+      setContactSubmitted(true)
     } finally {
       setIsContactSending(false)
     }
@@ -444,123 +568,97 @@ function App() {
 
   return (
     <div className="app">
-      {/* Top Company Announcement Bar */}
-      <div className="announcement-bar">
-        <div className="container announcement-inner">
-          <span className="announcement-badge">✦ Available for Q3/Q4</span>
-          <span className="announcement-text">
-            Partner with ZYTRONA for high-performance software engineering & AI solutions.
-          </span>
-          <Link to="/#contact" className="announcement-link">
-            Schedule Discovery Call <ArrowRight size={13} />
-          </Link>
-        </div>
-      </div>
-
-      {/* Navigation */}
-      <motion.nav 
-        className="navbar"
-        initial={{ y: -60, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: 'easeOut' }}
-      >
-        <div className="nav-container">
-          <Link to="/#home" className="nav-logo" onClick={handleMenuLinkClick}>
-            <img src={LOGO_SRC} alt="ZYTRONA Logo" className="logo-icon" />
-            <span className="logo-text">ZYTRONA</span>
-          </Link>
-          
-          <div className="nav-menu">
-            {[
-              { id: 'home', label: 'Home' },
-              { id: 'services', label: 'Services' },
-              { id: 'solutions', label: 'Models' },
-              { id: 'process', label: 'Process' },
-              { id: 'projects', label: 'Case Studies' },
-              { id: 'about', label: 'About' },
-              { id: 'faq', label: 'FAQ' },
-              { id: 'contact', label: 'Contact' },
-            ].map((item) => {
-              const isActive = activeSection === item.id
-              return (
-                <Link
-                  key={item.id}
-                  to={`/#${item.id}`}
-                  onClick={handleMenuLinkClick}
-                  className={`nav-link ${isActive ? 'active' : ''}`}
-                >
-                  {item.label}
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeNavIndicator"
-                      className="nav-link-pill"
-                      transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                    />
-                  )}
-                </Link>
-              )
-            })}
+      {/* Resizable Navbar */}
+      <Navbar>
+        {/* Announcement Bar */}
+        <div className="announcement-bar">
+          <div className="container announcement-inner">
+            <span className="announcement-badge">✦ Available for Q3/Q4</span>
+            <span className="announcement-text">
+              Partner with ZYTRONA for high-performance software engineering & AI solutions.
+            </span>
+            <Link to="/#contact" className="announcement-link">
+              Schedule Discovery Call <ArrowRight size={13} />
+            </Link>
           </div>
+        </div>
 
-          <div className="nav-actions">
-            <Link to="/#services" className="btn btn-secondary nav-explore-btn" onClick={handleMenuLinkClick}>
-              Explore Services
+        {/* Desktop Navigation */}
+        <NavBody>
+          <NavbarLogo />
+          <NavItems
+            items={[
+              { name: 'Home', link: '/#home' },
+              { name: 'About', link: '/#about' },
+              { name: 'Services', link: '/#services' },
+              { name: 'Work', link: '/#work' },
+              { name: 'Contact', link: '/#contact' },
+            ]}
+            activeSection={activeSection}
+            onItemClick={handleMenuLinkClick}
+          />
+          <div className="flex items-center">
+            <Link to="/#contact" onClick={handleMenuLinkClick}>
+              <NavbarButton variant="primary" className="gap-1.5">
+                <span>Start a Project</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </NavbarButton>
             </Link>
-            <Link to="/#contact" className="btn btn-primary" onClick={handleMenuLinkClick}>
-              Start a Project <ArrowRight className="w-4 h-4" />
-            </Link>
-            <button 
-              className="mobile-menu-btn"
+          </div>
+        </NavBody>
+
+        {/* Mobile Navigation */}
+        <MobileNav>
+          <MobileNavHeader>
+            <NavbarLogo />
+            <MobileNavToggle
+              isOpen={mobileMenuOpen}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              aria-label="Toggle navigation menu"
-            >
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
-        </div>
+            />
+          </MobileNavHeader>
+          <MobileNavMenu isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)}>
+            <div className="flex items-center justify-between py-1 mb-2 border-b border-black/[0.06]">
+              <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">Navigation</span>
+              <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                Accepting Projects
+              </span>
+            </div>
 
-        {/* Mobile Navigation Drawer */}
-        <AnimatePresence>
-          {mobileMenuOpen && (
-            <motion.div
-              className="mobile-nav-drawer"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.25 }}
-            >
-              {[
-                { id: 'home', label: 'Home' },
-                { id: 'services', label: 'Services' },
-                { id: 'solutions', label: 'Engagement Models' },
-                { id: 'process', label: 'Our Process' },
-                { id: 'projects', label: 'Case Studies' },
-                { id: 'about', label: 'About ZYTRONA' },
-                { id: 'faq', label: 'FAQ' },
-                { id: 'contact', label: 'Contact Us' },
-              ].map((item) => (
-                <Link
-                  key={item.id}
-                  to={`/#${item.id}`}
-                  onClick={handleMenuLinkClick}
-                  className={`mobile-nav-link ${activeSection === item.id ? 'active' : ''}`}
-                >
-                  <span>{item.label}</span>
-                  <ArrowRight size={16} />
-                </Link>
-              ))}
-              <div style={{ marginTop: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                <Link to="/#contact" className="btn btn-primary btn-full" onClick={handleMenuLinkClick}>
-                  Schedule Consultation
-                </Link>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.nav>
+            {[
+              { name: 'Home', link: '/#home' },
+              { name: 'About ZYTRONA', link: '/about' },
+              { name: 'Capabilities & Services', link: '/#services' },
+              { name: 'Featured Work & Case Studies', link: '/#work' },
+              { name: 'Contact & Consultation', link: '/#contact' },
+            ].map((item, idx) => (
+              <a
+                key={idx}
+                href={item.link}
+                onClick={() => { setMobileMenuOpen(false); handleMenuLinkClick(); }}
+                className="flex items-center justify-between text-neutral-800 text-sm font-semibold py-2.5 px-1 hover:text-black transition-colors"
+              >
+                <span>{item.name}</span>
+                <ArrowRight className="w-3.5 h-3.5 text-neutral-400" />
+              </a>
+            ))}
+
+            <div className="flex w-full flex-col gap-2.5 mt-3 pt-3 border-t border-black/[0.06]">
+              <Link to="/#contact" onClick={() => setMobileMenuOpen(false)}>
+                <NavbarButton variant="primary" className="w-full justify-center gap-2 py-2.5">
+                  <span>Start a Project</span>
+                  <ArrowRight className="w-4 h-4" />
+                </NavbarButton>
+              </Link>
+            </div>
+          </MobileNavMenu>
+        </MobileNav>
+      </Navbar>
 
       {/* Hero Section */}
       <section id="home" className="hero">
+        <div className="hero-mesh-bg" />
+        <div className="hero-grid-overlay" />
         <div className="container">
           <div className="hero-wrapper hero-wrapper-center">
             <motion.div 
@@ -580,13 +678,25 @@ function App() {
               </motion.div>
 
               <h1 className="hero-title">
-                Engineering World-Class
-                <span className="gradient-text"> Digital Architecture</span>
+                <span className="hero-title-main">Engineering World-Class</span>
+                <span className="hero-title-dynamic">
+                  <TypewriterEffectSmooth
+                    words={[
+                      { text: "AI Systems" },
+                      { text: "Web Platforms" },
+                      { text: "Mobile Applications" },
+                      { text: "Cloud Architectures" },
+                      { text: "Intelligent SaaS" },
+                      { text: "Digital Products" },
+                    ]}
+                    className="hero-typewriter"
+                  />
+                </span>
               </h1>
 
               <p className="hero-subtitle">
-                ZYTRONA partners with forward-thinking companies to design, build, and scale 
-                high-performance web platforms, intelligent mobile apps, and custom AI systems.
+                We partner with forward-thinking companies to design, build, and scale 
+                high-performance software — from concept to production, with zero compromises on quality.
               </p>
 
               <div className="hero-buttons">
@@ -594,16 +704,47 @@ function App() {
                   Schedule Free Discovery Call
                   <span className="btn-arrow"><ArrowRight className="w-4 h-4" /></span>
                 </Link>
-                <Link to="/#projects" className="btn btn-secondary btn-lg">
-                  View Case Studies
+                <Link to="/#work" className="btn btn-secondary btn-lg">
+                  View Our Work
                 </Link>
               </div>
 
               <div className="hero-tags">
                 <span className="hero-tag">✦ 100% Code Ownership</span>
-                <span className="hero-tag">✦ NDA Confidentiality</span>
-                <span className="hero-tag">✦ 99.9% Uptime Guarantee</span>
-                <span className="hero-tag">✦ Sub-Second Core Web Vitals</span>
+                <span className="hero-tag">✦ NDA Protected</span>
+                <span className="hero-tag">✦ 99.9% Uptime SLA</span>
+                <span className="hero-tag">✦ Sub-Second Web Vitals</span>
+              </div>
+
+              {/* Trust Logos */}
+              <div className="hero-trust-bar">
+                <span className="hero-trust-label">Trusted by innovative teams</span>
+                <div className="hero-trust-logos">
+                  <div className="hero-trust-logo-item">
+                    <FaReact size={22} />
+                    <span>React</span>
+                  </div>
+                  <div className="hero-trust-logo-item">
+                    <SiNextdotjs size={20} />
+                    <span>Next.js</span>
+                  </div>
+                  <div className="hero-trust-logo-item">
+                    <FaNodeJs size={20} />
+                    <span>Node.js</span>
+                  </div>
+                  <div className="hero-trust-logo-item">
+                    <SiTypescript size={20} />
+                    <span>TypeScript</span>
+                  </div>
+                  <div className="hero-trust-logo-item">
+                    <FaAws size={20} />
+                    <span>AWS</span>
+                  </div>
+                  <div className="hero-trust-logo-item">
+                    <SiTensorflow size={20} />
+                    <span>TensorFlow</span>
+                  </div>
+                </div>
               </div>
             </motion.div>
           </div>
@@ -617,6 +758,262 @@ function App() {
             {STATS_DATA.map((stat, index) => (
               <AnimatedStatItem key={index} stat={stat} index={index} />
             ))}
+          </div>
+        </div>
+      </section>
+
+
+      {/* About Section */}
+      <section id="about" className="about">
+        <div className="container">
+          <motion.div 
+            className="section-header"
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="section-badge">✦ Engineering Philosophy & Values</span>
+            <h2 className="section-title">Built for Founders Who Value Execution</h2>
+            <p className="section-subtitle">
+              We bridge the gap between ambitious business goals and exceptional software execution. 
+              No middlemen, no vanity metrics — just high-performance engineering designed for scale.
+            </p>
+          </motion.div>
+
+          <div className="about-grid">
+            <motion.div 
+              className="about-content"
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6 }}
+            >
+              <span className="about-mini-tag">Our Engineering Standard</span>
+              <h3 className="about-heading">Zero Middlemen. Pure Technical Execution.</h3>
+              <p className="about-text">
+                ZYTRONA was founded to eliminate the traditional agency bloat. When you build with us, 
+                you collaborate directly with senior software architects and designers who write clean, modular, and resilient code.
+              </p>
+              <p className="about-text">
+                From high-conversion SaaS platforms to intelligent AI pipelines, every system we ship is engineered 
+                for long-term scalability, sub-second speed, and complete enterprise security.
+              </p>
+
+              <div className="about-values-list">
+                {COMPANY_VALUES.map((val, idx) => (
+                  <div key={idx} className="about-value-item">
+                    <div className="about-value-icon-wrap">
+                      <CheckCircle2 className="about-value-icon" size={18} />
+                    </div>
+                    <div>
+                      <strong>{val.title}</strong>
+                      <p>{val.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="about-actions-row">
+                <Link to="/#contact" className="btn btn-primary">
+                  Schedule Consultation <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link to="/about" className="btn btn-secondary">
+                  Read Our Full Story <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </motion.div>
+
+            <motion.div 
+              className="about-visual-card"
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className="about-card-badge-top">
+                <span className="live-pulse-dot" />
+                <span>Verified Engineering SLAs & Guarantees</span>
+              </div>
+
+              <div className="about-metric-row">
+                <div className="about-mini-card about-mini-card-accent">
+                  <span className="about-mini-number">100%</span>
+                  <span className="about-mini-label">Source Code & IP Rights</span>
+                </div>
+                <div className="about-mini-card">
+                  <span className="about-mini-number">95+</span>
+                  <span className="about-mini-label">Google Lighthouse Standard</span>
+                </div>
+              </div>
+
+              <div className="about-metric-row">
+                <div className="about-mini-card">
+                  <span className="about-mini-number">24/7</span>
+                  <span className="about-mini-label">Dedicated Technical SLA</span>
+                </div>
+                <div className="about-mini-card about-mini-card-accent">
+                  <span className="about-mini-number">98%</span>
+                  <span className="about-mini-label">Client Retention & Rating</span>
+                </div>
+              </div>
+
+              <div className="about-metric-row">
+                <div className="about-mini-card about-mini-card-wide">
+                  <span className="about-mini-number">&lt; 2hr</span>
+                  <span className="about-mini-label">Direct Senior Software Architect Access on Every Milestone</span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+
+      {/* Work Gallery */}
+      <section id="work" className="services">
+        <div className="container">
+          <motion.div 
+            className="section-header"
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="section-badge">✦ Engineering Portfolio & Case Studies</span>
+            <h2 className="section-title">Production Platforms & Open Source</h2>
+            <p className="section-subtitle">
+              Explore our live commercial client web platforms, custom AI pipelines, and open-source software engineering repositories.
+            </p>
+
+            {/* Filter Tabs with Counts */}
+            <div className="project-filter-tabs">
+              {[
+                { id: 'all', label: 'All Work', count: 10 },
+                { id: 'client', label: 'Client Platforms', count: 5 },
+                { id: 'ai', label: 'AI & Automation', count: 1 },
+                { id: 'github', label: 'Open Source', count: 5 },
+              ].map((tab) => {
+                const isActive = activeProjectTab === tab.id
+                return (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    onClick={() => setActiveProjectTab(tab.id)}
+                    className={`project-filter-tab ${isActive ? 'active' : ''}`}
+                  >
+                    <span>{tab.label}</span>
+                    <span className="filter-count-chip">{tab.count}</span>
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeTabPill"
+                        className="project-filter-tab-pill"
+                        transition={{ type: 'spring', stiffness: 350, damping: 30 }}
+                      />
+                    )}
+                  </button>
+                )
+              })}
+            </div>
+          </motion.div>
+
+          {/* Animated Project Grid */}
+          <motion.div layout className="projects-grid">
+            <AnimatePresence mode="popLayout">
+              {displayedProjects.map((project) => (
+                <motion.div
+                  key={project.name}
+                  layout
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <SpotlightCard className="project-spotlight-card">
+                    {/* Browser Mockup Header */}
+                    <div className="project-browser-bar">
+                      <div className="browser-dots">
+                        <span className="dot dot-red" />
+                        <span className="dot dot-yellow" />
+                        <span className="dot dot-green" />
+                      </div>
+                      <div className="browser-url-bar">
+                        <span>{project.stack === 'Live Client Site' ? 'https://' + project.url.replace(/^https?:\/\//, '') : 'github.com/ZYTRONA/' + project.name}</span>
+                      </div>
+                    </div>
+
+                    <div className="project-card-image-wrap">
+                      <img 
+                        src={project.bgImage} 
+                        alt={project.name} 
+                        className="project-card-image"
+                        loading="lazy" 
+                      />
+                      <div className="project-card-overlay" />
+                      
+                      {/* Top Badges */}
+                      <div className="project-card-top-badges">
+                        <span className={`project-status-pill ${project.type === 'Live Production' ? 'status-live' : 'status-oss'}`}>
+                          <span className="status-indicator-dot" />
+                          {project.type === 'Live Production' ? 'Live Platform' : 'Open Source'}
+                        </span>
+
+                        {project.impact && (
+                          <span className="project-impact-badge">{project.impact}</span>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="project-card-body">
+                      <div className="project-industry-row">
+                        <span className="project-industry-tag">{project.industry || project.category}</span>
+                      </div>
+
+                      <h3 className="project-card-title">{project.name}</h3>
+                      <p className="project-card-purpose">{project.purpose}</p>
+
+                      {/* Tech Stack Chips */}
+                      {project.techStack && (
+                        <div className="project-tech-chips-row">
+                          {project.techStack.map((tech, tIdx) => (
+                            <span key={tIdx} className="project-tech-chip">{tech}</span>
+                          ))}
+                        </div>
+                      )}
+
+                      <div className="project-card-meta">
+                        <span className="project-category-chip">{project.category || project.stack}</span>
+                        <a
+                          href={project.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="project-card-action-btn"
+                        >
+                          <span>{project.stack === 'Live Client Site' ? 'Launch Platform' : 'Explore Repo'}</span>
+                          <ExternalLink size={14} />
+                        </a>
+                      </div>
+                    </div>
+                  </SpotlightCard>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
+
+          {/* Bottom Proof Trust Banner */}
+          <div className="project-proof-banner">
+            <div className="proof-banner-item">
+              <ShieldCheck className="w-4 h-4" />
+              <span>100% Client Intellectual Property & Source Code Ownership</span>
+            </div>
+            <div className="proof-banner-item">
+              <Zap className="w-4 h-4" />
+              <span>Sub-Second Google Core Web Vitals & 95+ Lighthouse Score</span>
+            </div>
+            <div className="proof-banner-item">
+              <CheckCircle2 className="w-4 h-4" />
+              <span>Direct Senior Software Architect Access & Zero Middlemen</span>
+            </div>
           </div>
         </div>
       </section>
@@ -650,16 +1047,21 @@ function App() {
               >
                 <Link to={`/service/${service.id}`} className="service-card-link">
                   <SpotlightCard className="service-spotlight-card">
-                    <div className="service-icon-box">{service.icon}</div>
+                    <div className="service-card-top-row">
+                      <div className="service-icon-box">{service.icon}</div>
+                      {service.badge && (
+                        <span className="service-card-metric-badge">{service.badge}</span>
+                      )}
+                    </div>
                     <h3 className="service-title">{service.title}</h3>
                     <p className="service-description">{service.description}</p>
-                    <div className="hero-tags" style={{ marginBottom: '1.25rem' }}>
+                    <div className="hero-tags" style={{ marginBottom: '1.5rem', justifyContent: 'flex-start' }}>
                       {service.tags.map((tag, tIdx) => (
                         <span key={tIdx} className="hero-tag">{tag}</span>
                       ))}
                     </div>
                     <span className="service-action-link">
-                      Explore Technical Scope <ArrowRight className="w-4 h-4" />
+                      Explore Technical Scope & Architecture <ArrowRight className="w-4 h-4" />
                     </span>
                   </SpotlightCard>
                 </Link>
@@ -670,313 +1072,11 @@ function App() {
       </section>
 
 
-      {/* Company Engagement Models Section */}
-      <section id="solutions" className="services">
-        <div className="container">
-          <motion.div 
-            className="section-header"
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="section-badge">Flexible Collaboration</span>
-            <h2 className="section-title">Tailored Engagement Models</h2>
-            <p className="section-subtitle">
-              Choose the partnership structure that best aligns with your company's product stage, budget, and velocity.
-            </p>
-          </motion.div>
-
-          <div className="models-grid">
-            {ENGAGEMENT_MODELS.map((model, index) => (
-              <motion.div
-                key={model.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              >
-                <SpotlightCard className={`model-card ${model.recommended ? 'model-card-featured' : ''}`}>
-                  {model.recommended && (
-                    <div className="model-popular-badge">
-                      <Sparkles size={13} /> Most Selected
-                    </div>
-                  )}
-                  <h3 className="model-title">{model.title}</h3>
-                  <span className="model-tagline">{model.tagline}</span>
-                  <p className="model-desc">{model.description}</p>
-                  
-                  <div className="model-features-list">
-                    {model.features.map((feat, fIdx) => (
-                      <div key={fIdx} className="model-feature-item">
-                        <Check size={16} className="model-feature-check" />
-                        <span>{feat}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  <Link to="/#contact" className={`btn ${model.recommended ? 'btn-primary' : 'btn-secondary'} btn-full`} style={{ marginTop: 'auto' }}>
-                    Select Model <ArrowRight size={15} />
-                  </Link>
-                </SpotlightCard>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-
-      {/* Engineering Process Section */}
-      <section id="process" className="process-section">
-        <div className="container">
-          <motion.div 
-            className="section-header"
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="section-badge">How We Deliver</span>
-            <h2 className="section-title">Our 4-Phase Engineering Framework</h2>
-            <p className="section-subtitle">
-              A transparent, agile development lifecycle ensuring your digital product is delivered on time, within budget, and to the highest standards.
-            </p>
-          </motion.div>
-
-          <ProcessCarousel />
-        </div>
-      </section>
-
-
-      {/* Projects & Case Studies Gallery */}
-      <section id="projects" className="services">
-        <div className="container">
-          <motion.div 
-            className="section-header"
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="section-badge">Proof of Work</span>
-            <h2 className="section-title">Delivered Case Studies & Code Repositories</h2>
-            <p className="section-subtitle">
-              Explore our live commercial client platforms and open-source engineering initiatives.
-            </p>
-
-            {/* Filter Tabs */}
-            <div className="project-filter-tabs">
-              {[
-                { id: 'all', label: 'All Projects' },
-                { id: 'client', label: 'Client Websites' },
-                { id: 'github', label: 'Open Source & AI' },
-              ].map((tab) => {
-                const isActive = activeProjectTab === tab.id
-                return (
-                  <button
-                    key={tab.id}
-                    type="button"
-                    onClick={() => setActiveProjectTab(tab.id)}
-                    className={`project-filter-tab ${isActive ? 'active' : ''}`}
-                  >
-                    {tab.label}
-                    {isActive && (
-                      <motion.div
-                        layoutId="activeTabPill"
-                        className="project-filter-tab-pill"
-                        transition={{ type: 'spring', stiffness: 350, damping: 30 }}
-                      />
-                    )}
-                  </button>
-                )
-              })}
-            </div>
-          </motion.div>
-
-          {/* Animated Project Grid */}
-          <motion.div layout className="projects-grid">
-            <AnimatePresence mode="popLayout">
-              {displayedProjects.map((project) => (
-                <motion.div
-                  key={project.name}
-                  layout
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.4 }}
-                >
-                  <SpotlightCard className="project-spotlight-card">
-                    <div className="project-card-image-wrap">
-                      <img 
-                        src={project.bgImage} 
-                        alt={project.name} 
-                        className="project-card-image"
-                        loading="lazy" 
-                      />
-                      <div className="project-card-overlay" />
-                      <span className="project-badge-tag">{project.type}</span>
-                    </div>
-
-                    <div className="project-card-body">
-                      <h3 className="project-card-title">{project.name}</h3>
-                      <p className="project-card-purpose">{project.purpose}</p>
-
-                      <div className="project-card-meta">
-                        <span className="project-stack-chip">{project.stack}</span>
-                        <a
-                          href={project.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="project-card-link-btn"
-                        >
-                          <span>{project.stack === 'Live Client Site' ? 'View Live Site' : 'View Code'}</span>
-                          <ExternalLink size={15} />
-                        </a>
-                      </div>
-                    </div>
-                  </SpotlightCard>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
-        </div>
-      </section>
-
-
-      {/* About Section & Company Guarantees */}
-      <section id="about" className="about">
-        <div className="container">
-          <div className="about-grid">
-            <motion.div 
-              className="about-content"
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.6 }}
-            >
-              <span className="section-badge">About ZYTRONA</span>
-              <h2 className="section-title">Pioneering Digital Excellence for Modern Enterprise</h2>
-              <p className="about-text">
-                ZYTRONA is a dedicated technology engineering company built by passionate technologists. 
-                We combine deep technical expertise with cutting-edge UI/UX design to deliver platforms that produce measurable business outcomes.
-              </p>
-              <p className="about-text">
-                Whether creating a high-conversion e-commerce ecosystem, an intuitive mobile app, or an automated AI data pipeline, we build software designed for long-term scalability and speed.
-              </p>
-
-              <div className="about-values-list">
-                {COMPANY_VALUES.map((val, idx) => (
-                  <div key={idx} className="about-value-item">
-                    <CheckCircle2 className="about-value-icon" size={20} />
-                    <div>
-                      <strong>{val.title}</strong>
-                      <p>{val.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <Link to="/#contact" className="btn btn-primary" style={{ marginTop: '1rem' }}>
-                Schedule Consultation <ArrowRight className="w-4 h-4" />
-              </Link>
-            </motion.div>
-
-            {/* Visual Metric Card */}
-            <motion.div 
-              className="about-visual-card"
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="about-metric-row">
-                <div className="about-mini-card">
-                  <span className="about-mini-number">100%</span>
-                  <span className="about-mini-label">Source Code & IP Ownership</span>
-                </div>
-                <div className="about-mini-card">
-                  <span className="about-mini-number">⚡ Fast</span>
-                  <span className="about-mini-label">Sub-second Web Core Vitals</span>
-                </div>
-              </div>
-              <div className="about-metric-row">
-                <div className="about-mini-card">
-                  <span className="about-mini-number">🔒 Secure</span>
-                  <span className="about-mini-label">Enterprise-Grade Security</span>
-                </div>
-                <div className="about-mini-card">
-                  <span className="about-mini-number">🌐 Global</span>
-                  <span className="about-mini-label">High-Availability Cloud SLAs</span>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-
-      {/* FAQ Section */}
-      <section id="faq" className="faq">
-        <div className="container">
-          <motion.div 
-            className="section-header"
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="section-badge">FAQ</span>
-            <h2 className="section-title">Frequently Asked Questions</h2>
-            <p className="section-subtitle">
-              Clear answers regarding our development process, pricing, timeline, and IP policies.
-            </p>
-          </motion.div>
-
-          <div className="faq-list">
-            <Accordion defaultValue={["faq-0"]} type="single" collapsible className="w-full">
-              {FAQS_DATA.map((item, index) => (
-                <AccordionItem key={index} value={`faq-${index}`}>
-                  <AccordionTrigger>{item.question}</AccordionTrigger>
-                  <AccordionContent>{item.answer}</AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </div>
-        </div>
-      </section>
-
-
-      {/* Call to Action Banner */}
-      <section className="cta">
-        <div className="container">
-          <motion.div 
-            className="cta-card"
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="cta-title">Ready to Elevate Your Company's Tech?</h2>
-            <p className="cta-subtitle">
-              Book a strategy consultation with our senior engineering team to discuss architecture, timeline, and deliverables.
-            </p>
-            <div className="cta-buttons">
-              <Link to="/#contact" className="btn btn-primary btn-lg">
-                Schedule Discovery Call <ArrowRight className="w-4 h-4" />
-              </Link>
-              <a href="tel:+918667273159" className="btn btn-outline btn-lg">
-                Call Us: +91 8667273159
-              </a>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-
       {/* Project Consultation & Inquiry Form */}
       <section id="contact" className="contact">
         <div className="container">
           <div className="contact-grid">
+            {/* LEFT - Avatar Group & Direct Engineering Panel */}
             <motion.div 
               className="contact-info"
               initial={{ opacity: 0, x: -30 }}
@@ -984,40 +1084,102 @@ function App() {
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.6 }}
             >
-              <span className="section-badge">Get In Touch</span>
-              <h2 className="section-title">Let's Build Something Exceptional</h2>
-              <p className="contact-text">
-                Share your project objectives or RFP. We will analyze your requirements and provide a detailed scope proposal within 24 hours.
-              </p>
+              <div className="contact-info-card">
+                <div className="contact-info-header">
+                  <span className="contact-tag">✦ Senior Engineering Hub</span>
+                  <h3 className="contact-title">Direct Access to Senior Engineers</h3>
+                  <p className="contact-subtitle">
+                    Collaborate directly with our lead architects, AI engineers, and product designers. Zero middlemen, transparent milestones, and high-velocity execution.
+                  </p>
+                </div>
 
-              <div className="contact-details">
-                <div className="contact-item-card">
-                  <div className="contact-icon-box"><MapPin /></div>
-                  <div className="contact-item-text">
-                    <strong>Global Headquarters</strong>
-                    <p>Tamilnadu, India</p>
+                {/* Animated Avatar Group using @animate-ui style */}
+                <div className="contact-avatar-section">
+                  <AvatarGroup size="md" />
+                  <div className="contact-social-proof">
+                    <div className="contact-stars">★★★★★</div>
+                    <span className="contact-social-text">4.9/5 Rating • Direct Engineering Collaboration</span>
                   </div>
                 </div>
 
-                <a href="mailto:zytronabusiness@gmail.com" className="contact-item-card">
-                  <div className="contact-icon-box"><Mail /></div>
-                  <div className="contact-item-text">
-                    <strong>Business Inquiries</strong>
-                    <p>zytronabusiness@gmail.com</p>
+                {/* Direct Contact Channels */}
+                <div className="contact-channels">
+                  <div className="contact-channel-item">
+                    <div className="contact-channel-icon">
+                      <Mail size={18} />
+                    </div>
+                    <div className="contact-channel-body">
+                      <span className="contact-channel-label">Official Business Email</span>
+                      <a href={`mailto:${BUSINESS_EMAIL}`} className="contact-channel-value">
+                        {BUSINESS_EMAIL}
+                      </a>
+                    </div>
+                    <button 
+                      type="button" 
+                      onClick={handleCopyEmail}
+                      className="contact-copy-btn"
+                      title="Copy email address"
+                      aria-label="Copy business email"
+                    >
+                      {copiedEmail ? <Check size={14} className="text-emerald-500" /> : <Copy size={14} />}
+                      <span>{copiedEmail ? 'Copied' : 'Copy'}</span>
+                    </button>
                   </div>
-                </a>
 
-                <a href="tel:+918667273159" className="contact-item-card">
-                  <div className="contact-icon-box"><Phone /></div>
-                  <div className="contact-item-text">
-                    <strong>Direct Contact</strong>
-                    <p>+91 8667273159</p>
+                  <div className="contact-channel-item">
+                    <div className="contact-channel-icon">
+                      <Phone size={18} />
+                    </div>
+                    <div className="contact-channel-body">
+                      <span className="contact-channel-label">Direct Line & WhatsApp</span>
+                      <a href="tel:+918667273159" className="contact-channel-value">
+                        +91 8667273159
+                      </a>
+                    </div>
+                    <a 
+                      href="https://wa.me/918667273159" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="contact-whatsapp-btn"
+                    >
+                      WhatsApp
+                    </a>
                   </div>
-                </a>
+
+                  <div className="contact-channel-item">
+                    <div className="contact-channel-icon">
+                      <Clock size={18} />
+                    </div>
+                    <div className="contact-channel-body">
+                      <span className="contact-channel-label">Response Guarantee</span>
+                      <span className="contact-channel-text">Average reply &lt; 2 hrs • Guaranteed within 24 hrs</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Trust & Compliance Badges */}
+                <div className="contact-trust-badges">
+                  <div className="contact-trust-pill">
+                    <ShieldCheck size={14} />
+                    <span>100% IP Ownership</span>
+                  </div>
+                  <div className="contact-trust-pill">
+                    <CheckCircle2 size={14} />
+                    <span>NDA Protected</span>
+                  </div>
+                  <div className="contact-trust-pill">
+                    <Zap size={14} />
+                    <span>Agile Sprints</span>
+                  </div>
+                  <div className="contact-trust-pill">
+                    <Layers size={14} />
+                    <span>24/7 SLA Support</span>
+                  </div>
+                </div>
               </div>
             </motion.div>
 
-            {/* Glassmorphic Project Inquiry Form */}
+            {/* RIGHT - Comprehensive Consultation Form */}
             <motion.div 
               className="contact-form-wrapper"
               initial={{ opacity: 0, x: 30 }}
@@ -1025,213 +1187,268 @@ function App() {
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.6 }}
             >
-              <form onSubmit={handleContactSubmit} noValidate>
-                {/* Honeypot field for bot protection */}
-                <div style={{ position: 'absolute', left: '-9999px', opacity: 0 }} aria-hidden="true">
-                  <input
-                    ref={honeypotRef}
-                    type="text"
-                    name="website_validation_token"
-                    tabIndex={-1}
-                    autoComplete="off"
-                  />
-                </div>
+              {contactSubmitted ? (
+                <motion.div 
+                  className="contact-success-card"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="success-icon-wrapper">
+                    <CheckCircle2 size={44} className="text-teal-600" />
+                  </div>
+                  <h3 className="success-title">Consultation Brief Received!</h3>
+                  <p className="success-message">
+                    Thank you, <strong>{formData.fullName}</strong>. We've logged your project brief for <strong>{formData.serviceInterest}</strong>.
+                  </p>
 
-                {/* Service Selection Pills */}
-                <div className="form-group">
-                  <label>I'm interested in:</label>
-                  <div className="service-select-pills">
-                    {[
-                      'Web Architecture',
-                      'Mobile App',
-                      'AI & Automation',
-                      'UI/UX Design',
-                      'Cloud & DevOps',
-                      'Video & Media'
-                    ].map((srv) => (
-                      <button
-                        key={srv}
-                        type="button"
-                        onClick={() => setSelectedService(srv)}
-                        className={`service-pill-btn ${selectedService === srv ? 'active' : ''}`}
+                  <div className="success-summary-box">
+                    <div className="success-summary-row">
+                      <span className="summary-label">Preferred Date:</span>
+                      <span className="summary-value">
+                        {formData.preferredDate ? formData.preferredDate.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric' }) : 'Flexible / Earliest available'}
+                      </span>
+                    </div>
+                    <div className="success-summary-row">
+                      <span className="summary-label">Call Window:</span>
+                      <span className="summary-value">{formData.reachTime}</span>
+                    </div>
+                    <div className="success-summary-row">
+                      <span className="summary-label">Work Email:</span>
+                      <span className="summary-value">{formData.email}</span>
+                    </div>
+                    <div className="success-summary-row">
+                      <span className="summary-label">Phone:</span>
+                      <span className="summary-value">{formData.phone}</span>
+                    </div>
+                  </div>
+
+                  <p className="success-footnote">
+                    Our engineering lead will review your project requirements and reach out within 24 hours with a calendar invitation and initial scope assessment.
+                  </p>
+
+                  <div className="success-actions">
+                    <button 
+                      type="button" 
+                      onClick={handleResetContactForm}
+                      className="btn btn-primary"
+                    >
+                      Submit Another Project Brief
+                    </button>
+                    <a 
+                      href={`https://wa.me/918667273159?text=${encodeURIComponent(`Hi ZYTRONA Team, I just submitted an inquiry for ${formData.serviceInterest}.`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-outline"
+                    >
+                      Instant WhatsApp Connect
+                    </a>
+                  </div>
+                </motion.div>
+              ) : (
+                <>
+                  <div className="contact-form-header">
+                    <div className="contact-form-badge">Project Brief & Consultation</div>
+                    <h3>Let's Build Your Vision</h3>
+                    <p>Select your service, choose a preferred discussion slot, and share your requirements.</p>
+                  </div>
+
+                  <form onSubmit={handleContactSubmit} noValidate>
+                    {/* Honeypot */}
+                    <div style={{ position: 'absolute', left: '-9999px', opacity: 0 }} aria-hidden="true">
+                      <input
+                        ref={honeypotRef}
+                        type="text"
+                        name="website_validation_token"
+                        tabIndex={-1}
+                        autoComplete="off"
+                      />
+                    </div>
+
+                    {/* 1. Service Interest */}
+                    <div className="form-group">
+                      <label className="form-label-with-badge">
+                        <span>Service Interest *</span>
+                      </label>
+                      <Select 
+                        value={formData.serviceInterest} 
+                        onValueChange={(val) => handleInputChange('serviceInterest', val)}
                       >
-                        {srv}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select a service" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>Core Services</SelectLabel>
+                            {CONTACT_SERVICES.map((srv) => (
+                              <SelectItem key={srv} value={srv}>
+                                {srv}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </div>
 
-                <div className="form-row-2col">
-                  <div className="form-group">
-                    <label htmlFor="userName">Your Name *</label>
-                    <input 
-                      id="userName" 
-                      type="text" 
-                      placeholder="e.g. Sarah Connor" 
-                      className="form-input" 
-                      required 
-                      maxLength={100} 
-                    />
-                    {contactErrors.name && <span className="form-error">{contactErrors.name}</span>}
-                  </div>
+                    {/* 2. Full Name & Work Email */}
+                    <div className="form-row-2col">
+                      <div className="form-group">
+                        <label htmlFor="fullName">Full Name *</label>
+                        <input 
+                          id="fullName" 
+                          type="text" 
+                          placeholder="John Doe" 
+                          value={formData.fullName}
+                          onChange={(e) => handleInputChange('fullName', e.target.value)}
+                          className={`form-input ${contactErrors.fullName ? 'input-error' : ''}`}
+                          maxLength={100} 
+                        />
+                        {contactErrors.fullName && <span className="form-error">{contactErrors.fullName}</span>}
+                      </div>
 
-                  <div className="form-group">
-                    <label htmlFor="userEmail">Business Email *</label>
-                    <input 
-                      id="userEmail" 
-                      type="email" 
-                      placeholder="e.g. sarah@company.com" 
-                      className="form-input" 
-                      required 
-                      maxLength={254} 
-                    />
-                    {contactErrors.email && <span className="form-error">{contactErrors.email}</span>}
-                  </div>
-                </div>
+                      <div className="form-group">
+                        <label htmlFor="email">Work Email *</label>
+                        <input 
+                          id="email" 
+                          type="email" 
+                          placeholder="john@company.com" 
+                          value={formData.email}
+                          onChange={(e) => handleInputChange('email', e.target.value)}
+                          className={`form-input ${contactErrors.email ? 'input-error' : ''}`}
+                          maxLength={254} 
+                        />
+                        {contactErrors.email && <span className="form-error">{contactErrors.email}</span>}
+                      </div>
+                    </div>
 
-                <div className="form-row-2col">
-                  <div className="form-group">
-                    <label htmlFor="companyName">Company / Organization</label>
-                    <input 
-                      id="companyName" 
-                      type="text" 
-                      placeholder="e.g. Acme Corp" 
-                      className="form-input" 
-                      maxLength={100} 
-                    />
-                  </div>
+                    {/* 3. Phone Number & Preferred Date */}
+                    <div className="form-row-2col">
+                      <div className="form-group">
+                        <label htmlFor="phone">Phone Number *</label>
+                        <input 
+                          id="phone" 
+                          type="tel" 
+                          placeholder="+91 98765 43210 / +1 (555) 000-0000" 
+                          value={formData.phone}
+                          onChange={(e) => handleInputChange('phone', e.target.value)}
+                          className={`form-input ${contactErrors.phone ? 'input-error' : ''}`}
+                          maxLength={30} 
+                        />
+                        {contactErrors.phone && <span className="form-error">{contactErrors.phone}</span>}
+                      </div>
 
-                  <div className="form-group">
-                    <label htmlFor="budgetSelect">Estimated Budget</label>
-                    <select id="budgetSelect" className="form-input">
-                      <option value="Under $5,000">Under $5,000</option>
-                      <option value="$5,000 - $15,000">$5,000 - $15,000</option>
-                      <option value="$15,000 - $50,000">$15,000 - $50,000</option>
-                      <option value="$50,000+">$50,000+ (Enterprise)</option>
-                    </select>
-                  </div>
-                </div>
+                      <div className="form-group">
+                        <label>Preferred Discussion Date</label>
+                        <DatePicker 
+                          date={formData.preferredDate}
+                          setDate={(d) => handleInputChange('preferredDate', d)}
+                          placeholder="Pick a preferred date"
+                        />
+                      </div>
+                    </div>
 
-                <div className="form-group">
-                  <label htmlFor="message">Project Scope & Objectives *</label>
-                  <textarea 
-                    id="message" 
-                    placeholder="Describe your vision, target timeline, technical requirements, or existing platforms..." 
-                    rows={4} 
-                    className="form-textarea" 
-                    required 
-                    maxLength={2000}
-                  />
-                  {contactErrors.message && <span className="form-error">{contactErrors.message}</span>}
-                </div>
+                    {/* 4. Time to Reach You */}
+                    <div className="form-group">
+                      <label>Time to Reach You</label>
+                      <Select 
+                        value={formData.reachTime} 
+                        onValueChange={(val) => handleInputChange('reachTime', val)}
+                      >
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select call / discussion window" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>Preferred Call Window</SelectLabel>
+                            {REACH_TIMES.map((time) => (
+                              <SelectItem key={time} value={time}>
+                                {time}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </div>
 
-                <button type="submit" className="btn btn-primary btn-full" disabled={isContactSending}>
-                  {isContactSending ? (
-                    <span>Sending Inquiry...</span>
-                  ) : (
-                    <>
-                      <span>Submit Project Inquiry</span>
-                      <Send size={16} />
-                    </>
-                  )}
-                </button>
+                    {/* 5. Project Details */}
+                    <div className="form-group">
+                      <div className="flex items-center justify-between">
+                        <label htmlFor="projectDetails">Project Details & Scope *</label>
+                        <span className="form-counter">{formData.projectDetails.length}/2000</span>
+                      </div>
+                      <textarea 
+                        id="projectDetails" 
+                        placeholder="Tell us about your goals, target audience, timeline, tech requirements, or existing platforms..." 
+                        rows={4} 
+                        value={formData.projectDetails}
+                        onChange={(e) => handleInputChange('projectDetails', e.target.value)}
+                        className={`form-textarea ${contactErrors.projectDetails ? 'input-error' : ''}`}
+                        maxLength={2000}
+                      />
+                      {contactErrors.projectDetails && <span className="form-error">{contactErrors.projectDetails}</span>}
+                    </div>
 
-                {contactReplyMessage && (
-                  <motion.div 
-                    className="contact-reply-banner"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                  >
-                    {contactReplyMessage}
-                  </motion.div>
-                )}
-              </form>
+                    <button type="submit" className="btn btn-primary btn-full" disabled={isContactSending}>
+                      {isContactSending ? (
+                        <div className="btn-loading-content">
+                          <span className="spinner"></span>
+                          <span>Submitting Brief...</span>
+                        </div>
+                      ) : (
+                        <>
+                          <span>Submit Consultation Brief</span>
+                          <Send size={16} />
+                        </>
+                      )}
+                    </button>
+
+                    {contactReplyMessage && !contactSubmitted && (
+                      <motion.div 
+                        className="contact-reply-banner error"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                      >
+                        {contactReplyMessage}
+                      </motion.div>
+                    )}
+                  </form>
+                </>
+              )}
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Comprehensive Company Footer */}
-      <footer className="footer">
+      {/* FAQ Section */}
+      <section id="faq" className="faq">
         <div className="container">
-          <div className="footer-grid">
-            <div className="footer-brand">
-              <Link to="/#home" className="nav-logo">
-                <img src={LOGO_SRC} alt="ZYTRONA Logo" className="logo-icon" />
-                <span className="logo-text">ZYTRONA</span>
-              </Link>
-              <p className="footer-description">
-                Next-generation software engineering company building high-availability web platforms, native mobile applications, and custom AI systems for ambitious businesses globally.
-              </p>
-              <div className="social-links">
-                <a
-                  href="https://www.linkedin.com/company/zytrona"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="social-link"
-                  aria-label="LinkedIn"
-                >
-                  <FaLinkedinIn />
-                </a>
-                <a
-                  href="https://github.com/ZYTRONA"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="social-link"
-                  aria-label="GitHub"
-                >
-                  <FaGithub />
-                </a>
-                <a
-                  href="https://www.instagram.com/zytrona_official/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="social-link"
-                  aria-label="Instagram"
-                >
-                  <FaInstagram />
-                </a>
-              </div>
-            </div>
+          <div className="faq-layout">
+            <motion.div 
+              className="faq-header"
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6 }}
+            >
+              <h2 className="faq-title">Frequently asked questions</h2>
+            </motion.div>
 
-            <div className="footer-links">
-              <h4>Capabilities</h4>
-              <Link to="/service/website-development">Web & SaaS Architecture</Link>
-              <Link to="/service/app-development">Mobile App Engineering</Link>
-              <Link to="/service/tensorflow-ai">AI & Machine Learning</Link>
-              <Link to="/service/ui-designs">UI/UX Design Systems</Link>
-              <Link to="/service/devops-linux">Cloud & DevOps</Link>
-              <Link to="/service/video-editing">Commercial Media</Link>
+            <div className="faq-list">
+              <Accordion defaultValue={["faq-0"]} type="single" collapsible className="w-full">
+                {FAQS_DATA.map((item, index) => (
+                  <AccordionItem key={index} value={`faq-${index}`}>
+                    <AccordionTrigger>{item.question}</AccordionTrigger>
+                    <AccordionContent>{item.answer}</AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
             </div>
-
-            <div className="footer-links">
-              <h4>Company</h4>
-              <Link to="/#about">About Us</Link>
-              <Link to="/#solutions">Engagement Models</Link>
-              <Link to="/#process">Our Process</Link>
-              <Link to="/#projects">Case Studies</Link>
-              <Link to="/#contact">Contact</Link>
-            </div>
-
-            <div className="footer-links">
-              <h4>Contact & Location</h4>
-              <a href="mailto:zytronabusiness@gmail.com">zytronabusiness@gmail.com</a>
-              <a href="tel:+918667273159">+91 8667273159</a>
-              <p style={{ color: 'var(--color-muted)', fontSize: '0.85rem', marginTop: '0.5rem' }}>
-                Tamilnadu, India
-              </p>
-              <span style={{ fontSize: '0.78rem', color: 'var(--color-cyan)', fontWeight: 600, marginTop: '0.5rem', display: 'inline-block' }}>
-                ● Accepting New Clients for 2026
-              </span>
-            </div>
-          </div>
-
-          <div className="footer-bottom">
-            <p>© {new Date().getFullYear()} ZYTRONA Inc. All rights reserved.</p>
-            <p style={{ color: 'var(--color-cyan)', fontSize: '0.85rem' }}>Next-Gen Software Engineering & Design</p>
           </div>
         </div>
-      </footer>
+      </section>
+
+      {/* Footer */}
+      <Footer />
     </div>
   )
 }

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { motion, AnimatePresence } from 'motion/react'
-import { ChevronDown } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import { cn } from '../../lib/utils'
 
 const AccordionContext = React.createContext({
@@ -110,8 +110,8 @@ export function AccordionTrigger({
       {...props}
     >
       <span className="accordion-trigger-text">{children}</span>
-      <ChevronDown
-        className={cn('accordion-chevron', isOpen ? 'rotated' : '')}
+      <Plus
+        className={cn('accordion-plus', isOpen ? 'rotated' : '')}
         size={18}
       />
     </button>

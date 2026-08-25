@@ -1,466 +1,427 @@
 import { useParams, Link } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { motion, AnimatePresence } from 'motion/react'
 import { 
-  FaGlobe, FaMobileAlt, FaVideo, FaGamepad, FaBriefcase, FaLinux, FaPalette, FaBrain,
-  FaBolt, FaLock, FaChartLine, FaFileAlt, FaShoppingCart, FaChartBar, FaSearch, FaClipboardList,
-  FaCode, FaFlask, FaRocket, FaBullseye, FaSyncAlt, FaMobile, FaLink, FaBell, FaLightbulb,
-  FaCogs, FaFilm, FaMagic, FaMusic, FaComments, FaStar, FaBox, FaCube, FaUsers, FaDollarSign,
-  FaVrCardboard, FaUserTie, FaClock, FaCalendarAlt, FaTools, FaCheckCircle, FaGem, FaHandshake,
-  FaDocker, FaCloud, FaShieldAlt, FaServer, FaEye, FaPencilRuler, FaBookOpen, FaUniversalAccess,
-  FaNetworkWired, FaDatabase, FaPython, FaMicrochip,
-  FaReact, FaNodeJs, FaVuejs, FaWordpress, FaShopify, FaApple, FaAndroid, FaAws, FaGitlab, FaJenkins
+  Navbar, 
+  NavBody, 
+  NavItems,
+  NavbarLogo, 
+  NavbarButton 
+} from '@/components/ui/resizable-navbar'
+import { Footer } from '@/components/ui/Footer'
+import { 
+  Globe, 
+  Smartphone, 
+  Cpu, 
+  Palette, 
+  Server, 
+  Video, 
+  ArrowRight, 
+  CheckCircle2, 
+  Zap, 
+  ShieldCheck, 
+  Layers, 
+  Lock, 
+  Clock, 
+  Sparkles, 
+  Phone, 
+  Mail, 
+  MessageSquare, 
+  Check, 
+  Copy, 
+  ChevronDown,
+  Code2,
+  GitBranch,
+  FileCheck,
+  Award,
+  Film
+} from 'lucide-react'
+import { 
+  FaReact, FaNodeJs, FaVuejs, FaWordpress, FaShopify, FaApple, FaAws, FaDocker, 
+  FaPython, FaCheck, FaWhatsapp
 } from 'react-icons/fa'
 import { 
   SiNextdotjs, SiTypescript, SiTailwindcss, SiFlutter, SiKotlin, SiFirebase, SiGraphql, SiMongodb,
-  SiDavinciresolve, SiBlender, SiUnity, SiUnrealengine,
-  SiGodotengine, SiCplusplus, SiFigma, SiSketch, SiInvision, SiFramer,
+  SiDavinciresolve, SiFigma, SiFramer,
   SiTensorflow, SiPytorch, SiKeras, SiOpencv, SiScikitlearn,
-  SiDocker, SiKubernetes, SiTerraform, SiPrometheus, SiSharp
+  SiKubernetes, SiTerraform, SiPrometheus, SiLinux, SiPostgresql, SiRedis
 } from 'react-icons/si'
-import '../App.css'
-const logo = '/Logo.png'
+import '@/App.css'
 
-// Icon mapping for service main icons
-const serviceIcons = {
-  'website-development': <FaGlobe />,
-  'app-development': <FaMobileAlt />,
-  'video-editing': <FaVideo />,
-  'game-development': <FaGamepad />,
-  'freelancing': <FaBriefcase />,
-  'devops-linux': <FaLinux />,
-  'ui-designs': <FaPalette />,
-  'tensorflow-ai': <FaBrain />
-}
-
-// Icon component mapping for dynamic rendering
-const iconMap = {
-  // General icons
-  bolt: <FaBolt />,
-  mobile: <FaMobile />,
-  lock: <FaLock />,
-  palette: <FaPalette />,
-  chartLine: <FaChartLine />,
-  rocket: <FaRocket />,
-  fileAlt: <FaFileAlt />,
-  shoppingCart: <FaShoppingCart />,
-  chartBar: <FaChartBar />,
-  search: <FaSearch />,
-  clipboard: <FaClipboardList />,
-  code: <FaCode />,
-  flask: <FaFlask />,
-  bullseye: <FaBullseye />,
-  sync: <FaSyncAlt />,
-  link: <FaLink />,
-  bell: <FaBell />,
-  lightbulb: <FaLightbulb />,
-  cogs: <FaCogs />,
-  film: <FaFilm />,
-  magic: <FaMagic />,
-  music: <FaMusic />,
-  comments: <FaComments />,
-  star: <FaStar />,
-  box: <FaBox />,
-  cube: <FaCube />,
-  users: <FaUsers />,
-  dollar: <FaDollarSign />,
-  vr: <FaVrCardboard />,
-  userTie: <FaUserTie />,
-  clock: <FaClock />,
-  calendar: <FaCalendarAlt />,
-  tools: <FaTools />,
-  checkCircle: <FaCheckCircle />,
-  gem: <FaGem />,
-  handshake: <FaHandshake />,
-  docker: <FaDocker />,
-  cloud: <FaCloud />,
-  shield: <FaShieldAlt />,
-  server: <FaServer />,
-  eye: <FaEye />,
-  pencilRuler: <FaPencilRuler />,
-  book: <FaBookOpen />,
-  accessible: <FaUniversalAccess />,
-  network: <FaNetworkWired />,
-  database: <FaDatabase />,
-  brain: <FaBrain />,
-  microchip: <FaMicrochip />,
-  // Technology icons
-  react: <FaReact />,
-  nodejs: <FaNodeJs />,
-  vuejs: <FaVuejs />,
-  wordpress: <FaWordpress />,
-  shopify: <FaShopify />,
-  apple: <FaApple />,
-  android: <FaAndroid />,
-  aws: <FaAws />,
-  gitlab: <FaGitlab />,
-  jenkins: <FaJenkins />,
-  nextjs: <SiNextdotjs />,
-  typescript: <SiTypescript />,
-  tailwind: <SiTailwindcss />,
-  flutter: <SiFlutter />,
-  kotlin: <SiKotlin />,
-  firebase: <SiFirebase />,
-  graphql: <SiGraphql />,
-  mongodb: <SiMongodb />,
-  premiere: <FaFilm />,
-  aftereffects: <FaMagic />,
-  davinci: <SiDavinciresolve />,
-  blender: <SiBlender />,
-  unity: <SiUnity />,
-  unreal: <SiUnrealengine />,
-  godot: <SiGodotengine />,
-  cpp: <SiCplusplus />,
-  csharp: <SiSharp />,
-  figma: <SiFigma />,
-  xd: <FaPencilRuler />,
-  sketch: <SiSketch />,
-  invision: <SiInvision />,
-  framer: <SiFramer />,
-  illustrator: <FaPalette />,
-  photoshop: <FaPalette />,
-  tensorflow: <SiTensorflow />,
-  pytorch: <SiPytorch />,
-  keras: <SiKeras />,
-  opencv: <SiOpencv />,
-  sklearn: <SiScikitlearn />,
-  dockerSi: <SiDocker />,
-  kubernetes: <SiKubernetes />,
-  terraform: <SiTerraform />,
-  prometheus: <SiPrometheus />,
-  python: <FaPython />,
-  linux: <FaLinux />
-}
-
-// Helper function to get icon component
-const getIcon = (iconKey) => iconMap[iconKey] || null
-
-const servicesData = {
+const SERVICES_FULL_DATA = {
   'website-development': {
-    title: "Website Development",
-    tagline: "Crafting Digital Experiences That Convert",
-    description: "Build stunning, responsive websites that captivate your audience and drive business growth.",
-    fullDescription: `Our website development services deliver custom, high-performance websites tailored to your business needs. We specialize in creating responsive, SEO-optimized websites that look great on all devices and convert visitors into customers.`,
+    id: 'website-development',
+    icon: <Globe className="w-8 h-8" />,
+    badge: 'Enterprise Web & SaaS Architecture',
+    title: 'Web Development & Cloud SaaS',
+    tagline: 'High-Performance Web Platforms Built for Scale & Conversion',
+    description: 'We engineer lightning-fast, secure, and SEO-optimized web applications and SaaS platforms. Built with modern modular architectures, sub-second latency, and enterprise-grade resilience.',
+    metrics: [
+      { label: 'Lighthouse Score', value: '98/100' },
+      { label: 'Average Page Load', value: '< 0.8s' },
+      { label: 'Uptime Reliability', value: '99.99%' },
+      { label: 'IP Ownership', value: '100%' }
+    ],
     highlights: [
-      { icon: "bolt", title: "Lightning Fast", desc: "Optimized for speed and performance" },
-      { icon: "mobile", title: "Fully Responsive", desc: "Perfect on every device" },
-      { icon: "lock", title: "Secure & Reliable", desc: "Enterprise-grade security" }
+      { icon: <Zap className="w-5 h-5" />, title: 'Sub-Second Vitals', desc: 'Engineered for instant first-contentful paint and top Google Core Web Vitals rankings.' },
+      { icon: <ShieldCheck className="w-5 h-5" />, title: 'Enterprise Security', desc: 'Automated CSRF/XSS protection, rate-limiting, and strict SSL/TLS encryption.' },
+      { icon: <Layers className="w-5 h-5" />, title: 'Modular Architecture', desc: 'Clean micro-frontends and REST/GraphQL APIs for effortless future scaling.' }
     ],
     features: [
-      { title: "Custom Responsive Design", desc: "Tailored designs that adapt beautifully to all screen sizes", icon: "palette" },
-      { title: "SEO Optimization", desc: "Built-in SEO best practices for higher search rankings", icon: "chartLine" },
-      { title: "Performance Optimization", desc: "Blazing fast load times with optimized assets", icon: "rocket" },
-      { title: "CMS Integration", desc: "Easy content management with WordPress, Strapi, or custom CMS", icon: "fileAlt" },
-      { title: "E-commerce Ready", desc: "Full shopping cart and payment gateway integration", icon: "shoppingCart" },
-      { title: "Analytics Setup", desc: "Track user behavior and conversion metrics", icon: "chartBar" }
+      { title: 'Custom React 19 & Next.js Platforms', desc: 'SSR, SSG, and streaming edge rendering for maximum speed and instant page loads.', icon: <Code2 className="w-5 h-5" /> },
+      { title: 'Full-Stack SaaS & Multi-Tenancy', desc: 'Secure user authentication, role-based access control (RBAC), and subscription billing.', icon: <Lock className="w-5 h-5" /> },
+      { title: 'SEO & Technical Optimization', desc: 'Semantic HTML5 structure, automated dynamic OpenGraph metadata, and structured JSON-LD schemas.', icon: <Sparkles className="w-5 h-5" /> },
+      { title: 'Headless CMS & Commerce', desc: 'Seamless integration with Shopify, Strapi, Sanity, and custom REST/GraphQL endpoints.', icon: <Layers className="w-5 h-5" /> },
+      { title: 'Real-Time WebSockets & Analytics', desc: 'Low-latency live data feeds, user behavior tracking, and executive telemetry dashboards.', icon: <Zap className="w-5 h-5" /> },
+      { title: 'Continuous Automated CI/CD', desc: 'Zero-downtime GitHub Actions deployment with automated build tests and branch previews.', icon: <GitBranch className="w-5 h-5" /> }
+    ],
+    deliverables: [
+      'Production-ready, fully commented GitHub / GitLab repository',
+      'Automated CI/CD deployment pipelines with Docker configuration',
+      'Full TypeScript type safety definitions and automated tests',
+      'Comprehensive REST / GraphQL API documentation and architectural blueprint',
+      'Figma design system tokens & responsive component libraries',
+      '100% intellectual property transfer and NDA protection'
     ],
     technologies: [
-      { name: "React", icon: "react" },
-      { name: "Next.js", icon: "nextjs" },
-      { name: "Vue.js", icon: "vuejs" },
-      { name: "WordPress", icon: "wordpress" },
-      { name: "Shopify", icon: "shopify" },
-      { name: "Node.js", icon: "nodejs" },
-      { name: "TypeScript", icon: "typescript" },
-      { name: "Tailwind CSS", icon: "tailwind" }
+      { name: 'React 19', icon: <FaReact size={24} /> },
+      { name: 'Next.js', icon: <SiNextdotjs size={24} /> },
+      { name: 'TypeScript', icon: <SiTypescript size={24} /> },
+      { name: 'Tailwind CSS', icon: <SiTailwindcss size={24} /> },
+      { name: 'Node.js', icon: <FaNodeJs size={24} /> },
+      { name: 'PostgreSQL', icon: <SiPostgresql size={24} /> },
+      { name: 'Redis', icon: <SiRedis size={24} /> },
+      { name: 'AWS Cloud', icon: <FaAws size={24} /> }
     ],
     process: [
-      { step: "Discovery", desc: "Deep dive into your business goals, target audience, and competitors", icon: "search" },
-      { step: "Strategy", desc: "Create a comprehensive plan with sitemap and user journeys", icon: "clipboard" },
-      { step: "Design", desc: "Craft stunning UI/UX designs with your brand identity", icon: "palette" },
-      { step: "Development", desc: "Build with clean, scalable code and modern technologies", icon: "code" },
-      { step: "Testing", desc: "Rigorous QA across all devices and browsers", icon: "flask" },
-      { step: "Launch & Support", desc: "Seamless deployment with ongoing maintenance", icon: "rocket" }
+      { step: '01', title: 'Architecture Discovery', desc: 'We analyze your product vision, target audience, database schemas, and performance requirements.' },
+      { step: '02', title: 'UI/UX Prototyping', desc: 'Designing interactive high-fidelity wireframes and responsive layouts in Figma.' },
+      { step: '03', title: 'Agile Sprint Slices', desc: 'Bi-weekly milestone deliveries with transparent GitHub commits and live staging previews.' },
+      { step: '04', title: 'Security & QA Hardening', desc: 'Rigorous cross-browser stress testing, Lighthouse audits, and penetration testing.' },
+      { step: '05', title: 'Launch & 24/7 Support', desc: 'Zero-downtime deployment, DNS propagation, cloud monitoring, and dedicated post-launch SLA.' }
+    ],
+    faqs: [
+      { q: 'How long does a typical custom web platform take to develop?', a: 'Standard MVP platforms take 3 to 6 weeks, while large-scale multi-tenant enterprise SaaS applications typically range from 6 to 12 weeks with bi-weekly milestone deliverables.' },
+      { q: 'Do we own the full source code and intellectual property?', a: 'Yes, 100%. All repository code, database schemas, Figma design files, and documentation belong completely to your company upon milestone delivery.' },
+      { q: 'How do you ensure optimal page speed and SEO rankings?', a: 'We build with modern Next.js server components, edge caching, image compression, minimal bundle sizing, and strict Core Web Vitals compliance aiming for 95+ Lighthouse scores.' }
     ]
   },
+
   'app-development': {
-    title: "App Development",
-    tagline: "Mobile Solutions That Users Love",
-    description: "Create powerful mobile applications for iOS and Android that deliver exceptional user experiences.",
-    fullDescription: `Transform your ideas into powerful mobile applications. Our expert team develops native and cross-platform apps that engage users, drive retention, and deliver measurable business results.`,
+    id: 'app-development',
+    icon: <Smartphone className="w-8 h-8" />,
+    badge: 'Native & Cross-Platform Mobile Engineering',
+    title: 'Mobile App Engineering',
+    tagline: 'Fluid, 60fps Mobile Applications for iOS & Android',
+    description: 'We build high-performance mobile apps engineered for fluid touch gestures, instant offline data syncing, and frictionless user experiences across all Apple iOS and Google Android devices.',
+    metrics: [
+      { label: 'UI Frame Rate', value: '60 - 120 FPS' },
+      { label: 'App Store Rating', value: '4.9/5 Avg' },
+      { label: 'Crash-Free Rate', value: '99.9%' },
+      { label: 'Code Reusability', value: 'Up to 90%' }
+    ],
     highlights: [
-      { icon: "users", title: "User-Centric", desc: "Designed for engagement" },
-      { icon: "sync", title: "Cross-Platform", desc: "iOS & Android from one codebase" },
-      { icon: "chartLine", title: "Data-Driven", desc: "Built-in analytics & insights" }
+      { icon: <Zap className="w-5 h-5" />, title: 'Native Performance', desc: 'Zero-lag animations, hardware acceleration, and optimized memory usage.' },
+      { icon: <Layers className="w-5 h-5" />, title: 'Offline-First Sync', desc: 'Robust local SQLite/MMKV caching with background cloud reconciliation.' },
+      { icon: <ShieldCheck className="w-5 h-5" />, title: 'Store Compliance', desc: 'Full compliance with Apple App Store & Google Play Store guidelines.' }
     ],
     features: [
-      { title: "Native Development", desc: "Pure iOS (Swift) and Android (Kotlin) apps for best performance", icon: "apple" },
-      { title: "Cross-Platform", desc: "React Native & Flutter for efficient multi-platform deployment", icon: "react" },
-      { title: "UI/UX Design", desc: "Intuitive interfaces following platform design guidelines", icon: "palette" },
-      { title: "Backend Integration", desc: "Robust APIs and real-time data synchronization", icon: "link" },
-      { title: "Push Notifications", desc: "Engage users with timely, personalized notifications", icon: "bell" },
-      { title: "App Store Optimization", desc: "Maximize visibility and downloads on app stores", icon: "chartBar" }
+      { title: 'React Native & Flutter Mastery', desc: 'Unified high-performance codebase delivering authentic native iOS and Android apps.', icon: <Code2 className="w-5 h-5" /> },
+      { title: 'Biometric & Secure Auth', desc: 'Face ID, Touch ID, biometric encryption, and secure keychain credential storage.', icon: <Lock className="w-5 h-5" /> },
+      { title: 'Push Notification Pipelines', desc: 'Targeted rich push notifications, background silent alerts, and scheduled user messaging.', icon: <Sparkles className="w-5 h-5" /> },
+      { title: 'In-App Purchases & Subscriptions', desc: 'Integration with Apple StoreKit, Google Play Billing, and RevenueCat platforms.', icon: <Layers className="w-5 h-5" /> },
+      { title: 'Real-Time Chat & Media Uploads', desc: 'Instant messaging, audio/video streaming, and background multipart media uploads.', icon: <Zap className="w-5 h-5" /> },
+      { title: 'App Store Submission & Approval', desc: 'End-to-end management of certificates, provisioning profiles, review approval, and releases.', icon: <FileCheck className="w-5 h-5" /> }
+    ],
+    deliverables: [
+      'Clean React Native / Flutter source code with modular architecture',
+      'Configured iOS (Xcode) and Android (Gradle) native build projects',
+      'Full App Store & Google Play Store metadata and screenshot kit',
+      'Automated Fastlane build and TestFlight / Play Console deployment scripts',
+      'Post-launch crash monitoring (Sentry / Firebase Crashlytics) setup'
     ],
     technologies: [
-      { name: "React Native", icon: "react" },
-      { name: "Flutter", icon: "flutter" },
-      { name: "Swift", icon: "apple" },
-      { name: "Kotlin", icon: "kotlin" },
-      { name: "Firebase", icon: "firebase" },
-      { name: "AWS Amplify", icon: "aws" },
-      { name: "GraphQL", icon: "graphql" },
-      { name: "MongoDB", icon: "mongodb" }
+      { name: 'React Native', icon: <FaReact size={24} /> },
+      { name: 'Flutter', icon: <SiFlutter size={24} /> },
+      { name: 'TypeScript', icon: <SiTypescript size={24} /> },
+      { name: 'iOS Swift', icon: <FaApple size={24} /> },
+      { name: 'Kotlin', icon: <SiKotlin size={24} /> },
+      { name: 'Firebase', icon: <SiFirebase size={24} /> },
+      { name: 'GraphQL', icon: <SiGraphql size={24} /> },
+      { name: 'MongoDB', icon: <SiMongodb size={24} /> }
     ],
     process: [
-      { step: "Ideation", desc: "Define your app concept, features, and target users", icon: "lightbulb" },
-      { step: "Prototyping", desc: "Create interactive prototypes to validate ideas", icon: "cogs" },
-      { step: "Design", desc: "Craft beautiful, intuitive user interfaces", icon: "palette" },
-      { step: "Development", desc: "Build robust, scalable mobile applications", icon: "code" },
-      { step: "QA Testing", desc: "Comprehensive testing across devices and scenarios", icon: "flask" },
-      { step: "Deployment", desc: "Launch on App Store and Google Play with support", icon: "rocket" }
+      { step: '01', title: 'User Flow Mapping', desc: 'Architecting wireframes, navigation stacks, screen states, and offline behavior.' },
+      { step: '02', title: 'Figma Mobile Design', desc: 'Crafting pixel-perfect iOS & Android UI screens adhering to HIG & Material 3.' },
+      { step: '03', title: 'Component Engineering', desc: 'Developing fluid screens, micro-interactions, and API client integrations.' },
+      { step: '04', title: 'Device Matrix Testing', desc: 'Testing across a spectrum of real iPhones, iPads, and Android phone screen resolutions.' },
+      { step: '05', title: 'Store Publication', desc: 'Managing TestFlight betas, signing, submission, and public store rollout.' }
+    ],
+    faqs: [
+      { q: 'Should we build cross-platform or native?', a: 'For 90% of business applications, React Native or Flutter offers native 60fps performance while cutting development time and maintenance costs by over 40%.' },
+      { q: 'Do you assist with Apple App Store and Google Play approval?', a: 'Yes, we manage the complete submission process, including developer accounts, privacy declarations, screenshots, and addressing review guidelines.' }
     ]
   },
-  'video-editing': {
-    title: "Video Editing",
-    tagline: "Stories That Captivate & Convert",
-    description: "Professional video editing services to bring your visual content to life with stunning effects.",
-    fullDescription: `Elevate your brand with professional video editing services. From corporate videos to viral social media content, we create compelling visual stories that captivate your audience and drive engagement.`,
-    highlights: [
-      { icon: "film", title: "Cinematic Quality", desc: "Hollywood-grade editing" },
-      { icon: "bolt", title: "Fast Turnaround", desc: "Quick delivery times" },
-      { icon: "bullseye", title: "Platform Optimized", desc: "Perfect for every channel" }
-    ],
-    features: [
-      { title: "Color Grading", desc: "Professional color correction for cinematic looks", icon: "palette" },
-      { title: "Motion Graphics", desc: "Eye-catching animations and visual effects", icon: "magic" },
-      { title: "Sound Design", desc: "Professional audio mixing and sound effects", icon: "music" },
-      { title: "Subtitles & Captions", desc: "Accurate captions for accessibility and reach", icon: "comments" },
-      { title: "Visual Effects", desc: "Stunning VFX and compositing", icon: "star" },
-      { title: "Multi-Platform Export", desc: "Optimized formats for every platform", icon: "box" }
-    ],
-    technologies: [
-      { name: "Premiere Pro", icon: "premiere" },
-      { name: "After Effects", icon: "aftereffects" },
-      { name: "DaVinci Resolve", icon: "davinci" },
-      { name: "Final Cut Pro", icon: "apple" },
-      { name: "Cinema 4D", icon: "cube" },
-      { name: "Audition", icon: "music" }
-    ],
-    process: [
-      { step: "Brief", desc: "Understand your vision, style, and goals", icon: "clipboard" },
-      { step: "Review", desc: "Analyze footage and plan the edit", icon: "search" },
-      { step: "Assembly", desc: "Create the initial cut with pacing", icon: "film" },
-      { step: "Polish", desc: "Add effects, graphics, and transitions", icon: "magic" },
-      { step: "Feedback", desc: "Collaborative revision process", icon: "comments" },
-      { step: "Delivery", desc: "Final export in all required formats", icon: "checkCircle" }
-    ]
-  },
-  'game-development': {
-    title: "Game Development",
-    tagline: "Immersive Worlds, Endless Possibilities",
-    description: "Develop immersive and engaging games across multiple platforms with cutting-edge technology.",
-    fullDescription: `Bring your game ideas to life with our comprehensive game development services. We create engaging, visually stunning games for mobile, PC, console, and emerging platforms like VR/AR.`,
-    highlights: [
-      { icon: "sync", title: "Multi-Platform", desc: "PC, Mobile, Console, VR" },
-      { icon: "eye", title: "Stunning Visuals", desc: "Next-gen graphics" },
-      { icon: "star", title: "Engaging Gameplay", desc: "Addictive mechanics" }
-    ],
-    features: [
-      { title: "2D & 3D Games", desc: "From casual mobile to AAA-quality titles", icon: "cube" },
-      { title: "Multiplayer Systems", desc: "Real-time multiplayer and matchmaking", icon: "users" },
-      { title: "Monetization", desc: "In-app purchases, ads, and subscription models", icon: "dollar" },
-      { title: "AR/VR Experiences", desc: "Immersive augmented and virtual reality games", icon: "vr" },
-      { title: "Game Analytics", desc: "Player behavior tracking and optimization", icon: "chartLine" },
-      { title: "Live Operations", desc: "Ongoing updates, events, and content", icon: "sync" }
-    ],
-    technologies: [
-      { name: "Unity", icon: "unity" },
-      { name: "Unreal Engine", icon: "unreal" },
-      { name: "Godot", icon: "godot" },
-      { name: "C#", icon: "csharp" },
-      { name: "C++", icon: "cpp" },
-      { name: "Blender", icon: "blender" },
-      { name: "Photon", icon: "network" },
-      { name: "PlayFab", icon: "cloud" }
-    ],
-    process: [
-      { step: "Concept", desc: "Define game mechanics, story, and vision", icon: "lightbulb" },
-      { step: "Pre-Production", desc: "Game design document and art direction", icon: "clipboard" },
-      { step: "Prototype", desc: "Build playable prototype for validation", icon: "cogs" },
-      { step: "Production", desc: "Full development with assets and polish", icon: "code" },
-      { step: "QA & Testing", desc: "Extensive playtesting and bug fixing", icon: "flask" },
-      { step: "Launch", desc: "Release with marketing and live ops support", icon: "rocket" }
-    ]
-  },
-  'freelancing': {
-    title: "Freelancing",
-    tagline: "Top Talent, On Demand",
-    description: "Flexible freelance solutions for all your project needs with dedicated expert professionals.",
-    fullDescription: `Access top-tier talent for your projects with our freelancing services. We provide skilled professionals who integrate seamlessly with your team to deliver outstanding results on time and within budget.`,
-    highlights: [
-      { icon: "userTie", title: "Expert Talent", desc: "Vetted professionals" },
-      { icon: "clock", title: "Flexible Hours", desc: "Scale up or down anytime" },
-      { icon: "dollar", title: "Cost Effective", desc: "No long-term commitments" }
-    ],
-    features: [
-      { title: "Dedicated Experts", desc: "Skilled professionals matched to your needs", icon: "users" },
-      { title: "Flexible Engagement", desc: "Hourly, project-based, or retainer models", icon: "calendar" },
-      { title: "Quick Scaling", desc: "Rapidly expand your team capacity", icon: "chartLine" },
-      { title: "Diverse Skills", desc: "Development, design, marketing, and more", icon: "tools" },
-      { title: "Quality Assured", desc: "Rigorous vetting and performance tracking", icon: "checkCircle" },
-      { title: "Transparent Pricing", desc: "Clear rates with no hidden costs", icon: "gem" }
-    ],
-    technologies: [
-      { name: "Full-Stack Dev", icon: "code" },
-      { name: "UI/UX Design", icon: "palette" },
-      { name: "Digital Marketing", icon: "chartBar" },
-      { name: "Content Writing", icon: "fileAlt" },
-      { name: "Data Analysis", icon: "chartLine" },
-      { name: "Project Management", icon: "clipboard" }
-    ],
-    process: [
-      { step: "Requirement", desc: "Define your project scope and needs", icon: "clipboard" },
-      { step: "Matching", desc: "Find the perfect professional for you", icon: "users" },
-      { step: "Onboarding", desc: "Quick integration with your workflow", icon: "handshake" },
-      { step: "Execution", desc: "Deliver high-quality work consistently", icon: "code" },
-      { step: "Review", desc: "Regular check-ins and feedback loops", icon: "comments" },
-      { step: "Completion", desc: "Project handoff with documentation", icon: "checkCircle" }
-    ]
-  },
-  'devops-linux': {
-    title: "DevOps & Linux Operations",
-    tagline: "Automate, Deploy, Scale",
-    description: "Streamline your infrastructure with DevOps practices and expert Linux system administration.",
-    fullDescription: `Optimize your development workflow and infrastructure with our DevOps and Linux expertise. We help you build scalable, reliable, and secure systems that enable rapid deployment and continuous improvement.`,
-    highlights: [
-      { icon: "sync", title: "CI/CD Pipelines", desc: "Automated deployments" },
-      { icon: "docker", title: "Containerization", desc: "Docker & Kubernetes" },
-      { icon: "shield", title: "Security First", desc: "Hardened infrastructure" }
-    ],
-    features: [
-      { title: "CI/CD Pipelines", desc: "Automated build, test, and deployment workflows", icon: "sync" },
-      { title: "Infrastructure as Code", desc: "Terraform, Ansible, and CloudFormation", icon: "code" },
-      { title: "Container Orchestration", desc: "Docker and Kubernetes at scale", icon: "docker" },
-      { title: "Cloud Management", desc: "AWS, Azure, and GCP infrastructure", icon: "cloud" },
-      { title: "Monitoring & Alerting", desc: "Proactive observability and incident response", icon: "eye" },
-      { title: "Security Hardening", desc: "Secure configurations and compliance", icon: "shield" }
-    ],
-    technologies: [
-      { name: "Docker", icon: "docker" },
-      { name: "Kubernetes", icon: "kubernetes" },
-      { name: "Jenkins", icon: "jenkins" },
-      { name: "GitLab CI", icon: "gitlab" },
-      { name: "Terraform", icon: "terraform" },
-      { name: "AWS", icon: "aws" },
-      { name: "Prometheus", icon: "prometheus" },
-      { name: "Linux", icon: "linux" }
-    ],
-    process: [
-      { step: "Assessment", desc: "Evaluate current infrastructure and pain points", icon: "search" },
-      { step: "Strategy", desc: "Design DevOps roadmap and architecture", icon: "clipboard" },
-      { step: "Implementation", desc: "Set up tools, pipelines, and automation", icon: "cogs" },
-      { step: "Migration", desc: "Seamlessly transition to new infrastructure", icon: "sync" },
-      { step: "Monitoring", desc: "Implement observability and alerting", icon: "eye" },
-      { step: "Optimization", desc: "Continuous improvement and cost optimization", icon: "chartLine" }
-    ]
-  },
-  'ui-designs': {
-    title: "UI Designs",
-    tagline: "Beautiful Interfaces, Seamless Experiences",
-    description: "Craft beautiful and intuitive user interfaces that enhance user engagement and satisfaction.",
-    fullDescription: `Create stunning user interfaces that delight your users and strengthen your brand. Our design team combines aesthetics with usability to deliver exceptional experiences that drive conversions and loyalty.`,
-    highlights: [
-      { icon: "gem", title: "Pixel Perfect", desc: "Attention to every detail" },
-      { icon: "users", title: "User Research", desc: "Data-driven decisions" },
-      { icon: "mobile", title: "Responsive", desc: "All devices covered" }
-    ],
-    features: [
-      { title: "User Research", desc: "Deep understanding of your users and their needs", icon: "search" },
-      { title: "Wireframing", desc: "Low-fidelity layouts for rapid iteration", icon: "pencilRuler" },
-      { title: "Visual Design", desc: "Stunning high-fidelity mockups", icon: "palette" },
-      { title: "Design Systems", desc: "Scalable component libraries and guidelines", icon: "book" },
-      { title: "Prototyping", desc: "Interactive prototypes for user testing", icon: "cogs" },
-      { title: "Accessibility", desc: "WCAG compliant, inclusive designs", icon: "accessible" }
-    ],
-    technologies: [
-      { name: "Figma", icon: "figma" },
-      { name: "Adobe XD", icon: "xd" },
-      { name: "Sketch", icon: "sketch" },
-      { name: "InVision", icon: "invision" },
-      { name: "Principle", icon: "cogs" },
-      { name: "Framer", icon: "framer" },
-      { name: "Illustrator", icon: "illustrator" },
-      { name: "Photoshop", icon: "photoshop" }
-    ],
-    process: [
-      { step: "Research", desc: "Understand users, competitors, and goals", icon: "search" },
-      { step: "Ideation", desc: "Explore concepts and design directions", icon: "lightbulb" },
-      { step: "Wireframe", desc: "Create low-fidelity layouts and flows", icon: "pencilRuler" },
-      { step: "Design", desc: "Develop high-fidelity visual designs", icon: "palette" },
-      { step: "Prototype", desc: "Build interactive prototypes for testing", icon: "cogs" },
-      { step: "Handoff", desc: "Deliver specs and assets to developers", icon: "checkCircle" }
-    ]
-  },
+
   'tensorflow-ai': {
-    title: "TensorFlow & AI Solutions",
-    tagline: "Intelligence That Transforms Business",
-    description: "Leverage machine learning and AI with TensorFlow to build intelligent, data-driven applications.",
-    fullDescription: `Harness the power of artificial intelligence and machine learning to transform your business. Our AI experts build intelligent solutions using TensorFlow and other cutting-edge frameworks that automate processes and unlock insights.`,
+    id: 'tensorflow-ai',
+    icon: <Cpu className="w-8 h-8" />,
+    badge: 'Applied AI & Neural Engineering',
+    title: 'AI & Machine Learning Automation',
+    tagline: 'Custom Neural Models, Computer Vision & LLM Workflow Automation',
+    description: 'Transform raw data into competitive intelligence. We develop custom machine learning models, computer vision systems, natural language processing, and automated AI workflows tailored to your business operations.',
+    metrics: [
+      { label: 'Inference Latency', value: '< 50ms' },
+      { label: 'Model Accuracy', value: '96%+' },
+      { label: 'Pipeline Automation', value: '24/7 Live' },
+      { label: 'Data Security', value: 'Air-Gapped' }
+    ],
     highlights: [
-      { icon: "brain", title: "Deep Learning", desc: "Neural network expertise" },
-      { icon: "chartLine", title: "Predictive Analytics", desc: "Data-driven insights" },
-      { icon: "eye", title: "Computer Vision", desc: "Image & video AI" }
+      { icon: <Cpu className="w-5 h-5" />, title: 'Custom Model Training', desc: 'Custom fine-tuned neural models built specifically on your domain data.' },
+      { icon: <Zap className="w-5 h-5" />, title: 'Edge & Cloud Inference', desc: 'Optimized ONNX / TensorRT runtime for blazing fast millisecond predictions.' },
+      { icon: <ShieldCheck className="w-5 h-5" />, title: 'Private & Secure', desc: 'Zero data leakage — models deployed directly within your dedicated private VPC.' }
     ],
     features: [
-      { title: "Custom ML Models", desc: "Tailored machine learning solutions for your needs", icon: "microchip" },
-      { title: "NLP Solutions", desc: "Text analysis, chatbots, and language understanding", icon: "comments" },
-      { title: "Computer Vision", desc: "Image recognition and video analysis", icon: "eye" },
-      { title: "Predictive Analytics", desc: "Forecast trends and make data-driven decisions", icon: "chartLine" },
-      { title: "Recommendation Engines", desc: "Personalized content and product suggestions", icon: "star" },
-      { title: "AI Integration", desc: "Seamlessly integrate AI into your applications", icon: "link" }
+      { title: 'Custom LLM & Agent Pipelines', desc: 'RAG (Retrieval-Augmented Generation), vector databases, and autonomous business workflows.', icon: <Code2 className="w-5 h-5" /> },
+      { title: 'Computer Vision & Detection', desc: 'Real-time object detection, OCR document parsing, video analysis, and facial recognition.', icon: <Sparkles className="w-5 h-5" /> },
+      { title: 'Predictive Analytics & Forecasting', desc: 'Time-series forecasting, predictive customer churn, demand estimation, and risk analytics.', icon: <Zap className="w-5 h-5" /> },
+      { title: 'NLP & Conversational AI', desc: 'Intelligent customer assistants, sentiment extraction, classification, and summarization.', icon: <Layers className="w-5 h-5" /> },
+      { title: 'Automated Data ETL Pipelines', desc: 'Data cleaning, feature engineering, synthetic data generation, and training pipelines.', icon: <GitBranch className="w-5 h-5" /> },
+      { title: 'Model Monitoring & Retraining', desc: 'Drift detection, automated regression testing, telemetry tracking, and continuous retraining.', icon: <FileCheck className="w-5 h-5" /> }
+    ],
+    deliverables: [
+      'Complete Python training and inference repository with documented notebooks',
+      'Serialized model weights (ONNX / TorchScript / TensorFlow SavedModel)',
+      'Containerized FastAPI microservice for high-throughput prediction requests',
+      'Automated data validation and model evaluation test suite',
+      'Private cloud deployment script (AWS SageMaker, ECS, or bare metal)'
     ],
     technologies: [
-      { name: "TensorFlow", icon: "tensorflow" },
-      { name: "PyTorch", icon: "pytorch" },
-      { name: "Keras", icon: "keras" },
-      { name: "Python", icon: "python" },
-      { name: "OpenCV", icon: "opencv" },
-      { name: "Hugging Face", icon: "brain" },
-      { name: "scikit-learn", icon: "sklearn" },
-      { name: "CUDA", icon: "microchip" }
+      { name: 'Python', icon: <FaPython size={24} /> },
+      { name: 'PyTorch', icon: <SiPytorch size={24} /> },
+      { name: 'TensorFlow', icon: <SiTensorflow size={24} /> },
+      { name: 'Keras', icon: <SiKeras size={24} /> },
+      { name: 'OpenCV', icon: <SiOpencv size={24} /> },
+      { name: 'scikit-learn', icon: <SiScikitlearn size={24} /> },
+      { name: 'Docker', icon: <FaDocker size={24} /> },
+      { name: 'AWS SageMaker', icon: <FaAws size={24} /> }
     ],
     process: [
-      { step: "Discovery", desc: "Identify AI opportunities and use cases", icon: "search" },
-      { step: "Data Strategy", desc: "Collect, clean, and prepare training data", icon: "database" },
-      { step: "Model Design", desc: "Architect and train ML models", icon: "brain" },
-      { step: "Validation", desc: "Test accuracy and refine performance", icon: "flask" },
-      { step: "Deployment", desc: "Integrate into production systems", icon: "rocket" },
-      { step: "Monitoring", desc: "Continuous model improvement and retraining", icon: "eye" }
+      { step: '01', title: 'Data Audit & Feasibility', desc: 'Assessing your data quality, labeling requirements, and target accuracy metrics.' },
+      { step: '02', title: 'Baseline Prototyping', desc: 'Rapidly training initial model architectures to validate feasibility and benchmark latency.' },
+      { step: '03', title: 'Hyperparameter Tuning', desc: 'Optimizing model depth, regularization, and feature engineering to maximize precision.' },
+      { step: '04', title: 'Containerized API Serving', desc: 'Wrapping models inside asynchronous FastAPI microservices with batching optimization.' },
+      { step: '05', title: 'Production Telemetry', desc: 'Deploying with real-time inference latency and accuracy drift alerts.' }
+    ],
+    faqs: [
+      { q: 'How do you protect our proprietary training data?', a: 'All training and inference routines execute inside your private cloud environment or air-gapped instances. We never share, expose, or use your data outside your project.' },
+      { q: 'Can you integrate AI into our existing web or mobile app?', a: 'Yes. We build clean REST or gRPC API endpoints that integrate seamlessly with your current web, mobile, or backend stack.' }
+    ]
+  },
+
+  'ui-designs': {
+    id: 'ui-designs',
+    icon: <Palette className="w-8 h-8" />,
+    badge: 'Design Systems & Product UX',
+    title: 'UI/UX & Product Design Systems',
+    tagline: 'Intuitive Interfaces, Conversion-Focused Design & Scalable Tokens',
+    description: 'We craft human-centric UI/UX designs, comprehensive component libraries, and interactive Figma prototypes engineered to maximize user retention, product adoption, and business conversion.',
+    metrics: [
+      { label: 'Design Tokens', value: '100% Sync' },
+      { label: 'Figma Components', value: '250+ UI' },
+      { label: 'Accessibility', value: 'WCAG AAA' },
+      { label: 'User Retention Boost', value: '+40% Avg' }
+    ],
+    highlights: [
+      { icon: <Palette className="w-5 h-5" />, title: 'Pixel-Perfect Systems', desc: 'Clean typography scales, color tokens, and atomic components built for developers.' },
+      { icon: <Sparkles className="w-5 h-5" />, title: 'Conversion-Driven', desc: 'Eliminating user friction through heuristic analysis and optimized user journeys.' },
+      { icon: <Layers className="w-5 h-5" />, title: 'Interactive Prototypes', desc: 'High-fidelity Figma flows ready for stakeholder validation and usability testing.' }
+    ],
+    features: [
+      { title: 'Atomic Design Component Libraries', desc: 'Reusable, themeable design systems in Figma with auto-layout and variable tokens.', icon: <Code2 className="w-5 h-5" /> },
+      { title: 'User Research & Wireframing', desc: 'Customer persona mapping, empathy mapping, and rapid low-fidelity wireframes.', icon: <Sparkles className="w-5 h-5" /> },
+      { title: 'Interactive Micro-Interactions', desc: 'Engaging micro-animations, hover states, transitions, and loading feedback.', icon: <Zap className="w-5 h-5" /> },
+      { title: 'Design-to-Code Handoff', desc: 'Developer-ready specs, asset exports, Tailwind tokens, and CSS property documentation.', icon: <Layers className="w-5 h-5" /> },
+      { title: 'Responsive Multi-Device Views', desc: 'Dedicated mobile, tablet, desktop, and ultra-wide responsive viewport layouts.', icon: <Smartphone className="w-5 h-5" /> },
+      { title: 'Accessibility Compliance', desc: 'WCAG 2.1 AAA color contrast checks, screen reader compatibility, and touch-target sizing.', icon: <ShieldCheck className="w-5 h-5" /> }
+    ],
+    deliverables: [
+      'Comprehensive Figma project file with full component library and variants',
+      'Design Token JSON export compatible with Tailwind CSS & CSS variables',
+      'Clickable interactive user journey prototype for usability testing',
+      'Exported icon packages, SVGs, and responsive brand assets',
+      'Developer handoff documentation detailing animations and state transitions'
+    ],
+    technologies: [
+      { name: 'Figma', icon: <SiFigma size={24} /> },
+      { name: 'Framer', icon: <SiFramer size={24} /> },
+      { name: 'Tailwind Tokens', icon: <SiTailwindcss size={24} /> },
+      { name: 'Design Systems', icon: <Palette size={24} /> },
+      { name: 'Motion Design', icon: <Sparkles size={24} /> },
+      { name: 'UX Research', icon: <Layers size={24} /> }
+    ],
+    process: [
+      { step: '01', title: 'UX Research & Audit', desc: 'Analyzing user goals, existing product bottlenecks, and competitor design patterns.' },
+      { step: '02', title: 'Information Architecture', desc: 'Mapping user journeys, sitemaps, and low-fidelity structural wireframes.' },
+      { step: '03', title: 'Visual UI Direction', desc: 'Crafting moodboards, typography, color palettes, and hero concept directions.' },
+      { step: '04', title: 'Component Library', desc: 'Building full Figma auto-layout components, modal states, and design tokens.' },
+      { step: '05', title: 'Developer Handoff', desc: 'Providing interactive specs, assets, and token documentation to the engineering team.' }
+    ],
+    faqs: [
+      { q: 'How easily can developers implement your Figma designs?', a: 'Very easily. Every screen uses Figma Auto-Layout, proper naming conventions, and Tailwind-compatible tokens, making development 50% faster.' },
+      { q: 'Do you create interactive prototypes?', a: 'Yes, we provide clickable prototypes showing real page transitions, dropdowns, and button states so you can experience the app before writing any code.' }
+    ]
+  },
+
+  'devops-linux': {
+    id: 'devops-linux',
+    icon: <Server className="w-8 h-8" />,
+    badge: 'Cloud Infrastructure & SRE',
+    title: 'Cloud & DevOps Infrastructure',
+    tagline: 'Automated CI/CD, Container Orchestration & Resilient Cloud Architecture',
+    description: 'We design, automate, and manage rock-solid cloud infrastructure. From automated GitHub Actions deployment pipelines to Kubernetes orchestration, Terraform IaC, and 24/7 observability.',
+    metrics: [
+      { label: 'Deployment Speed', value: '10x Faster' },
+      { label: 'Uptime SLA', value: '99.99%' },
+      { label: 'Rollback Recovery', value: '< 60s' },
+      { label: 'Cloud Cost Savings', value: 'Up to 35%' }
+    ],
+    highlights: [
+      { icon: <Server className="w-5 h-5" />, title: 'Zero-Downtime Releases', desc: 'Blue-green and rolling deployment strategies with instant automatic rollbacks.' },
+      { icon: <ShieldCheck className="w-5 h-5" />, title: 'Hardened Security', desc: 'IAM least-privilege, automated vulnerability scanning, and encrypted secrets.' },
+      { icon: <Zap className="w-5 h-5" />, title: 'Automated Scaling', desc: 'Horizontal autoscaling dynamically provisioned based on traffic spikes.' }
+    ],
+    features: [
+      { title: 'Docker & Kubernetes (K8s)', desc: 'Containerizing microservices with self-healing pods, ingress controllers, and load balancers.', icon: <Code2 className="w-5 h-5" /> },
+      { title: 'Infrastructure as Code (Terraform)', desc: 'Repeatable, version-controlled cloud environments on AWS, Google Cloud, or Azure.', icon: <Layers className="w-5 h-5" /> },
+      { title: 'CI/CD Pipeline Automation', desc: 'Automated linting, unit testing, docker building, and multi-stage deployment workflows.', icon: <GitBranch className="w-5 h-5" /> },
+      { title: 'Linux Server Administration', desc: 'Kernel tuning, systemd process management, firewall security (UFW/iptables), and Nginx reverse proxies.', icon: <Server className="w-5 h-5" /> },
+      { title: 'Observability & Monitoring', desc: 'Prometheus metrics, Grafana dashboards, centralized Loki/ELK logging, and Slack/PagerDuty alerts.', icon: <Zap className="w-5 h-5" /> },
+      { title: 'Cloud Cost Optimization', desc: 'Right-sizing cloud instances, spot instance scheduling, and egress optimization.', icon: <ShieldCheck className="w-5 h-5" /> }
+    ],
+    deliverables: [
+      'Modular Terraform / OpenTofu infrastructure codebase',
+      'Production multi-stage Dockerfiles and Helm charts',
+      'Fully automated GitHub Actions / GitLab CI pipeline workflows',
+      'Configured Grafana monitoring dashboards with custom alert rules',
+      'Comprehensive disaster recovery and automated backup runbook'
+    ],
+    technologies: [
+      { name: 'Docker', icon: <FaDocker size={24} /> },
+      { name: 'Kubernetes', icon: <SiKubernetes size={24} /> },
+      { name: 'Terraform', icon: <SiTerraform size={24} /> },
+      { name: 'AWS Cloud', icon: <FaAws size={24} /> },
+      { name: 'Prometheus', icon: <SiPrometheus size={24} /> },
+      { name: 'Linux OS', icon: <SiLinux size={24} /> },
+      { name: 'PostgreSQL', icon: <SiPostgresql size={24} /> },
+      { name: 'Redis', icon: <SiRedis size={24} /> }
+    ],
+    process: [
+      { step: '01', title: 'Infrastructure Audit', desc: 'Assessing your existing cloud setup, cost structure, security posture, and bottlenecks.' },
+      { step: '02', title: 'Architecture Blueprint', desc: 'Designing resilient VPC networking, container clusters, and security policies.' },
+      { step: '03', title: 'Terraform & CI/CD Setup', desc: 'Writing modular IaC scripts and automated build & test deployment pipelines.' },
+      { step: '04', title: 'Observability & Hardening', desc: 'Configuring metrics, tracing, audit logging, and automated incident alert channels.' },
+      { step: '05', title: 'Handover & Runbooks', desc: 'Conducting live team walkthroughs and providing documented operations runbooks.' }
+    ],
+    faqs: [
+      { q: 'Can you migrate our existing infrastructure to Kubernetes without downtime?', a: 'Yes. We use traffic mirroring and blue/green DNS cutovers to ensure 100% uptime during cloud and cluster migrations.' },
+      { q: 'Do you help lower monthly AWS or cloud hosting bills?', a: 'Yes. Our infrastructure audits routinely identify unused resources, oversized instances, and architecture inefficiencies, reducing monthly bills by 20% to 40%.' }
+    ]
+  },
+
+  'video-editing': {
+    id: 'video-editing',
+    icon: <Video className="w-8 h-8" />,
+    badge: 'Cinematic Motion & VFX Production',
+    title: 'Commercial Video & Motion Graphics',
+    tagline: 'High-Impact Brand Videos, 3D Product Demos & Motion Graphics',
+    description: 'We produce compelling commercial videos, 3D product animations, motion graphics, and visual effects that capture attention, explain complex software, and drive high conversion across digital marketing channels.',
+    metrics: [
+      { label: 'Video Resolution', value: '4K / 60 FPS' },
+      { label: 'Turnaround Time', value: '3 - 7 Days' },
+      { label: 'Client Approvals', value: '99%' },
+      { label: 'Multi-Platform', value: '100% Optimized' }
+    ],
+    highlights: [
+      { icon: <Video className="w-5 h-5" />, title: 'Cinematic Visuals', desc: 'Hollywood-grade color grading, dynamic sound design, and custom motion graphics.' },
+      { icon: <Sparkles className="w-5 h-5" />, title: 'Product Storytelling', desc: 'Distilling complex software features into crisp, engaging 60-second video stories.' },
+      { icon: <Zap className="w-5 h-5" />, title: 'Rapid Delivery', desc: 'Iterative review cycles with frame-accurate timestamp feedback.' }
+    ],
+    features: [
+      { title: 'Commercial SaaS & Product Demos', desc: 'High-end UI screen recordings with 3D camera sweeps, zooms, and kinetic typography.', icon: <Code2 className="w-5 h-5" /> },
+      { title: 'Kinetic Motion Graphics & VFX', desc: 'Custom 2D/3D logo animations, lower-thirds, infographic callouts, and particle effects.', icon: <Sparkles className="w-5 h-5" /> },
+      { title: 'Cinematic Color Grading', desc: 'DaVinci Resolve color timing, LUT application, HDR mastering, and lighting correction.', icon: <Palette className="w-5 h-5" /> },
+      { title: 'Sound Design & Spatial Audio', desc: 'Pro audio mastering, SFX layering, noise reduction, and licensing high-energy royalty-free music.', icon: <Zap className="w-5 h-5" /> },
+      { title: 'Multi-Aspect Ratio Exports', desc: 'Optimized formats for YouTube (16:9), Instagram/TikTok (9:16), and LinkedIn (1:1/4:5).', icon: <Layers className="w-5 h-5" /> },
+      { title: 'Interactive Subtitles & Captions', desc: 'Dynamic animated captions formatted for high viewer engagement and silent playback.', icon: <FileCheck className="w-5 h-5" /> }
+    ],
+    deliverables: [
+      'Master 4K 60fps ProRes / H.265 export files',
+      'Multi-platform cropped exports for YouTube, LinkedIn, Instagram & TikTok',
+      'Full Adobe Premiere Pro / DaVinci Resolve project package and raw assets',
+      'Licensed commercial audio rights and voiceover WAV stems',
+      'Animated GIF and WebM micro-assets for web integration'
+    ],
+    technologies: [
+      { name: 'DaVinci Resolve', icon: <SiDavinciresolve size={24} /> },
+      { name: 'Premiere Pro', icon: <Film size={24} /> },
+      { name: 'After Effects', icon: <Sparkles size={24} /> },
+      { name: '4K Color Grading', icon: <Palette size={24} /> },
+      { name: 'Motion Graphics', icon: <Layers size={24} /> },
+      { name: 'Sound Mastering', icon: <Zap size={24} /> }
+    ],
+    process: [
+      { step: '01', title: 'Creative Brief & Script', desc: 'Outlining video goals, key product messages, visual pacing, and storyboard concepts.' },
+      { step: '02', title: 'Footage & Asset Ingestion', desc: 'Screen recording UI, compiling 3D models, capturing footage, and organizing project bins.' },
+      { step: '03', title: 'Assembly & Rough Cut', desc: 'Building the narrative flow, sync points, music bed, and pacing.' },
+      { step: '04', title: 'Motion Graphics & VFX', desc: 'Adding 3D camera moves, text callouts, sound effects, and color grading.' },
+      { step: '05', title: 'Revisions & Master Export', desc: 'Refining per your feedback and rendering multi-platform 4K deliverables.' }
+    ],
+    faqs: [
+      { q: 'What is your typical turnaround time for a commercial video?', a: 'Standard product demo and promotional videos typically take 4 to 7 business days, including full motion graphics, sound design, and revision rounds.' },
+      { q: 'Do you provide voiceovers and licensed background music?', a: 'Yes. We include full commercial licensing for all soundtrack selections and can arrange studio-grade AI or human voiceovers in multiple accents.' }
     ]
   }
 }
 
-const googleFormsByService = {
-  'website-development': 'https://docs.google.com/forms/d/e/1FAIpQLSdIU0cad3tXkHi2iBtrbldq-anCN6q_1Q_u_VBKayayEpMy8A/viewform',
-  'app-development': 'https://docs.google.com/forms/d/e/1FAIpQLSceprsDvLFszsIulki2pNUNPwRvtStCCLcToKwQ-Liu73SDdQ/viewform',
-  'video-editing': 'https://docs.google.com/forms/d/e/1FAIpQLScrLJDMs5Jn3yU_GR6kMmmXmLZMZ-WWxymEKdaqP6yDrPzw_A/viewform',
-  'ui-designs': 'https://docs.google.com/forms/d/e/1FAIpQLSfBtjyBkSwqQfQB_1TemqW8Kek6DF7-QbVyeSEqqs4o2zDk_A/viewform'
-}
-
 function ServiceDetail() {
   const { serviceId } = useParams()
-  const service = servicesData[serviceId]
-  const serviceFormUrl = googleFormsByService[serviceId]
+  const service = SERVICES_FULL_DATA[serviceId] || SERVICES_FULL_DATA['website-development']
+  const [activeFaq, setActiveFaq] = useState(null)
+  const [copiedEmail, setCopiedEmail] = useState(false)
 
-  // Scroll to top immediately when page loads
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   }, [serviceId])
 
+  const handleCopyEmail = (e) => {
+    e.preventDefault()
+    navigator.clipboard.writeText('zytronabusiness@gmail.com')
+    setCopiedEmail(true)
+    setTimeout(() => setCopiedEmail(false), 2500)
+  }
+
+  const toggleFaq = (index) => {
+    setActiveFaq(activeFaq === index ? null : index)
+  }
+
   if (!service) {
     return (
       <div className="app">
-        <nav className="navbar">
-          <div className="nav-container">
-            <Link to="/" className="nav-logo">
-              <img src={logo} alt="ZYTRONA Logo" className="logo-icon" />
-              <span className="logo-text">ZYTRONA</span>
-            </Link>
-          </div>
-        </nav>
-        <section className="service-detail-hero">
+        <Navbar>
+          <NavBody>
+            <NavbarLogo />
+            <div className="flex items-center gap-3">
+              <Link to="/#services">
+                <NavbarButton variant="secondary">Back to Services</NavbarButton>
+              </Link>
+            </div>
+          </NavBody>
+        </Navbar>
+        <section className="service-modern-hero">
           <div className="container">
-            <h1>Service Not Found</h1>
-            <Link to="/#services" className="btn btn-primary">Back to Services</Link>
+            <h1 className="service-modern-title">Service Not Found</h1>
+            <Link to="/#services" className="btn btn-primary btn-lg">Back to Services</Link>
           </div>
         </section>
       </div>
@@ -469,43 +430,152 @@ function ServiceDetail() {
 
   return (
     <div className="app">
-      {/* Navigation */}
-      <nav className="navbar">
-        <div className="nav-container">
-          <Link to="/" className="nav-logo">
-            <img src={logo} alt="ZYTRONA Logo" className="logo-icon" />
-            <span className="logo-text">ZYTRONA</span>
-          </Link>
-          <div className="nav-actions">
-            <Link to="/#services" className="btn btn-secondary">← Back to Services</Link>
-            <Link to="/#contact" className="btn btn-primary">Get Started</Link>
+      {/* Dynamic Navbar */}
+      <Navbar>
+        <NavBody>
+          <NavbarLogo />
+          <NavItems
+            items={[
+              { name: 'Home', link: '/#home' },
+              { name: 'About', link: '/about' },
+              { name: 'Services', link: '/#services' },
+              { name: 'Work', link: '/#work' },
+              { name: 'Contact', link: '/#contact' },
+            ]}
+          />
+          <div className="flex items-center">
+            <Link to="/#contact">
+              <NavbarButton variant="primary" className="gap-1.5">
+                <span>Start Consultation</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </NavbarButton>
+            </Link>
+          </div>
+        </NavBody>
+      </Navbar>
+
+      {/* Hero Section */}
+      <section className="service-modern-hero">
+        <div className="service-hero-bg-blur" />
+        <div className="container">
+          <motion.div
+            className="service-modern-hero-content"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="service-hero-icon-badge">
+              {service.icon}
+            </div>
+            
+            <div className="service-badge-pill-wrap">
+              <span className="hero-badge">
+                <span className="hero-badge-dot" />
+                {service.badge}
+              </span>
+            </div>
+
+            <h1 className="service-modern-title">{service.title}</h1>
+            <p className="service-modern-tagline-text">{service.tagline}</p>
+            <p className="service-modern-description">{service.description}</p>
+
+            {/* Metrics Bar */}
+            <div className="service-metrics-grid">
+              {service.metrics.map((m, i) => (
+                <div key={i} className="service-metric-card">
+                  <span className="service-metric-value">{m.value}</span>
+                  <span className="service-metric-label">{m.label}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Quick Hero Actions */}
+            <div className="service-hero-actions">
+              <Link to="/#contact" className="btn btn-primary btn-lg">
+                Book Technical Consultation <ArrowRight className="w-4 h-4" />
+              </Link>
+              <a 
+                href="https://wa.me/918667273159?text=Hi%20ZYTRONA,%20I%20would%20like%20to%20discuss%20a%20project%20for%20" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="btn btn-secondary btn-lg"
+              >
+                <FaWhatsapp className="w-4 h-4 text-emerald-600" /> Chat on WhatsApp
+              </a>
+            </div>
+
+            {/* Highlights Chips */}
+            <div className="service-hero-highlights">
+              {service.highlights.map((h, i) => (
+                <motion.div
+                  key={i}
+                  className="service-highlight-chip"
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 + i * 0.1, duration: 0.5 }}
+                >
+                  <span className="highlight-chip-icon">{h.icon}</span>
+                  <div>
+                    <strong>{h.title}</strong>
+                    <span>{h.desc}</span>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Capabilities Bento Grid */}
+      <section className="service-modern-features">
+        <div className="container">
+          <motion.div
+            className="section-header-detail"
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="section-badge">Scope & Capabilities</span>
+            <h2 className="section-title-large">Architectural Features</h2>
+            <p className="section-desc">Comprehensive capabilities included in every {service.title} engagement</p>
+          </motion.div>
+
+          <div className="service-bento-grid">
+            {service.features.map((feature, index) => (
+              <motion.div
+                key={index}
+                className="service-bento-card"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.5, delay: index * 0.08 }}
+              >
+                <div className="bento-card-icon">{feature.icon}</div>
+                <h3 className="bento-card-title">{feature.title}</h3>
+                <p className="bento-card-desc">{feature.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
-      </nav>
+      </section>
 
-      {/* Service Hero */}
-      <section className="service-detail-hero">
-        <div className="hero-particles">
-          <div className="particle"></div>
-          <div className="particle"></div>
-          <div className="particle"></div>
-        </div>
+      {/* Deliverables Section */}
+      <section className="service-deliverables-section">
         <div className="container">
-          <div className="service-detail-header">
-            <span className="service-badge-glow">{serviceIcons[serviceId]}</span>
-            <span className="service-tagline">{service.tagline}</span>
-            <h1 className="service-detail-title">{service.title}</h1>
-            <p className="service-detail-subtitle">{service.fullDescription}</p>
-            
-            {/* Highlights */}
-            <div className="service-highlights">
-              {service.highlights.map((highlight, index) => (
-                <div key={index} className="highlight-card">
-                  <span className="highlight-icon">{getIcon(highlight.icon)}</span>
-                  <div className="highlight-content">
-                    <h4>{highlight.title}</h4>
-                    <p>{highlight.desc}</p>
+          <div className="service-deliverables-wrapper">
+            <div className="service-deliverables-header">
+              <span className="section-badge">Tangible Assets</span>
+              <h2 className="section-title-large">What You Receive</h2>
+              <p className="section-desc">Zero ambiguity. Here is what is delivered upon completion.</p>
+            </div>
+            <div className="service-deliverables-grid">
+              {service.deliverables.map((item, idx) => (
+                <div key={idx} className="service-deliverable-item">
+                  <div className="deliverable-check-icon">
+                    <CheckCircle2 className="w-5 h-5" />
                   </div>
+                  <span className="deliverable-text">{item}</span>
                 </div>
               ))}
             </div>
@@ -513,84 +583,151 @@ function ServiceDetail() {
         </div>
       </section>
 
-
-      {/* Google Form Section */}
-      {serviceFormUrl && (
-        <section className="service-form-section">
-          <div className="container">
-            <div className="section-header-detail">
-              <span className="section-badge">Service Request Form</span>
-              <h2 className="section-title-large">Book {service.title}</h2>
-              <p className="section-desc">
-                  Open the form in a new tab to avoid browser embed issues and submit your request directly.
-              </p>
-            </div>
-
-            <div className="service-form-actions">
-              <a
-                href={serviceFormUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-primary btn-lg"
-              >
-                Open Google Form
-              </a>
-            </div>
-          </div>
-        </section>
-      )}
-
-
       {/* Technologies Section */}
-      <section className="service-technologies">
+      <section className="service-modern-tech">
         <div className="container">
-          <div className="section-header-detail">
-            <span className="section-badge">Technologies We Use</span>
-            <h2 className="section-title-large">Powered By The Best</h2>
-            <p className="section-desc">Industry-leading tools and frameworks for optimal results</p>
-          </div>
-          <div className="tech-grid-enhanced">
+          <motion.div
+            className="section-header-detail"
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="section-badge">Engineering Stack</span>
+            <h2 className="section-title-large">Technologies & Frameworks</h2>
+            <p className="section-desc">Battle-tested tools selected for reliability, speed, and maintainability</p>
+          </motion.div>
+
+          <div className="service-tech-bento">
             {service.technologies.map((tech, index) => (
-              <div key={index} className="tech-card">
-                <span className="tech-icon">{getIcon(tech.icon)}</span>
-                <span className="tech-name">{tech.name}</span>
-              </div>
+              <motion.div
+                key={index}
+                className="service-tech-card"
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+              >
+                <span className="service-tech-icon">{tech.icon}</span>
+                <span className="service-tech-name">{tech.name}</span>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="cta service-cta">
-        <div className="cta-glow"></div>
+      {/* Delivery Process Workflow */}
+      <section className="service-modern-process">
         <div className="container">
-          <div className="cta-content">
-            <span className="cta-badge">Let's Build Together</span>
-            <h2 className="cta-title">Ready to Get Started with {service.title}?</h2>
-            <p className="cta-subtitle">
-              Let's discuss how we can help you achieve your goals. 
-              Contact us for a free consultation today.
-            </p>
-            <div className="cta-buttons">
-              <Link to="/#contact" className="btn btn-white btn-lg">
-                Contact Us
-              </Link>
-              <a href="tel:+918667273159" className="btn btn-outline btn-lg">
-                Call Us: +91 8667273159
-              </a>
-            </div>
+          <motion.div
+            className="section-header-detail"
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="section-badge">Agile Delivery Blueprint</span>
+            <h2 className="section-title-large">How We Execute</h2>
+            <p className="section-desc">Transparent 5-stage lifecycle from architecture to production launch</p>
+          </motion.div>
+
+          <div className="service-process-grid">
+            {service.process.map((step, index) => (
+              <motion.div
+                key={index}
+                className="service-process-card"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.5, delay: index * 0.08 }}
+              >
+                <div className="process-step-number">{step.step}</div>
+                <h3 className="process-card-title">{step.title}</h3>
+                <p className="process-card-desc">{step.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="footer">
-        <div className="container">
-          <div className="footer-bottom">
-            <p>© 2026 ZYTRONA. All rights reserved.</p>
+      {/* Service-Specific FAQs */}
+      {service.faqs && service.faqs.length > 0 && (
+        <section className="service-faq-section">
+          <div className="container">
+            <div className="section-header-detail">
+              <span className="section-badge">Delivery Assurance</span>
+              <h2 className="section-title-large">Frequently Asked Questions</h2>
+              <p className="section-desc">Common questions regarding our {service.title} workflow</p>
+            </div>
+
+            <div className="service-faq-container">
+              {service.faqs.map((faq, idx) => (
+                <div 
+                  key={idx} 
+                  className={`service-faq-item ${activeFaq === idx ? 'open' : ''}`}
+                  onClick={() => toggleFaq(idx)}
+                >
+                  <div className="service-faq-question">
+                    <span>{faq.q}</span>
+                    <ChevronDown className={`service-faq-arrow ${activeFaq === idx ? 'rotated' : ''}`} />
+                  </div>
+                  <AnimatePresence>
+                    {activeFaq === idx && (
+                      <motion.div 
+                        className="service-faq-answer"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.25 }}
+                      >
+                        <p>{faq.a}</p>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ))}
+            </div>
           </div>
+        </section>
+      )}
+
+      {/* Consultation Direct Bridge Banner */}
+      <section className="service-modern-cta">
+        <div className="container">
+          <motion.div
+            className="service-cta-bento"
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="cta-badge">✦ Let's Build Your Solution</span>
+            <h2 className="cta-title">Ready to Architect Your {service.title}?</h2>
+            <p className="cta-subtitle">
+              Collaborate directly with our senior engineering team. Get a detailed technical brief, milestone roadmap, and direct estimate within 24 hours.
+            </p>
+            
+            <div className="cta-buttons">
+              <Link to="/#contact" className="btn btn-primary btn-lg">
+                Submit Consultation Brief <ArrowRight className="w-4 h-4" />
+              </Link>
+              <a href="tel:+918667273159" className="btn btn-secondary btn-lg">
+                <Phone className="w-4 h-4" /> Direct Line: +91 8667273159
+              </a>
+              <button 
+                onClick={handleCopyEmail}
+                className="btn btn-secondary btn-lg"
+              >
+                {copiedEmail ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
+                {copiedEmail ? 'Email Copied!' : 'Copy Business Email'}
+              </button>
+            </div>
+          </motion.div>
         </div>
-      </footer>
+      </section>
+
+      {/* Footer */}
+      <Footer />
     </div>
   )
 }

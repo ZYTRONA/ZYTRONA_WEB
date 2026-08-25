@@ -1,7 +1,10 @@
 import { useEffect, useRef } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import App from './App.jsx'
+import About from './pages/About.jsx'
 import ServiceDetail from './pages/ServiceDetail.jsx'
+import PrivacyPolicy from './pages/PrivacyPolicy.jsx'
+import TermsOfService from './pages/TermsOfService.jsx'
 import BackgroundGrid from './components/ui/BackgroundGrid'
 
 function isLowPerformanceMobile() {
@@ -84,7 +87,10 @@ export function RootApp() {
       <ScrollToSection />
       <Routes>
         <Route path="/" element={<App />} />
+        <Route path="/about" element={<About />} />
         <Route path="/service/:serviceId" element={<ServiceDetail />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
       </Routes>
     </>
   )

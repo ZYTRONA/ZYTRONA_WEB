@@ -1,30 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
+@import "tailwindcss";
+
 /* ============================================
-   ZYTRONA - Sleek Blur White & Cyan Theme
+   ZYTRONA - Sleek Black, Grey, White & Cyan Theme
    ============================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
-
 :root {
-  /* Blur White Light Palette */
-  --color-bg-base: #f8fafc;
+  /* White Blur & Frosted Glass Palette */
+  --color-bg-base: #ffffff;
   --color-bg-white: #ffffff;
-  --color-bg-blur: rgba(255, 255, 255, 0.72);
-  --color-bg-blur-elevated: rgba(255, 255, 255, 0.88);
-  --color-bg-blur-subtle: rgba(255, 255, 255, 0.55);
+  --color-bg-blur: rgba(255, 255, 255, 0.78);
+  --color-bg-blur-elevated: rgba(255, 255, 255, 0.92);
+  --color-bg-blur-subtle: rgba(255, 255, 255, 0.6);
+  --color-bg-card: rgba(255, 255, 255, 0.88);
 
-  /* High Contrast Typography */
-  --color-black: #0b1720;
-  --color-heading: #0f172a;
-  --color-body: #334155;
-  --color-muted: #64748b;
-  --color-light-slate: #e2e8f0;
+  /* High Contrast Black Typography */
+  --color-black: #000000;
+  --color-heading: #000000;
+  --color-body: #171717;
+  --color-muted: #525252;
+  --color-light-slate: #e5e5e5;
+  --color-border: rgba(0, 0, 0, 0.09);
+  --color-border-hover: rgba(0, 0, 0, 0.25);
 
-  /* Vibrant Teal & Cyan Accents */
-  --color-cyan: #0d9488;
-  --color-cyan-dark: #0f766e;
-  --color-cyan-light: #06b6d4;
-  --color-cyan-glow: rgba(13, 148, 136, 0.22);
-  --color-cyan-tint: rgba(13, 148, 136, 0.08);
+  /* Sleek Black & Obsidian Accents */
+  --color-cyan: #000000;
+  --color-cyan-dark: #171717;
+  --color-cyan-light: #334155;
+  --color-cyan-glow: rgba(0, 0, 0, 0.12);
+  --color-cyan-tint: rgba(0, 0, 0, 0.05);
 
   /* Compatibility alias used in App.css */
   --cyan: var(--color-cyan);
@@ -35,9 +39,9 @@
   --color-error: #ef4444;
 
   /* Gradients */
-  --gradient-cyan: linear-gradient(135deg, #0d9488 0%, #06b6d4 100%);
-  --gradient-heading: linear-gradient(135deg, #0f172a 0%, #0d9488 65%, #0284c7 100%);
-  --gradient-white-blur: linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.65) 100%);
+  --gradient-cyan: linear-gradient(135deg, #000000 0%, #1e293b 100%);
+  --gradient-heading: linear-gradient(135deg, #000000 0%, #334155 70%, #0f172a 100%);
+  --gradient-white-blur: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.75) 100%);
 
   /* Font Families */
   --font-heading: 'Manrope', sans-serif;
@@ -75,7 +79,7 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: #f8fafc;
+  background: #ffffff;
   color: var(--color-body);
 }
 
@@ -85,13 +89,13 @@ body {
 
 a {
   font-weight: 500;
-  color: var(--color-cyan);
+  color: #000000;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
 }
 
 a:hover {
-  color: var(--color-cyan-dark);
+  color: #525252;
 }
 
 h1 {
@@ -111,7 +115,7 @@ h2, h3 {
 
 button {
   border-radius: 12px;
-  border: 1px solid var(--color-light-slate);
+  border: 1px solid var(--color-border);
   padding: 0.8em 1.6em;
   font-size: 1em;
   font-weight: 600;
@@ -119,14 +123,14 @@ button {
   background: var(--color-bg-white);
   color: var(--color-heading);
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
   position: relative;
   overflow: hidden;
 }
 
 button:hover {
-  border-color: var(--color-cyan);
-  box-shadow: 0 4px 15px var(--color-cyan-glow);
+  border-color: #000000;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   transform: translateY(-2px);
 }
 
@@ -135,7 +139,7 @@ button:focus {
 }
 
 button:focus-visible {
-  outline: 2px solid var(--color-cyan);
+  outline: 2px solid #000000;
   outline-offset: 2px;
 }
 
@@ -143,18 +147,19 @@ button:active {
   transform: translateY(0);
 }
 
-/* Primary CTA Button */
+/* Primary CTA Button - Solid Sleek Black */
 .btn-primary {
-  background: var(--gradient-cyan);
-  border: none;
-  color: #ffffff;
+  background: #000000 !important;
+  border: 1px solid #000000 !important;
+  color: #ffffff !important;
   font-weight: 700;
-  box-shadow: 0 4px 16px rgba(13, 148, 136, 0.3);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18) !important;
 }
 
 .btn-primary:hover {
-  box-shadow: 0 6px 24px rgba(13, 148, 136, 0.45);
-  color: #ffffff;
+  background: #18181b !important;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.28) !important;
+  color: #ffffff !important;
 }
 
 /* Scrollbar Styling */
@@ -164,7 +169,7 @@ button:active {
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #f8fafc;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -173,11 +178,12 @@ button:active {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-cyan);
+  background: #000000;
 }
 
 /* Selection */
 ::selection {
-  background: rgba(13, 148, 136, 0.2);
-  color: var(--color-heading);
+  background: rgba(0, 0, 0, 0.12);
+  color: #000000;
 }
+

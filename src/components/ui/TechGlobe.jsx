@@ -13,16 +13,16 @@ export function TechGlobe() {
     const width = container.clientWidth || 480
     const height = container.clientHeight || 480
 
-    // Theme Colors for Blur White Light Theme
+    // Theme Colors for Frosted White & Sleek Black
     const config = {
       radius: 2.6,
       rotationSpeed: 0.0015,
-      primaryColor: 0x0d9488,     // Vibrant modern teal
-      secondaryColor: 0x06b6d4,   // Electric cyan
-      accentColor: 0x0284c7,      // Sky blue
-      nodeColor: 0x0f766e,        // Deep teal
-      hubColor: 0x10b981,         // Emerald green
-      glassColor: 0xd1fae5,       // Mint tinted glass
+      primaryColor: 0x0f172a,     // Deep obsidian black
+      secondaryColor: 0x334155,   // Dark slate
+      accentColor: 0x000000,      // Pure black
+      nodeColor: 0x1e293b,        // Slate 800
+      hubColor: 0x475569,         // Slate 600
+      glassColor: 0xf1f5f9,       // Frosted white glass
     }
 
     // Scene
@@ -332,7 +332,7 @@ export function TechGlobe() {
     const atmosphereGeom = new THREE.SphereGeometry(config.radius * 1.22, 48, 48)
     const atmosphereMat = new THREE.ShaderMaterial({
       uniforms: {
-        uColor: { value: new THREE.Color(0x06b6d4) },
+        uColor: { value: new THREE.Color(config.secondaryColor) },
       },
       vertexShader: `
         varying vec3 vNormal;
