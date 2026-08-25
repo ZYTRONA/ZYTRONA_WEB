@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import App from './App.jsx'
 import ServiceDetail from './pages/ServiceDetail.jsx'
-import ClickSpark from './components/ui/ClickSpark'
+import BackgroundGrid from './components/ui/BackgroundGrid'
 
 function isLowPerformanceMobile() {
   if (typeof window === 'undefined') return false
@@ -79,19 +79,15 @@ export function RootApp() {
   }, [])
 
   return (
-    <ClickSpark
-      sparkColor="#00c8ff"
-      sparkSize={12}
-      sparkRadius={20}
-      sparkCount={10}
-      duration={500}
-      extraScale={1.2}
-    >
+    <>
+      <BackgroundGrid />
       <ScrollToSection />
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/service/:serviceId" element={<ServiceDetail />} />
       </Routes>
-    </ClickSpark>
+    </>
   )
 }
+
+export default RootApp

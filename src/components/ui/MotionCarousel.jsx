@@ -1,6 +1,7 @@
 import * as React from 'react'
 import useEmblaCarousel from 'embla-carousel-react'
-import { ChevronRight, ChevronLeft } from 'lucide-react'
+import { motion } from 'motion/react'
+import { ChevronRight, ChevronLeft, Lightbulb, Code2, Rocket, ShieldCheck } from 'lucide-react'
 import { RippleButton } from './ripple-button'
 
 const useEmblaControls = (emblaApi) => {
@@ -54,8 +55,32 @@ const useEmblaControls = (emblaApi) => {
   }
 }
 
-// Feature Card Carousel for "Comprehensive Solutions"
-function FeatureCarousel({ features, getIcon }) {
+// Default process steps for engineering innovation
+const defaultProcessSteps = [
+  {
+    step: 'Discovery & Strategic Roadmap',
+    desc: 'Deep-dive analysis into business architecture, technical requirements, user psychology, and competitive advantage.',
+    icon: <Lightbulb className="w-6 h-6 text-cyan-300" />,
+  },
+  {
+    step: 'Next-Gen UI/UX & Prototyping',
+    desc: 'Crafting responsive, high-converting interfaces with interactive motion prototypes, design systems, and glassmorphism.',
+    icon: <Code2 className="w-6 h-6 text-cyan-300" />,
+  },
+  {
+    step: 'Full-Stack Build & AI Integration',
+    desc: 'Engineering scalable codebases with microservices, modern frameworks, robust security, and practical machine learning.',
+    icon: <Rocket className="w-6 h-6 text-cyan-300" />,
+  },
+  {
+    step: 'Cloud Launch, QA & Global Scale',
+    desc: 'Automated CI/CD deployment, comprehensive load testing, 99.9% uptime guarantees, and ongoing performance tuning.',
+    icon: <ShieldCheck className="w-6 h-6 text-cyan-300" />,
+  },
+]
+
+// Process Card Carousel for "How We Work" / "Our Proven Process"
+export function ProcessCarousel({ process = defaultProcessSteps, getIcon }) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ 
     align: 'center', 
     loop: true,
@@ -78,96 +103,7 @@ function FeatureCarousel({ features, getIcon }) {
           size="iconLg"
           className="carousel-nav-btn carousel-nav-prev" 
           onClick={onPrev}
-          aria-label="Previous"
-        >
-          <ChevronLeft size={24} strokeWidth={2.5} />
-        </RippleButton>
-
-        {/* Carousel Viewport */}
-        <div className="carousel-viewport-v2" ref={emblaRef}>
-          <div className="carousel-container-v2">
-            {features.map((feature, index) => {
-              const isActive = index === selectedIndex
-
-              return (
-                <motion.div
-                  key={index}
-                  className="carousel-slide-v2"
-                  initial={false}
-                  animate={{
-                    scale: isActive ? 1 : 0.85,
-                    opacity: isActive ? 1 : 0.4,
-                  }}
-                  transition={{ type: 'spring', stiffness: 260, damping: 26, mass: 0.9 }}
-                >
-                  <div className={`carousel-card-v2 ${isActive ? 'active' : ''}`}>
-                    <div className="carousel-card-number">{index + 1}</div>
-                    <div className="carousel-card-content">
-                      <div className="carousel-card-icon">
-                        {getIcon(feature.icon)}
-                      </div>
-                      <h3>{feature.title}</h3>
-                      <p>{feature.desc}</p>
-                    </div>
-                  </div>
-                </motion.div>
-              )
-            })}
-          </div>
-        </div>
-
-        {/* Right Arrow */}
-        <RippleButton 
-          variant="default"
-          size="iconLg"
-          className="carousel-nav-btn carousel-nav-next" 
-          onClick={onNext}
-          aria-label="Next"
-        >
-          <ChevronRight size={24} strokeWidth={2.5} />
-        </RippleButton>
-      </div>
-
-      {/* Pagination Dots */}
-      <div className="carousel-pagination-v2">
-        {scrollSnaps.map((_, index) => (
-          <DotButton
-            key={index}
-            label={`Slide ${index + 1}`}
-            selected={index === selectedIndex}
-            onClick={() => onDotClick(index)}
-          />
-        ))}
-      </div>
-    </div>
-  )
-}
-
-// Process Card Carousel for "How We Work"
-function ProcessCarousel({ process, getIcon }) {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ 
-    align: 'center', 
-    loop: true,
-    containScroll: false,
-  })
-  const {
-    selectedIndex,
-    scrollSnaps,
-    onDotClick,
-    onPrev,
-    onNext,
-  } = useEmblaControls(emblaApi)
-
-  return (
-    <div className="motion-carousel-v2">
-      <div className="carousel-wrapper-v2">
-        {/* Left Arrow */}
-        <RippleButton 
-          variant="default"
-          size="iconLg"
-          className="carousel-nav-btn carousel-nav-prev" 
-          onClick={onPrev}
-          aria-label="Previous"
+          aria-label="Previous step"
         >
           <ChevronLeft size={24} strokeWidth={2.5} />
         </RippleButton>
@@ -184,18 +120,20 @@ function ProcessCarousel({ process, getIcon }) {
                   className="carousel-slide-v2"
                   initial={false}
                   animate={{
-                    scale: isActive ? 1 : 0.85,
-                    opacity: isActive ? 1 : 0.4,
+                    scale: isActive ? 1.02 : 0.88,
+                    opacity: isActive ? 1 : 0.45,
                   }}
                   transition={{ type: 'spring', stiffness: 260, damping: 26, mass: 0.9 }}
                 >
                   <div className={`carousel-card-v2 ${isActive ? 'active' : ''}`}>
-                    <div className="carousel-card-number">{index + 1}</div>
+                    <div className="carousel-card-header">
+                      <span className="carousel-step-label">Phase 0{index + 1}</span>
+                      <div className="carousel-card-number">0{index + 1}</div>
+                    </div>
                     <div className="carousel-card-content">
                       <div className="carousel-card-icon">
-                        {getIcon(item.icon)}
+                        {getIcon ? getIcon(item.icon) : item.icon}
                       </div>
-                      <span className="carousel-step-label">Step {index + 1}</span>
                       <h3>{item.step}</h3>
                       <p>{item.desc}</p>
                     </div>
@@ -212,7 +150,7 @@ function ProcessCarousel({ process, getIcon }) {
           size="iconLg"
           className="carousel-nav-btn carousel-nav-next" 
           onClick={onNext}
-          aria-label="Next"
+          aria-label="Next step"
         >
           <ChevronRight size={24} strokeWidth={2.5} />
         </RippleButton>
@@ -223,7 +161,7 @@ function ProcessCarousel({ process, getIcon }) {
         {scrollSnaps.map((_, index) => (
           <DotButton
             key={index}
-            label={`Slide ${index + 1}`}
+            label={`Phase ${index + 1}`}
             selected={index === selectedIndex}
             onClick={() => onDotClick(index)}
           />
@@ -242,7 +180,7 @@ function DotButton({ selected = false, label, onClick }) {
       initial={false}
       className={`carousel-dot-v2 ${selected ? 'selected' : ''}`}
       animate={{
-        backgroundColor: selected ? '#ffffff' : 'rgba(255,255,255,0.4)',
+        backgroundColor: selected ? 'var(--color-cyan)' : 'rgba(255,255,255,0.25)',
       }}
       transition={{ type: 'spring', stiffness: 260, damping: 26, mass: 0.9 }}
     >
@@ -261,4 +199,4 @@ function DotButton({ selected = false, label, onClick }) {
   )
 }
 
-export { FeatureCarousel, ProcessCarousel }
+export default ProcessCarousel

@@ -1,78 +1,72 @@
-import { useEffect, useRef } from "react";
-import * as THREE from "three";
+import { useEffect, useRef } from 'react'
+import * as THREE from 'three'
 
-/**
- * Dark Premium TechGlobe Component
- * A futuristic 3D network globe for ZYTRONA with enhanced animations
- */
-const TechGlobe = () => {
-  const containerRef = useRef(null);
-  const rendererRef = useRef(null);
-  const frameIdRef = useRef(null);
+export function TechGlobe() {
+  const containerRef = useRef(null)
+  const rendererRef = useRef(null)
+  const frameIdRef = useRef(0)
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!containerRef.current) return
 
-    const container = containerRef.current;
-    const width = container.clientWidth;
-    const height = container.clientHeight;
+    const container = containerRef.current
+    const width = container.clientWidth || 480
+    const height = container.clientHeight || 480
 
-    // Configuration - Dark but visible colors
+    // Theme Colors for Blur White Light Theme
     const config = {
-      radius: 2.8,
-      rotationSpeed: 0.0018,
-      primaryColor: 0x0077bb,      // Dark cyan
-      secondaryColor: 0x004488,    // Dark blue
-      accentColor: 0x00aadd,       // Visible accent
-      darkColor: 0x030507,         // Very dark sleek black
-    };
+      radius: 2.6,
+      rotationSpeed: 0.0015,
+      primaryColor: 0x0d9488,     // Vibrant modern teal
+      secondaryColor: 0x06b6d4,   // Electric cyan
+      accentColor: 0x0284c7,      // Sky blue
+      nodeColor: 0x0f766e,        // Deep teal
+      hubColor: 0x10b981,         // Emerald green
+      glassColor: 0xd1fae5,       // Mint tinted glass
+    }
 
     // Scene
-    const scene = new THREE.Scene();
+    const scene = new THREE.Scene()
 
     // Camera
-    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
-    camera.position.set(0, 0.2, 7.5);
+    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000)
+    camera.position.set(0, 0.3, 7.2)
 
-    // Renderer
+    // Renderer with high precision and transparency
     const renderer = new THREE.WebGLRenderer({
       antialias: true,
       alpha: true,
-      powerPreference: "high-performance",
-    });
-    renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setClearColor(0x000000, 0);
-    container.appendChild(renderer.domElement);
-    rendererRef.current = renderer;
+      powerPreference: 'high-performance',
+    })
+    renderer.setSize(width, height)
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    renderer.setClearColor(0x000000, 0)
+    container.appendChild(renderer.domElement)
+    rendererRef.current = renderer
 
-    // Globe group
-    const globeGroup = new THREE.Group();
-    scene.add(globeGroup);
+    // Main globe group
+    const globeGroup = new THREE.Group()
+    scene.add(globeGroup)
 
-    const materials = [];
-    const geometries = [];
-    const pixelRatio = renderer.getPixelRatio();
-    const phi = Math.PI * (3 - Math.sqrt(5));
+    const materials = []
+    const geometries = []
 
     // ============================================
-    // 1. DARK CORE SPHERE with scanning effect
+    // 1. TRANSLUCENT FROSTED GLASS CORE (Soft Cyan / Blur White)
     // ============================================
-    const coreGeometry = new THREE.SphereGeometry(config.radius * 0.88, 64, 64);
+    const coreGeometry = new THREE.SphereGeometry(config.radius * 0.95, 64, 64)
     const coreMaterial = new THREE.ShaderMaterial({
       uniforms: {
         uTime: { value: 0 },
-        uColor1: { value: new THREE.Color(0x020304) },
-        uColor2: { value: new THREE.Color(0x050708) },
+        uColor1: { value: new THREE.Color(0xecfdf5) }, // Soft mint white
+        uColor2: { value: new THREE.Color(0x99f6e4) }, // Translucent teal glow
       },
       vertexShader: `
         varying vec3 vNormal;
         varying vec3 vPosition;
-        varying vec2 vUv;
         void main() {
           vNormal = normalize(normalMatrix * normal);
           vPosition = position;
-          vUv = uv;
           gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
         }
       `,
@@ -82,506 +76,263 @@ const TechGlobe = () => {
         uniform float uTime;
         varying vec3 vNormal;
         varying vec3 vPosition;
-        varying vec2 vUv;
         
         void main() {
-          float fresnel = pow(1.0 - abs(dot(vNormal, vec3(0.0, 0.0, 1.0))), 2.5);
-          vec3 color = mix(uColor1, uColor2, fresnel * 0.8);
+          // Fresnel rim lighting for glass edge
+          float fresnel = pow(1.0 - abs(dot(vNormal, vec3(0.0, 0.0, 1.0))), 2.2);
           
-          // Multiple horizontal scan lines
-          float scanY1 = mod(uTime * 0.4, 2.0) - 1.0;
-          float scanY2 = mod(uTime * 0.25 + 1.0, 2.0) - 1.0;
-          float scanLine1 = 1.0 - smoothstep(0.0, 0.08, abs(vPosition.y / 2.8 - scanY1));
-          float scanLine2 = 1.0 - smoothstep(0.0, 0.06, abs(vPosition.y / 2.8 - scanY2));
-          color += vec3(0.0, 0.25, 0.4) * scanLine1 * 0.5;
-          color += vec3(0.0, 0.15, 0.3) * scanLine2 * 0.3;
+          // Subtle horizontal scanning wave
+          float scan = sin(vPosition.y * 3.0 - uTime * 1.5) * 0.5 + 0.5;
+          vec3 color = mix(uColor1, uColor2, fresnel * 0.75 + scan * 0.15);
           
-          // Rotating grid pattern
-          float rotAngle = uTime * 0.2;
-          float rx = vPosition.x * cos(rotAngle) - vPosition.z * sin(rotAngle);
-          float rz = vPosition.x * sin(rotAngle) + vPosition.z * cos(rotAngle);
-          float grid = sin(vPosition.y * 25.0) * sin(rx * 25.0 + uTime * 2.0);
-          grid = smoothstep(0.75, 1.0, grid) * 0.04;
-          color += vec3(0.0, 0.35, 0.55) * grid;
-          
-          // Pulse wave from poles
-          float poleWave = sin(abs(vPosition.y) * 3.0 - uTime * 2.5) * 0.5 + 0.5;
-          color += vec3(0.0, 0.1, 0.2) * poleWave * 0.15;
-          
-          gl_FragColor = vec4(color, 0.92);
+          // Translucent alpha (never dark or pitch black)
+          float alpha = 0.18 + fresnel * 0.35 + scan * 0.05;
+          gl_FragColor = vec4(color, alpha);
         }
       `,
       transparent: true,
       side: THREE.FrontSide,
-      depthWrite: true,
-    });
-    const coreSphere = new THREE.Mesh(coreGeometry, coreMaterial);
-    globeGroup.add(coreSphere);
-    materials.push(coreMaterial);
-    geometries.push(coreGeometry);
+      depthWrite: false,
+    })
+    const coreSphere = new THREE.Mesh(coreGeometry, coreMaterial)
+    globeGroup.add(coreSphere)
+    materials.push(coreMaterial)
+    geometries.push(coreGeometry)
 
     // ============================================
-    // 2. HEXAGONAL GRID with wave animation
+    // 2. DOTTED GLOBE MATRIX (Fibonacci Sphere Distribution)
     // ============================================
-    const hexRadius = config.radius * 1.005;
-    const hexPoints = [];
-    const hexCount = 500;
+    const dotCount = 1400
+    const dotPositions = []
+    const dotSizes = []
+    const phi = Math.PI * (3 - Math.sqrt(5))
 
-    for (let i = 0; i < hexCount; i++) {
-      const y = 1 - (i / (hexCount - 1)) * 2;
-      const radiusAtY = Math.sqrt(1 - y * y);
-      const theta = phi * i;
-      hexPoints.push(new THREE.Vector3(
-        Math.cos(theta) * radiusAtY * hexRadius,
-        y * hexRadius,
-        Math.sin(theta) * radiusAtY * hexRadius
-      ));
+    for (let i = 0; i < dotCount; i++) {
+      const y = 1 - (i / (dotCount - 1)) * 2
+      const radiusAtY = Math.sqrt(1 - y * y)
+      const theta = phi * i
+
+      const x = Math.cos(theta) * radiusAtY * config.radius
+      const z = Math.sin(theta) * radiusAtY * config.radius
+      dotPositions.push(x, y * config.radius, z)
+
+      // Random dot size variation for natural sparkle
+      dotSizes.push(1.5 + Math.random() * 2.5)
     }
 
-    const hexLinePositions = [];
-    const hexLineIndices = [];
-    let lineIdx = 0;
-    for (let i = 0; i < hexPoints.length; i++) {
-      for (let j = i + 1; j < hexPoints.length; j++) {
-        const dist = hexPoints[i].distanceTo(hexPoints[j]);
-        if (dist < hexRadius * 0.22 && dist > hexRadius * 0.08) {
-          hexLinePositions.push(
-            hexPoints[i].x, hexPoints[i].y, hexPoints[i].z,
-            hexPoints[j].x, hexPoints[j].y, hexPoints[j].z
-          );
-          hexLineIndices.push(lineIdx, lineIdx);
-          lineIdx += 2;
-        }
-      }
-    }
+    const dotGeometry = new THREE.BufferGeometry()
+    dotGeometry.setAttribute('position', new THREE.Float32BufferAttribute(dotPositions, 3))
+    dotGeometry.setAttribute('aSize', new THREE.Float32BufferAttribute(dotSizes, 1))
 
-    const hexGeometry = new THREE.BufferGeometry();
-    hexGeometry.setAttribute("position", new THREE.Float32BufferAttribute(hexLinePositions, 3));
-    geometries.push(hexGeometry);
-
-    const hexMaterial = new THREE.ShaderMaterial({
+    const dotMaterial = new THREE.ShaderMaterial({
       uniforms: {
         uTime: { value: 0 },
         uColor: { value: new THREE.Color(config.primaryColor) },
+        uColorAccent: { value: new THREE.Color(config.secondaryColor) },
       },
       vertexShader: `
+        attribute float aSize;
         varying vec3 vPosition;
-        varying float vDist;
+        uniform float uTime;
         void main() {
           vPosition = position;
-          vDist = length(position);
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }
-      `,
-      fragmentShader: `
-        uniform vec3 uColor;
-        uniform float uTime;
-        varying vec3 vPosition;
-        varying float vDist;
-        
-        void main() {
-          // Multiple pulsing waves
-          float wave1 = sin(vDist * 4.0 - uTime * 3.0) * 0.5 + 0.5;
-          float wave2 = sin(vDist * 2.5 + uTime * 2.0) * 0.5 + 0.5;
-          // Spiral wave
-          float angle = atan(vPosition.z, vPosition.x);
-          float spiral = sin(angle * 3.0 + vPosition.y * 2.0 - uTime * 2.5) * 0.5 + 0.5;
-          float alpha = 0.08 + wave1 * 0.08 + wave2 * 0.06 + spiral * 0.06;
-          gl_FragColor = vec4(uColor * 0.7, alpha);
-        }
-      `,
-      transparent: true,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-    });
-    const hexLines = new THREE.LineSegments(hexGeometry, hexMaterial);
-    globeGroup.add(hexLines);
-    materials.push(hexMaterial);
-
-    // ============================================
-    // 3. LATITUDE RINGS with pulse animation
-    // ============================================
-    const latCount = 7;
-    const latLines = [];
-    for (let i = 1; i < latCount; i++) {
-      const latPhi = (i / latCount) * Math.PI;
-      const latRadius = config.radius * Math.sin(latPhi);
-      const latY = config.radius * Math.cos(latPhi);
-
-      const latPoints = [];
-      for (let j = 0; j <= 128; j++) {
-        const angle = (j / 128) * Math.PI * 2;
-        latPoints.push(new THREE.Vector3(
-          latRadius * Math.cos(angle),
-          latY,
-          latRadius * Math.sin(angle)
-        ));
-      }
-
-      const latGeometry = new THREE.BufferGeometry().setFromPoints(latPoints);
-      const latMaterial = new THREE.ShaderMaterial({
-        uniforms: {
-          uTime: { value: 0 },
-          uColor: { value: new THREE.Color(config.primaryColor) },
-          uIndex: { value: i },
-        },
-        vertexShader: `
-          varying vec3 vPos;
-          varying float vAngle;
-          void main() {
-            vPos = position;
-            vAngle = atan(position.z, position.x);
-            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-          }
-        `,
-        fragmentShader: `
-          uniform vec3 uColor;
-          uniform float uTime;
-          uniform float uIndex;
-          varying vec3 vPos;
-          varying float vAngle;
-          void main() {
-            // Traveling light around ring
-            float travelSpeed = 1.5 + uIndex * 0.2;
-            float lightPos = mod(uTime * travelSpeed, 6.28318);
-            float dist = abs(vAngle - lightPos + 3.14159);
-            dist = min(dist, 6.28318 - dist);
-            float travelLight = 1.0 - smoothstep(0.0, 0.8, dist);
-            // Base pulse
-            float pulse = 0.5 + 0.5 * sin(uTime * 2.0 + uIndex * 0.8);
-            float alpha = 0.1 + pulse * 0.08 + travelLight * 0.35;
-            vec3 col = mix(uColor * 0.5, uColor, travelLight);
-            gl_FragColor = vec4(col, alpha);
-          }
-        `,
-        transparent: true,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-      });
-      const latLine = new THREE.Line(latGeometry, latMaterial);
-      globeGroup.add(latLine);
-      latLines.push(latLine);
-      materials.push(latMaterial);
-      geometries.push(latGeometry);
-    }
-
-    // ============================================
-    // 4. LONGITUDE ARCS with staggered animation
-    // ============================================
-    const longCount = 12;
-    for (let i = 0; i < longCount; i++) {
-      const longPoints = [];
-      const longAngle = (i / longCount) * Math.PI;
-
-      for (let j = 0; j <= 64; j++) {
-        const longPhi = (j / 64) * Math.PI;
-        longPoints.push(new THREE.Vector3(
-          config.radius * Math.sin(longPhi) * Math.cos(longAngle),
-          config.radius * Math.cos(longPhi),
-          config.radius * Math.sin(longPhi) * Math.sin(longAngle)
-        ));
-      }
-
-      const longGeometry = new THREE.BufferGeometry().setFromPoints(longPoints);
-      const longMaterial = new THREE.ShaderMaterial({
-        uniforms: {
-          uTime: { value: 0 },
-          uColor: { value: new THREE.Color(config.primaryColor) },
-          uIndex: { value: i },
-        },
-        vertexShader: `
-          varying float vY;
-          varying float vProgress;
-          void main() {
-            vY = position.y;
-            vProgress = (position.y + 2.8) / 5.6;
-            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-          }
-        `,
-        fragmentShader: `
-          uniform vec3 uColor;
-          uniform float uTime;
-          uniform float uIndex;
-          varying float vY;
-          varying float vProgress;
-          void main() {
-            // Multiple traveling lights going opposite directions
-            float travel1 = mod(uTime * 1.2 + uIndex * 0.4, 6.0) - 3.0;
-            float travel2 = mod(-uTime * 0.9 + uIndex * 0.5 + 3.0, 6.0) - 3.0;
-            float glow1 = 1.0 - smoothstep(0.0, 0.5, abs(vY - travel1));
-            float glow2 = 1.0 - smoothstep(0.0, 0.4, abs(vY - travel2));
-            float glow = max(glow1, glow2 * 0.7);
-            // Pulse effect
-            float pulse = sin(uTime * 3.0 + uIndex) * 0.3 + 0.7;
-            float alpha = 0.06 + glow * 0.35 * pulse;
-            vec3 col = mix(uColor * 0.4, uColor, glow);
-            gl_FragColor = vec4(col, alpha);
-          }
-        `,
-        transparent: true,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-      });
-      const longLine = new THREE.Line(longGeometry, longMaterial);
-      globeGroup.add(longLine);
-      materials.push(longMaterial);
-      geometries.push(longGeometry);
-    }
-
-    // ============================================
-    // 5. NETWORK NODES with flicker animation
-    // ============================================
-    const nodeCount = 280;
-    const nodePositionsArray = new Float32Array(nodeCount * 3);
-    const nodeSizes = new Float32Array(nodeCount);
-    const nodeIntensities = new Float32Array(nodeCount);
-    const nodeOffsets = new Float32Array(nodeCount);
-    const nodeVectors = [];
-
-    for (let i = 0; i < nodeCount; i++) {
-      const y = 1 - (i / (nodeCount - 1)) * 2;
-      const radiusAtY = Math.sqrt(1 - y * y);
-      const theta = phi * i;
-
-      const x = Math.cos(theta) * radiusAtY * config.radius;
-      const z = Math.sin(theta) * radiusAtY * config.radius;
-      const yPos = y * config.radius;
-
-      nodeVectors.push(new THREE.Vector3(x, yPos, z));
-      nodePositionsArray[i * 3] = x;
-      nodePositionsArray[i * 3 + 1] = yPos;
-      nodePositionsArray[i * 3 + 2] = z;
-
-      const rand = Math.random();
-      if (rand > 0.92) {
-        nodeSizes[i] = 0.1;
-        nodeIntensities[i] = 1.0;
-      } else if (rand > 0.75) {
-        nodeSizes[i] = 0.05;
-        nodeIntensities[i] = 0.7;
-      } else {
-        nodeSizes[i] = 0.025;
-        nodeIntensities[i] = 0.4;
-      }
-      nodeOffsets[i] = Math.random() * 10.0;
-    }
-
-    const nodeGeometry = new THREE.BufferGeometry();
-    nodeGeometry.setAttribute("position", new THREE.BufferAttribute(nodePositionsArray, 3));
-    nodeGeometry.setAttribute("size", new THREE.BufferAttribute(nodeSizes, 1));
-    nodeGeometry.setAttribute("intensity", new THREE.BufferAttribute(nodeIntensities, 1));
-    nodeGeometry.setAttribute("offset", new THREE.BufferAttribute(nodeOffsets, 1));
-    geometries.push(nodeGeometry);
-
-    const nodeMaterial = new THREE.ShaderMaterial({
-      uniforms: {
-        uTime: { value: 0 },
-        uColor: { value: new THREE.Color(config.accentColor) },
-        uPixelRatio: { value: pixelRatio },
-      },
-      vertexShader: `
-        attribute float size;
-        attribute float intensity;
-        attribute float offset;
-        uniform float uPixelRatio;
-        uniform float uTime;
-        varying float vIntensity;
-        varying float vFlicker;
-        varying float vPulsePhase;
-        
-        void main() {
-          vIntensity = intensity;
-          // Complex flicker effect
-          float flicker = sin(uTime * 10.0 + offset * 25.0) * 0.25 + 0.75;
-          flicker *= sin(uTime * 4.0 + offset * 8.0) * 0.15 + 0.85;
-          flicker *= sin(uTime * 1.5 + offset * 2.0) * 0.2 + 0.8;
-          // Random pop effect
-          float pop = step(0.97, sin(uTime * 0.5 + offset * 50.0)) * 0.5;
-          vFlicker = flicker + pop;
-          vPulsePhase = sin(uTime * 3.0 + offset * 4.0);
-          
           vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-          float pulse = 1.0 + 0.5 * sin(uTime * 2.5 + offset * 3.0);
-          float breathe = 1.0 + 0.2 * sin(uTime * 0.8);
-          gl_PointSize = size * uPixelRatio * (400.0 / -mvPosition.z) * pulse * intensity * breathe;
+          gl_PointSize = aSize * (160.0 / -mvPosition.z);
           gl_Position = projectionMatrix * mvPosition;
         }
       `,
       fragmentShader: `
         uniform vec3 uColor;
-        varying float vIntensity;
-        varying float vFlicker;
-        varying float vPulsePhase;
-        
+        uniform vec3 uColorAccent;
+        uniform float uTime;
+        varying vec3 vPosition;
+
         void main() {
+          // Circular particle shape
           float dist = length(gl_PointCoord - vec2(0.5));
           if (dist > 0.5) discard;
           
-          float core = 1.0 - smoothstep(0.0, 0.12, dist);
-          float glow = 1.0 - smoothstep(0.0, 0.5, dist);
-          glow = pow(glow, 1.8);
+          float alpha = smoothstep(0.5, 0.1, dist);
           
-          vec3 coreColor = vec3(0.85, 0.95, 1.0);
-          vec3 finalColor = mix(uColor * 0.7, coreColor, core * 0.85);
+          // Shimmer wave
+          float shimmer = sin(vPosition.y * 5.0 + uTime * 3.0) * 0.5 + 0.5;
+          vec3 col = mix(uColor, uColorAccent, shimmer);
           
-          float alpha = (core + glow * 0.6) * vIntensity * vFlicker * 0.85;
-          gl_FragColor = vec4(finalColor, alpha);
+          gl_FragColor = vec4(col, alpha * 0.75);
         }
       `,
       transparent: true,
-      blending: THREE.AdditiveBlending,
       depthWrite: false,
-    });
-
-    const nodes = new THREE.Points(nodeGeometry, nodeMaterial);
-    globeGroup.add(nodes);
-    materials.push(nodeMaterial);
+    })
+    const dotPoints = new THREE.Points(dotGeometry, dotMaterial)
+    globeGroup.add(dotPoints)
+    materials.push(dotMaterial)
+    geometries.push(dotGeometry)
 
     // ============================================
-    // 6. CONNECTION LINES with data flow
+    // 3. GLOBAL TECH HUBS & PULSING BEACONS
     // ============================================
-    const connectionDist = config.radius * 0.4;
-    const connectionPositions = [];
-    const connectionAlphas = [];
-    const connectionOffsets = [];
+    // Key worldwide technology centers (lat/long in radians)
+    const hubCoordinates = [
+      { lat: 37.7749, lng: -122.4194, name: 'San Francisco' },
+      { lat: 40.7128, lng: -74.006, name: 'New York' },
+      { lat: 51.5074, lng: -0.1278, name: 'London' },
+      { lat: 52.52, lng: 13.405, name: 'Berlin' },
+      { lat: 12.9716, lng: 77.5946, name: 'Bangalore' },
+      { lat: 1.3521, lng: 103.8198, name: 'Singapore' },
+      { lat: 35.6762, lng: 139.6503, name: 'Tokyo' },
+      { lat: -33.8688, lng: 151.2093, name: 'Sydney' },
+      { lat: 25.2048, lng: 55.2708, name: 'Dubai' },
+    ]
 
-    for (let i = 0; i < nodeVectors.length; i++) {
-      for (let j = i + 1; j < nodeVectors.length; j++) {
-        const dist = nodeVectors[i].distanceTo(nodeVectors[j]);
-        if (dist < connectionDist && Math.random() > 0.6) {
-          connectionPositions.push(
-            nodeVectors[i].x, nodeVectors[i].y, nodeVectors[i].z,
-            nodeVectors[j].x, nodeVectors[j].y, nodeVectors[j].z
-          );
-          const alpha = 1 - dist / connectionDist;
-          connectionAlphas.push(alpha, alpha);
-          const off = Math.random() * 10;
-          connectionOffsets.push(off, off);
-        }
-      }
+    const latLngToVector3 = (lat, lng, radius) => {
+      const phi = (90 - lat) * (Math.PI / 180)
+      const theta = (lng + 180) * (Math.PI / 180)
+      return new THREE.Vector3(
+        -radius * Math.sin(phi) * Math.cos(theta),
+        radius * Math.cos(phi),
+        radius * Math.sin(phi) * Math.sin(theta)
+      )
     }
 
-    const connectionGeometry = new THREE.BufferGeometry();
-    connectionGeometry.setAttribute("position", new THREE.Float32BufferAttribute(connectionPositions, 3));
-    connectionGeometry.setAttribute("alpha", new THREE.Float32BufferAttribute(connectionAlphas, 1));
-    connectionGeometry.setAttribute("offset", new THREE.Float32BufferAttribute(connectionOffsets, 1));
-    geometries.push(connectionGeometry);
+    const hubPoints = hubCoordinates.map((coord) =>
+      latLngToVector3(coord.lat, coord.lng, config.radius * 1.01)
+    )
 
-    const connectionMaterial = new THREE.ShaderMaterial({
-      uniforms: {
-        uColor: { value: new THREE.Color(config.primaryColor) },
-        uTime: { value: 0 },
-      },
-      vertexShader: `
-        attribute float alpha;
-        attribute float offset;
-        varying float vAlpha;
-        varying float vOffset;
-        varying vec3 vPos;
-        void main() {
-          vAlpha = alpha;
-          vOffset = offset;
-          vPos = position;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }
-      `,
-      fragmentShader: `
-        uniform vec3 uColor;
-        uniform float uTime;
-        varying float vAlpha;
-        varying float vOffset;
-        varying vec3 vPos;
-        void main() {
-          // Data packet traveling along line
-          float packet = mod(uTime * 3.0 + vOffset * 2.0, 4.0);
-          float packetGlow = 1.0 - smoothstep(0.0, 0.3, abs(length(vPos) - packet));
-          // Base pulse
-          float pulse = 0.4 + 0.6 * sin(uTime * 2.5 + vOffset);
-          float flicker = sin(uTime * 6.0 + vOffset * 4.0) * 0.2 + 0.8;
-          float alpha = vAlpha * 0.25 * pulse * flicker + packetGlow * 0.3;
-          vec3 col = mix(uColor * 0.5, uColor, packetGlow);
-          gl_FragColor = vec4(col, alpha);
-        }
-      `,
-      transparent: true,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-    });
+    // Draw glowing pulsing rings at each hub
+    hubPoints.forEach((point) => {
+      // Small solid beacon sphere
+      const beaconGeom = new THREE.SphereGeometry(0.065, 16, 16)
+      const beaconMat = new THREE.MeshBasicMaterial({
+        color: config.hubColor,
+      })
+      const beaconMesh = new THREE.Mesh(beaconGeom, beaconMat)
+      beaconMesh.position.copy(point)
+      globeGroup.add(beaconMesh)
+      materials.push(beaconMat)
+      geometries.push(beaconGeom)
 
-    const connections = new THREE.LineSegments(connectionGeometry, connectionMaterial);
-    globeGroup.add(connections);
-    materials.push(connectionMaterial);
+      // Outer ripple ring
+      const ringGeom = new THREE.RingGeometry(0.08, 0.14, 24)
+      const ringMat = new THREE.MeshBasicMaterial({
+        color: config.secondaryColor,
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: 0.8,
+      })
+      const ringMesh = new THREE.Mesh(ringGeom, ringMat)
+      ringMesh.position.copy(point)
+      ringMesh.lookAt(point.clone().multiplyScalar(2))
+      globeGroup.add(ringMesh)
+      materials.push(ringMat)
+      geometries.push(ringGeom)
+    })
 
     // ============================================
-    // 7. ENERGY RINGS (animated orbital rings)
+    // 4. ANIMATED INTERCONTINENTAL DATA ARCS
     // ============================================
-    const orbitalRadii = [config.radius * 1.2, config.radius * 1.4, config.radius * 1.6];
-    const orbitals = [];
-    const orbitalMaterials = [];
+    const arcPairs = [
+      [0, 1], // SF -> NY
+      [1, 2], // NY -> London
+      [2, 3], // London -> Berlin
+      [2, 8], // London -> Dubai
+      [8, 4], // Dubai -> Bangalore
+      [4, 5], // Bangalore -> Singapore
+      [5, 6], // Singapore -> Tokyo
+      [6, 7], // Tokyo -> Sydney
+      [0, 6], // SF -> Tokyo
+    ]
 
-    orbitalRadii.forEach((orbRadius, index) => {
-      const orbPoints = [];
-      for (let i = 0; i <= 128; i++) {
-        const angle = (i / 128) * Math.PI * 2;
-        orbPoints.push(new THREE.Vector3(
-          orbRadius * Math.cos(angle),
-          0,
-          orbRadius * Math.sin(angle)
-        ));
-      }
+    arcPairs.forEach(([startIdx, endIdx], arcIndex) => {
+      const p1 = hubPoints[startIdx]
+      const p2 = hubPoints[endIdx]
 
-      const orbGeometry = new THREE.BufferGeometry().setFromPoints(orbPoints);
-      const orbMaterial = new THREE.ShaderMaterial({
+      // Midpoint elevated away from globe center for curve
+      const mid = p1.clone().add(p2).multiplyScalar(0.5)
+      const distance = p1.distanceTo(p2)
+      mid.normalize().multiplyScalar(config.radius + distance * 0.35)
+
+      const curve = new THREE.QuadraticBezierCurve3(p1, mid, p2)
+      const curvePoints = curve.getPoints(60)
+
+      const arcGeom = new THREE.BufferGeometry().setFromPoints(curvePoints)
+      const arcMat = new THREE.ShaderMaterial({
         uniforms: {
           uTime: { value: 0 },
-          uColor: { value: new THREE.Color(config.primaryColor) },
-          uIndex: { value: index },
+          uColor: { value: new THREE.Color(config.secondaryColor) },
+          uOffset: { value: arcIndex * 0.3 },
         },
         vertexShader: `
-          varying float vAngle;
+          varying float vProgress;
           void main() {
-            vAngle = atan(position.z, position.x);
+            vProgress = uv.x;
             gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
           }
         `,
         fragmentShader: `
           uniform vec3 uColor;
           uniform float uTime;
-          uniform float uIndex;
-          varying float vAngle;
+          uniform float uOffset;
+          varying float vProgress;
+
           void main() {
-            // Rotating bright spot
-            float spot = mod(uTime * (0.8 + uIndex * 0.2) + uIndex, 6.28318);
-            float dist = abs(vAngle - spot + 3.14159);
-            dist = min(dist, 6.28318 - dist);
-            float glow = 1.0 - smoothstep(0.0, 1.2, dist);
-            float alpha = 0.12 + glow * 0.4;
-            vec3 col = mix(uColor * 0.5, uColor, glow);
+            // Flowing data packet
+            float t = mod(uTime * 0.8 + uOffset, 1.0);
+            float packet = smoothstep(0.18, 0.0, abs(vProgress - t));
+            float alpha = 0.25 + packet * 0.75;
+            vec3 col = mix(uColor * 0.8, vec3(1.0), packet * 0.8);
             gl_FragColor = vec4(col, alpha);
           }
         `,
         transparent: true,
-        blending: THREE.AdditiveBlending,
         depthWrite: false,
-      });
-      const orbLine = new THREE.Line(orbGeometry, orbMaterial);
-      orbLine.rotation.x = Math.PI * 0.42 + index * 0.12;
-      orbLine.rotation.z = index * 0.35;
-      globeGroup.add(orbLine);
-      orbitals.push(orbLine);
-      orbitalMaterials.push(orbMaterial);
-      materials.push(orbMaterial);
-      geometries.push(orbGeometry);
-    });
+      })
+
+      // Generate UV coords for curve
+      const uvs = new Float32Array(curvePoints.length * 2)
+      for (let i = 0; i < curvePoints.length; i++) {
+        uvs[i * 2] = i / (curvePoints.length - 1)
+        uvs[i * 2 + 1] = 0
+      }
+      arcGeom.setAttribute('uv', new THREE.BufferAttribute(uvs, 2))
+
+      const arcLine = new THREE.Line(arcGeom, arcMat)
+      globeGroup.add(arcLine)
+      materials.push(arcMat)
+      geometries.push(arcGeom)
+    })
 
     // ============================================
-    // 8. SUBTLE ATMOSPHERE
+    // 5. ELEGANT ORBITAL LATITUDE & LONGITUDE RINGS
     // ============================================
-    const atmosGeometry = new THREE.SphereGeometry(config.radius * 1.06, 64, 64);
-    const atmosMaterial = new THREE.ShaderMaterial({
+    const ringRadii = [config.radius * 1.08, config.radius * 1.18]
+    ringRadii.forEach((r, idx) => {
+      const ringPoints = []
+      for (let i = 0; i <= 100; i++) {
+        const theta = (i / 100) * Math.PI * 2
+        ringPoints.push(new THREE.Vector3(Math.cos(theta) * r, 0, Math.sin(theta) * r))
+      }
+      const ringGeom = new THREE.BufferGeometry().setFromPoints(ringPoints)
+      const ringMat = new THREE.LineBasicMaterial({
+        color: idx === 0 ? config.primaryColor : config.secondaryColor,
+        transparent: true,
+        opacity: 0.35,
+      })
+      const ringLine = new THREE.Line(ringGeom, ringMat)
+      ringLine.rotation.x = Math.PI / 3 + idx * 0.4
+      ringLine.rotation.y = idx * 0.6
+      globeGroup.add(ringLine)
+      materials.push(ringMat)
+      geometries.push(ringGeom)
+    })
+
+    // ============================================
+    // 6. ATMOSPHERIC HALO GLOW
+    // ============================================
+    const atmosphereGeom = new THREE.SphereGeometry(config.radius * 1.22, 48, 48)
+    const atmosphereMat = new THREE.ShaderMaterial({
       uniforms: {
-        uColor: { value: new THREE.Color(config.primaryColor) },
-        uTime: { value: 0 },
+        uColor: { value: new THREE.Color(0x06b6d4) },
       },
       vertexShader: `
         varying vec3 vNormal;
@@ -592,344 +343,148 @@ const TechGlobe = () => {
       `,
       fragmentShader: `
         uniform vec3 uColor;
-        uniform float uTime;
         varying vec3 vNormal;
-        
         void main() {
-          float intensity = pow(0.7 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 2.5);
-          float pulse = 0.7 + 0.3 * sin(uTime * 0.5);
-          gl_FragColor = vec4(uColor * 0.7, intensity * 0.25 * pulse);
+          float intensity = pow(0.65 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 2.8);
+          gl_FragColor = vec4(uColor, intensity * 0.45);
         }
       `,
       transparent: true,
-      blending: THREE.AdditiveBlending,
       side: THREE.BackSide,
       depthWrite: false,
-    });
-    const atmosphere = new THREE.Mesh(atmosGeometry, atmosMaterial);
-    globeGroup.add(atmosphere);
-    materials.push(atmosMaterial);
-    geometries.push(atmosGeometry);
+    })
+    const atmosphere = new THREE.Mesh(atmosphereGeom, atmosphereMat)
+    globeGroup.add(atmosphere)
+    materials.push(atmosphereMat)
+    geometries.push(atmosphereGeom)
+
+    // Initial slight tilt for aesthetic projection
+    globeGroup.rotation.x = 0.22
+    globeGroup.rotation.y = -0.4
 
     // ============================================
-    // 9. FLOATING DUST PARTICLES
+    // INTERACTION & ANIMATION LOOP
     // ============================================
-    const particleCount = 800;
-    const particlePositions = new Float32Array(particleCount * 3);
-    const particleSizes = new Float32Array(particleCount);
-    const particleAlphas = new Float32Array(particleCount);
-    const particleOffsets = new Float32Array(particleCount);
+    let mouseX = 0
+    let mouseY = 0
+    let targetRotationX = 0.22
+    let targetRotationY = -0.4
+    let isDragging = false
+    let prevMouseX = 0
+    let prevMouseY = 0
 
-    for (let i = 0; i < particleCount; i++) {
-      const r = config.radius * (1.15 + Math.pow(Math.random(), 0.5) * 2.0);
-      const theta = Math.random() * Math.PI * 2;
-      const phiAngle = Math.acos(2 * Math.random() - 1);
-
-      particlePositions[i * 3] = r * Math.sin(phiAngle) * Math.cos(theta);
-      particlePositions[i * 3 + 1] = r * Math.sin(phiAngle) * Math.sin(theta);
-      particlePositions[i * 3 + 2] = r * Math.cos(phiAngle);
-
-      particleSizes[i] = 0.008 + Math.random() * 0.02;
-      particleAlphas[i] = 0.15 + Math.random() * 0.35;
-      particleOffsets[i] = Math.random() * 20.0;
+    const handlePointerDown = (e) => {
+      isDragging = true
+      prevMouseX = e.clientX || e.touches?.[0]?.clientX || 0
+      prevMouseY = e.clientY || e.touches?.[0]?.clientY || 0
     }
 
-    const particleGeometry = new THREE.BufferGeometry();
-    particleGeometry.setAttribute("position", new THREE.BufferAttribute(particlePositions, 3));
-    particleGeometry.setAttribute("size", new THREE.BufferAttribute(particleSizes, 1));
-    particleGeometry.setAttribute("alpha", new THREE.BufferAttribute(particleAlphas, 1));
-    particleGeometry.setAttribute("offset", new THREE.BufferAttribute(particleOffsets, 1));
-    geometries.push(particleGeometry);
+    const handlePointerMove = (e) => {
+      const clientX = e.clientX || e.touches?.[0]?.clientX || 0
+      const clientY = e.clientY || e.touches?.[0]?.clientY || 0
 
-    const particleMaterial = new THREE.ShaderMaterial({
-      uniforms: {
-        uTime: { value: 0 },
-        uColor: { value: new THREE.Color(config.primaryColor) },
-        uPixelRatio: { value: pixelRatio },
-      },
-      vertexShader: `
-        attribute float size;
-        attribute float alpha;
-        attribute float offset;
-        uniform float uPixelRatio;
-        uniform float uTime;
-        varying float vAlpha;
-        
-        void main() {
-          vec3 pos = position;
-          // Organic floating motion
-          pos.x += sin(uTime * 0.15 + offset) * 0.15;
-          pos.y += cos(uTime * 0.12 + offset * 0.7) * 0.12;
-          pos.z += sin(uTime * 0.1 + offset * 1.3) * 0.1;
-          
-          vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-          
-          // Twinkle effect
-          float twinkle = sin(uTime * 4.0 + offset * 8.0) * 0.4 + 0.6;
-          vAlpha = alpha * twinkle;
-          
-          gl_PointSize = size * uPixelRatio * (150.0 / -mvPosition.z);
-          gl_Position = projectionMatrix * mvPosition;
-        }
-      `,
-      fragmentShader: `
-        uniform vec3 uColor;
-        varying float vAlpha;
-        
-        void main() {
-          float dist = length(gl_PointCoord - vec2(0.5));
-          if (dist > 0.5) discard;
-          float alpha = 1.0 - smoothstep(0.0, 0.5, dist);
-          gl_FragColor = vec4(uColor * 0.5, alpha * vAlpha * 0.3);
-        }
-      `,
-      transparent: true,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-    });
+      if (isDragging) {
+        const deltaX = clientX - prevMouseX
+        const deltaY = clientY - prevMouseY
+        prevMouseX = clientX
+        prevMouseY = clientY
 
-    const particles = new THREE.Points(particleGeometry, particleMaterial);
-    scene.add(particles);
-    materials.push(particleMaterial);
-
-    // ============================================
-    // 10. DATA STREAMS with trail effect
-    // ============================================
-    const streamCount = 300;
-    const streamPositions = new Float32Array(streamCount * 3);
-    const streamSizes = new Float32Array(streamCount);
-    const streamOffsets = new Float32Array(streamCount);
-    const streamSpeeds = new Float32Array(streamCount);
-
-    for (let i = 0; i < streamCount; i++) {
-      const x = -config.radius * 5 - Math.random() * config.radius * 3;
-      const y = (Math.random() - 0.5) * config.radius * 4;
-      const z = (Math.random() - 0.5) * config.radius * 3;
-
-      streamPositions[i * 3] = x;
-      streamPositions[i * 3 + 1] = y;
-      streamPositions[i * 3 + 2] = z;
-
-      streamSizes[i] = 0.01 + Math.random() * 0.02;
-      streamOffsets[i] = Math.random() * 15;
-      streamSpeeds[i] = 0.8 + Math.random() * 0.6;
+        targetRotationY += deltaX * 0.005
+        targetRotationX += deltaY * 0.005
+      } else {
+        const rect = container.getBoundingClientRect()
+        mouseX = ((clientX - rect.left) / width - 0.5) * 0.4
+        mouseY = ((clientY - rect.top) / height - 0.5) * 0.4
+      }
     }
 
-    const streamGeometry = new THREE.BufferGeometry();
-    streamGeometry.setAttribute("position", new THREE.BufferAttribute(streamPositions, 3));
-    streamGeometry.setAttribute("size", new THREE.BufferAttribute(streamSizes, 1));
-    streamGeometry.setAttribute("offset", new THREE.BufferAttribute(streamOffsets, 1));
-    streamGeometry.setAttribute("speed", new THREE.BufferAttribute(streamSpeeds, 1));
-    geometries.push(streamGeometry);
-
-    const streamMaterial = new THREE.ShaderMaterial({
-      uniforms: {
-        uTime: { value: 0 },
-        uColor: { value: new THREE.Color(config.primaryColor) },
-        uPixelRatio: { value: pixelRatio },
-      },
-      vertexShader: `
-        attribute float size;
-        attribute float offset;
-        attribute float speed;
-        uniform float uPixelRatio;
-        uniform float uTime;
-        varying float vAlpha;
-        varying float vTrail;
-        
-        void main() {
-          vec3 pos = position;
-          float flow = mod(uTime * speed + offset, 14.0);
-          pos.x += flow * 1.5;
-          
-          // Slight wave motion
-          pos.y += sin(uTime * 2.0 + offset) * 0.05;
-          
-          float fadeIn = smoothstep(-14.0, -10.0, pos.x);
-          float fadeOut = 1.0 - smoothstep(-3.5, -1.5, pos.x);
-          vAlpha = fadeIn * fadeOut;
-          vTrail = flow / 14.0;
-          
-          vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-          float pulse = 0.6 + 0.4 * sin(uTime * 4.0 + offset * 5.0);
-          gl_PointSize = size * uPixelRatio * (140.0 / -mvPosition.z) * pulse;
-          gl_Position = projectionMatrix * mvPosition;
-        }
-      `,
-      fragmentShader: `
-        uniform vec3 uColor;
-        varying float vAlpha;
-        varying float vTrail;
-        
-        void main() {
-          float dist = length(gl_PointCoord - vec2(0.5));
-          if (dist > 0.5) discard;
-          float alpha = 1.0 - smoothstep(0.0, 0.5, dist);
-          // Brighter as approaches globe
-          vec3 col = mix(uColor * 0.4, uColor * 0.8, vTrail);
-          gl_FragColor = vec4(col, alpha * vAlpha * 0.5);
-        }
-      `,
-      transparent: true,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-    });
-
-    const streams = new THREE.Points(streamGeometry, streamMaterial);
-    scene.add(streams);
-    materials.push(streamMaterial);
-
-    // ============================================
-    // 11. PULSE WAVE RINGS
-    // ============================================
-    const pulseRings = [];
-    const pulseCount = 3;
-    for (let i = 0; i < pulseCount; i++) {
-      const ringGeometry = new THREE.RingGeometry(config.radius * 0.95, config.radius * 1.0, 64);
-      const ringMaterial = new THREE.ShaderMaterial({
-        uniforms: {
-          uTime: { value: 0 },
-          uColor: { value: new THREE.Color(config.primaryColor) },
-          uIndex: { value: i },
-        },
-        vertexShader: `
-          varying vec2 vUv;
-          void main() {
-            vUv = uv;
-            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-          }
-        `,
-        fragmentShader: `
-          uniform vec3 uColor;
-          uniform float uTime;
-          uniform float uIndex;
-          varying vec2 vUv;
-          void main() {
-            float pulse = mod(uTime * 0.4 + uIndex * 1.5, 4.5);
-            float scale = pulse;
-            float fade = 1.0 - pulse / 4.5;
-            fade = pow(fade, 2.0);
-            gl_FragColor = vec4(uColor * 0.4, fade * 0.15);
-          }
-        `,
-        transparent: true,
-        blending: THREE.AdditiveBlending,
-        side: THREE.DoubleSide,
-        depthWrite: false,
-      });
-      const ring = new THREE.Mesh(ringGeometry, ringMaterial);
-      ring.rotation.x = Math.PI * 0.5;
-      ring.userData.baseScale = 1;
-      ring.userData.index = i;
-      globeGroup.add(ring);
-      pulseRings.push(ring);
-      materials.push(ringMaterial);
-      geometries.push(ringGeometry);
+    const handlePointerUp = () => {
+      isDragging = false
     }
 
-    // Initial globe tilt
-    globeGroup.rotation.x = 0.15;
-    globeGroup.rotation.z = 0.08;
+    container.addEventListener('mousedown', handlePointerDown)
+    window.addEventListener('mousemove', handlePointerMove)
+    window.addEventListener('mouseup', handlePointerUp)
+    container.addEventListener('touchstart', handlePointerDown, { passive: true })
+    window.addEventListener('touchmove', handlePointerMove, { passive: true })
+    window.addEventListener('touchend', handlePointerUp)
 
-    // Animation
-    const startTime = Date.now();
+    // Resize Handler
+    const handleResize = () => {
+      if (!container) return
+      const newWidth = container.clientWidth
+      const newHeight = container.clientHeight
+      camera.aspect = newWidth / newHeight
+      camera.updateProjectionMatrix()
+      renderer.setSize(newWidth, newHeight)
+    }
+    window.addEventListener('resize', handleResize)
+
+    // Animation Loop
+    const clock = new THREE.Clock()
 
     const animate = () => {
-      frameIdRef.current = requestAnimationFrame(animate);
-      const elapsed = (Date.now() - startTime) * 0.001;
+      const elapsedTime = clock.getElapsedTime()
 
-      // Update uniforms
+      // Continuous gentle auto rotation
+      if (!isDragging) {
+        targetRotationY += config.rotationSpeed
+      }
+
+      // Smooth damping interpolation
+      globeGroup.rotation.y += (targetRotationY + mouseX - globeGroup.rotation.y) * 0.06
+      globeGroup.rotation.x += (targetRotationX + mouseY - globeGroup.rotation.x) * 0.06
+
+      // Update shader uniforms
       materials.forEach((mat) => {
-        if (mat.uniforms?.uTime) mat.uniforms.uTime.value = elapsed;
-      });
+        if (mat.uniforms?.uTime) {
+          mat.uniforms.uTime.value = elapsedTime
+        }
+      })
 
-      // Rotate globe with subtle oscillation
-      const oscillation = Math.sin(elapsed * 0.3) * 0.0003;
-      globeGroup.rotation.y += config.rotationSpeed + oscillation;
-      
-      // Subtle breathing effect on globe tilt
-      globeGroup.rotation.x = 0.15 + Math.sin(elapsed * 0.2) * 0.02;
-      globeGroup.rotation.z = 0.08 + Math.cos(elapsed * 0.15) * 0.015;
+      renderer.render(scene, camera)
+      frameIdRef.current = requestAnimationFrame(animate)
+    }
 
-      // Animate pulse rings with varied speeds
-      pulseRings.forEach((ring, i) => {
-        const speed = 0.5 + i * 0.15;
-        const pulse = ((elapsed * speed + i * 1.2) % 4.5);
-        const scale = 1 + pulse * 0.9;
-        ring.scale.set(scale, scale, 1);
-        ring.rotation.z = elapsed * 0.1 * (i + 1);
-      });
+    animate()
 
-      // Counter-rotate orbitals with wobble
-      orbitals.forEach((orb, i) => {
-        orb.rotation.z += config.rotationSpeed * (0.5 + i * 0.2);
-        orb.rotation.x = Math.PI * 0.42 + i * 0.12 + Math.sin(elapsed * 0.3 + i) * 0.03;
-      });
-
-      // Rotate particles with wave motion
-      particles.rotation.y -= config.rotationSpeed * 0.2;
-      particles.rotation.x = Math.sin(elapsed * 0.1) * 0.05;
-
-      // Rotate streams slightly
-      streams.rotation.y = Math.sin(elapsed * 0.1) * 0.1;
-
-      renderer.render(scene, camera);
-    };
-
-    animate();
-
-    // Resize handler
-    const handleResize = () => {
-      if (!containerRef.current || !rendererRef.current) return;
-
-      const newWidth = containerRef.current.clientWidth;
-      const newHeight = containerRef.current.clientHeight;
-
-      camera.aspect = newWidth / newHeight;
-      camera.updateProjectionMatrix();
-      rendererRef.current.setSize(newWidth, newHeight);
-
-      const newPixelRatio = Math.min(window.devicePixelRatio, 2);
-      rendererRef.current.setPixelRatio(newPixelRatio);
-      nodeMaterial.uniforms.uPixelRatio.value = newPixelRatio;
-      particleMaterial.uniforms.uPixelRatio.value = newPixelRatio;
-      streamMaterial.uniforms.uPixelRatio.value = newPixelRatio;
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    // Cleanup
+    // Cleanup on unmount
     return () => {
-      window.removeEventListener("resize", handleResize);
-      if (frameIdRef.current) cancelAnimationFrame(frameIdRef.current);
+      if (frameIdRef.current) cancelAnimationFrame(frameIdRef.current)
 
-      geometries.forEach((geo) => geo.dispose());
-      materials.forEach((mat) => mat.dispose());
+      container.removeEventListener('mousedown', handlePointerDown)
+      window.removeEventListener('mousemove', handlePointerMove)
+      window.removeEventListener('mouseup', handlePointerUp)
+      container.removeEventListener('touchstart', handlePointerDown)
+      window.removeEventListener('touchmove', handlePointerMove)
+      window.removeEventListener('touchend', handlePointerUp)
+      window.removeEventListener('resize', handleResize)
 
-      if (rendererRef.current) {
-        rendererRef.current.dispose();
-        if (container?.contains(rendererRef.current.domElement)) {
-          container.removeChild(rendererRef.current.domElement);
+      geometries.forEach((g) => g.dispose())
+      materials.forEach((m) => m.dispose())
+
+      if (rendererRef.current && rendererRef.current.domElement) {
+        rendererRef.current.dispose()
+        if (container.contains(rendererRef.current.domElement)) {
+          container.removeChild(rendererRef.current.domElement)
         }
       }
-      scene.clear();
-    };
-  }, []);
+    }
+  }, [])
 
   return (
-    <div
-      ref={containerRef}
+    <div 
+      ref={containerRef} 
+      className="tech-globe-container"
       style={{
-        width: "100%",
-        height: "100%",
-        position: "absolute",
-        top: 0,
-        left: 0,
-        overflow: "hidden",
-        background: "transparent",
+        width: '100%',
+        height: '100%',
+        cursor: 'grab',
+        touchAction: 'none'
       }}
+      aria-label="Interactive 3D Technology Globe"
     />
-  );
-};
+  )
+}
 
-export default TechGlobe;
+export default TechGlobe

@@ -1,51 +1,56 @@
 /* ============================================
-   ZYTRONA - Sleek Black, Grey, White & Cyan Theme
+   ZYTRONA - Sleek Blur White & Cyan Theme
    ============================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
 
 :root {
-  /* Core Black + Neon Blue Palette */
-  --color-black: #0a0a0a;
-  --color-dark-grey: #111111;
-  --color-grey: #1a1a1a;
-  --color-medium-grey: #6bcfe6;
-  --color-light-grey: #a9e7f7;
+  /* Blur White Light Palette */
+  --color-bg-base: #f8fafc;
+  --color-bg-white: #ffffff;
+  --color-bg-blur: rgba(255, 255, 255, 0.72);
+  --color-bg-blur-elevated: rgba(255, 255, 255, 0.88);
+  --color-bg-blur-subtle: rgba(255, 255, 255, 0.55);
 
-  /* Text + Accent */
-  --color-white: #ffffff;
-  --color-off-white: #eafcff;
-  --color-cyan: #00c8ff;
-  --color-cyan-dark: #0099cc;
-  --color-cyan-light: #00e5ff;
-  --color-cyan-glow: rgba(0, 200, 255, 0.28);
-  --color-cyan-tint: #002233;
+  /* High Contrast Typography */
+  --color-black: #0b1720;
+  --color-heading: #0f172a;
+  --color-body: #334155;
+  --color-muted: #64748b;
+  --color-light-slate: #e2e8f0;
+
+  /* Vibrant Teal & Cyan Accents */
+  --color-cyan: #0d9488;
+  --color-cyan-dark: #0f766e;
+  --color-cyan-light: #06b6d4;
+  --color-cyan-glow: rgba(13, 148, 136, 0.22);
+  --color-cyan-tint: rgba(13, 148, 136, 0.08);
 
   /* Compatibility alias used in App.css */
   --cyan: var(--color-cyan);
 
   /* Status accents */
-  --color-success: #00ff94;
-  --color-warning: #ffb020;
-  --color-error: #ff4560;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
 
   /* Gradients */
-  --gradient-dark: linear-gradient(135deg, #000000 0%, #0a0a0a 55%, #1a1a1a 100%);
-  --gradient-cyan: linear-gradient(135deg, #0099cc 0%, #00c8ff 55%, #00e5ff 100%);
-  --gradient-sleek: linear-gradient(180deg, #0a0a0a 0%, #111111 100%);
+  --gradient-cyan: linear-gradient(135deg, #0d9488 0%, #06b6d4 100%);
+  --gradient-heading: linear-gradient(135deg, #0f172a 0%, #0d9488 65%, #0284c7 100%);
+  --gradient-white-blur: linear-gradient(180deg, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.65) 100%);
 
   /* Font Families */
-  --font-heading: 'Bebas Neue', sans-serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  --font-heading: 'Manrope', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
   
   font-family: var(--font-body);
   line-height: 1.6;
   font-weight: 400;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
 
-  color-scheme: dark;
-  color: var(--color-off-white);
-  background: var(--gradient-sleek);
+  color-scheme: light;
+  color: var(--color-body);
+  background: var(--color-bg-base);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -63,6 +68,19 @@ html {
 
 html, body {
   overflow-x: hidden;
+  background: var(--color-bg-base);
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background: #f8fafc;
+  color: var(--color-body);
+}
+
+#root {
+  width: 100%;
 }
 
 a {
@@ -73,75 +91,49 @@ a {
 }
 
 a:hover {
-  color: var(--color-cyan-light);
-  text-shadow: 0 0 10px var(--color-cyan-glow);
-}
-
-body {
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-  background: #0a0a0a;
-}
-
-#root {
-  width: 100%;
+  color: var(--color-cyan-dark);
 }
 
 h1 {
-  color: var(--color-cyan-light);
+  color: var(--color-heading);
+  font-family: var(--font-heading);
   font-size: 3.5em;
   line-height: 1.1;
-  font-weight: 700;
-  background: var(--gradient-cyan);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-weight: 800;
   letter-spacing: -0.02em;
 }
 
 h2, h3 {
-  color: var(--color-white);
-  font-weight: 600;
+  color: var(--color-heading);
+  font-family: var(--font-heading);
+  font-weight: 700;
 }
 
 button {
   border-radius: 12px;
-  border: 1px solid var(--color-grey);
+  border: 1px solid var(--color-light-slate);
   padding: 0.8em 1.6em;
   font-size: 1em;
   font-weight: 600;
   font-family: inherit;
-  background: var(--color-dark-grey);
-  color: var(--color-white);
+  background: var(--color-bg-white);
+  color: var(--color-heading);
   cursor: pointer;
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
 }
 
-button::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(0, 200, 255, 0.2), transparent);
-  transition: left 0.5s ease;
-}
-
 button:hover {
   border-color: var(--color-cyan);
-  box-shadow: 0 0 20px var(--color-cyan-glow), inset 0 0 20px rgba(0, 200, 255, 0.1);
+  box-shadow: 0 4px 15px var(--color-cyan-glow);
   transform: translateY(-2px);
 }
 
-button:hover::before {
-  left: 100%;
+button:focus {
+  outline: none;
 }
 
-button:focus,
 button:focus-visible {
   outline: 2px solid var(--color-cyan);
   outline-offset: 2px;
@@ -155,12 +147,14 @@ button:active {
 .btn-primary {
   background: var(--gradient-cyan);
   border: none;
-  color: var(--color-black);
+  color: #ffffff;
   font-weight: 700;
+  box-shadow: 0 4px 16px rgba(13, 148, 136, 0.3);
 }
 
 .btn-primary:hover {
-  box-shadow: 0 0 30px var(--color-cyan-glow);
+  box-shadow: 0 6px 24px rgba(13, 148, 136, 0.45);
+  color: #ffffff;
 }
 
 /* Scrollbar Styling */
@@ -170,11 +164,11 @@ button:active {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-dark-grey);
+  background: #f1f5f9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-grey);
+  background: #cbd5e1;
   border-radius: 4px;
 }
 
@@ -184,45 +178,6 @@ button:active {
 
 /* Selection */
 ::selection {
-  background: var(--color-cyan);
-  color: #000000;
-}
-
-/* Light mode with white & cyan accents */
-@media (prefers-color-scheme: light) {
-  :root {
-    color: var(--color-dark-grey);
-    background: linear-gradient(180deg, #ffffff 0%, #f0f0f0 100%);
-  }
-  
-  body {
-    background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 50%, #e8e8e8 100%);
-  }
-  
-  h1 {
-    color: var(--color-dark-grey);
-    background: linear-gradient(135deg, #030304 0%, #141416 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  
-  a {
-    color: var(--color-cyan-dark);
-  }
-  
-  a:hover {
-    color: var(--color-cyan);
-  }
-  
-  button {
-    background-color: var(--color-white);
-    border-color: #ddd;
-    color: var(--color-dark-grey);
-  }
-  
-  button:hover {
-    border-color: var(--color-cyan);
-    background-color: var(--color-off-white);
-  }
+  background: rgba(13, 148, 136, 0.2);
+  color: var(--color-heading);
 }

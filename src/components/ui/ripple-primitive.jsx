@@ -1,5 +1,4 @@
 import * as React from 'react'
-// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'motion/react'
 import { useRipple } from './use-ripple'
 

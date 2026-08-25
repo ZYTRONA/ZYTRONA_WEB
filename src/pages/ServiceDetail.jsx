@@ -18,7 +18,7 @@ import {
   SiDocker, SiKubernetes, SiTerraform, SiPrometheus, SiSharp
 } from 'react-icons/si'
 import '../App.css'
-import logo from '../assets/logo.svg'
+const logo = '/Logo.png'
 
 // Icon mapping for service main icons
 const serviceIcons = {
@@ -433,18 +433,13 @@ const googleFormsByService = {
   'website-development': 'https://docs.google.com/forms/d/e/1FAIpQLSdIU0cad3tXkHi2iBtrbldq-anCN6q_1Q_u_VBKayayEpMy8A/viewform',
   'app-development': 'https://docs.google.com/forms/d/e/1FAIpQLSceprsDvLFszsIulki2pNUNPwRvtStCCLcToKwQ-Liu73SDdQ/viewform',
   'video-editing': 'https://docs.google.com/forms/d/e/1FAIpQLScrLJDMs5Jn3yU_GR6kMmmXmLZMZ-WWxymEKdaqP6yDrPzw_A/viewform',
-  'game-development': 'https://docs.google.com/forms/d/e/YOUR_GAME_FORM_ID/viewform',
-  'freelancing': 'https://docs.google.com/forms/d/e/YOUR_FREELANCING_FORM_ID/viewform',
-  'devops-linux': 'https://docs.google.com/forms/d/e/YOUR_DEVOPS_FORM_ID/viewform',
-  'ui-designs': 'https://docs.google.com/forms/d/e/1FAIpQLSfBtjyBkSwqQfQB_1TemqW8Kek6DF7-QbVyeSEqqs4o2zDk_A/viewform',
-  'tensorflow-ai': 'https://docs.google.com/forms/d/e/YOUR_AI_FORM_ID/viewform',
-  default: 'https://docs.google.com/forms/d/e/YOUR_DEFAULT_FORM_ID/viewform'
+  'ui-designs': 'https://docs.google.com/forms/d/e/1FAIpQLSfBtjyBkSwqQfQB_1TemqW8Kek6DF7-QbVyeSEqqs4o2zDk_A/viewform'
 }
 
 function ServiceDetail() {
   const { serviceId } = useParams()
   const service = servicesData[serviceId]
-  const serviceFormUrl = googleFormsByService[serviceId] || googleFormsByService.default
+  const serviceFormUrl = googleFormsByService[serviceId]
 
   // Scroll to top immediately when page loads
   useEffect(() => {
@@ -518,39 +513,33 @@ function ServiceDetail() {
         </div>
       </section>
 
-      {/* Section Divider */}
-      <div className="section-divider">
-        <div className="section-divider-line"></div>
-      </div>
 
       {/* Google Form Section */}
-      <section className="service-form-section">
-        <div className="container">
-          <div className="section-header-detail">
-            <span className="section-badge">Service Request Form</span>
-            <h2 className="section-title-large">Book {service.title}</h2>
-            <p className="section-desc">
-                Open the form in a new tab to avoid browser embed issues and submit your request directly.
-            </p>
-          </div>
+      {serviceFormUrl && (
+        <section className="service-form-section">
+          <div className="container">
+            <div className="section-header-detail">
+              <span className="section-badge">Service Request Form</span>
+              <h2 className="section-title-large">Book {service.title}</h2>
+              <p className="section-desc">
+                  Open the form in a new tab to avoid browser embed issues and submit your request directly.
+              </p>
+            </div>
 
-          <div className="service-form-actions">
-            <a
-              href={serviceFormUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-primary btn-lg"
-            >
-              Open Google Form
-            </a>
+            <div className="service-form-actions">
+              <a
+                href={serviceFormUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary btn-lg"
+              >
+                Open Google Form
+              </a>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* Section Divider */}
-      <div className="section-divider">
-        <div className="section-divider-line"></div>
-      </div>
 
       {/* Technologies Section */}
       <section className="service-technologies">
