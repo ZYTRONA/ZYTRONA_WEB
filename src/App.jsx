@@ -228,25 +228,6 @@ const CLIENT_PROJECTS = [
   }
 ]
 
-// Testimonials
-const TESTIMONIALS_DATA = [
-  {
-    quote: "ZYTRONA transformed our entire digital infrastructure. Their engineering speed, eye for design, and responsiveness were crucial to our scale.",
-    author: "Sarah Johnson",
-    position: "CEO, TechVentures Inc."
-  },
-  {
-    quote: "The team's innovative approach and clean UI designs helped us increase client engagement by over 300% within months.",
-    author: "Michael Chen",
-    position: "CTO, GlobalScale Solutions"
-  },
-  {
-    quote: "Professional, reliable, and deeply knowledgeable in modern full-stack web and AI. ZYTRONA is our go-to technology partner.",
-    author: "Emily Rodriguez",
-    position: "Director, Innovation Labs"
-  }
-]
-
 // FAQs
 const FAQS_DATA = [
   {
@@ -313,7 +294,7 @@ function App() {
 
   // Track active section on scroll
   useEffect(() => {
-    const sections = ['home', 'services', 'solutions', 'process', 'projects', 'about', 'testimonials', 'faq', 'contact']
+    const sections = ['home', 'services', 'solutions', 'process', 'projects', 'about', 'faq', 'contact']
     let rafId = 0
 
     const handleScroll = () => {
@@ -497,7 +478,6 @@ function App() {
               { id: 'process', label: 'Process' },
               { id: 'projects', label: 'Case Studies' },
               { id: 'about', label: 'About' },
-              { id: 'testimonials', label: 'Reviews' },
               { id: 'faq', label: 'FAQ' },
               { id: 'contact', label: 'Contact' },
             ].map((item) => {
@@ -556,7 +536,6 @@ function App() {
                 { id: 'process', label: 'Our Process' },
                 { id: 'projects', label: 'Case Studies' },
                 { id: 'about', label: 'About ZYTRONA' },
-                { id: 'testimonials', label: 'Client Reviews' },
                 { id: 'faq', label: 'FAQ' },
                 { id: 'contact', label: 'Contact Us' },
               ].map((item) => (
@@ -936,58 +915,6 @@ function App() {
       </section>
 
 
-      {/* Client Endorsements / Testimonials */}
-      <section id="testimonials" className="testimonials">
-        <div className="container">
-          <motion.div 
-            className="section-header"
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
-          >
-            <span className="section-badge">Client Endorsements</span>
-            <h2 className="section-title">What Founders & Leaders Say</h2>
-            <p className="section-subtitle">
-              Hear from leadership teams that have scaled their digital products with ZYTRONA.
-            </p>
-          </motion.div>
-
-          <div className="testimonials-grid">
-            {TESTIMONIALS_DATA.map((testimonial, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.5, delay: index * 0.15 }}
-              >
-                <SpotlightCard className="testimonial-spotlight-card">
-                  <div className="testimonial-rating">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} size={18} fill="#f59e0b" stroke="#f59e0b" />
-                    ))}
-                  </div>
-
-                  <p className="testimonial-quote-text">"{testimonial.quote}"</p>
-
-                  <div className="testimonial-author-row">
-                    <div className="author-avatar-circle">
-                      {testimonial.author.charAt(0)}
-                    </div>
-                    <div className="author-info-block">
-                      <span className="author-name-text">{testimonial.author}</span>
-                      <span className="author-position-text">{testimonial.position}</span>
-                    </div>
-                  </div>
-                </SpotlightCard>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-
       {/* FAQ Section */}
       <section id="faq" className="faq">
         <div className="container">
@@ -1283,7 +1210,6 @@ function App() {
               <Link to="/#solutions">Engagement Models</Link>
               <Link to="/#process">Our Process</Link>
               <Link to="/#projects">Case Studies</Link>
-              <Link to="/#testimonials">Client Reviews</Link>
               <Link to="/#contact">Contact</Link>
             </div>
 
