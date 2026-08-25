@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { 
@@ -6,7 +6,11 @@ import {
   NavBody, 
   NavItems,
   NavbarLogo, 
-  NavbarButton 
+  NavbarButton,
+  MobileNav,
+  MobileNavHeader,
+  MobileNavToggle,
+  MobileNavMenu
 } from '@/components/ui/resizable-navbar'
 import { Footer } from '@/components/ui/Footer'
 import { 
@@ -85,6 +89,8 @@ const METHODOLOGY_STEPS = [
 ]
 
 export function About() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   }, [])
@@ -113,6 +119,53 @@ export function About() {
             </Link>
           </div>
         </NavBody>
+
+        {/* Mobile Navigation */}
+        <MobileNav>
+          <MobileNavHeader>
+            <NavbarLogo />
+            <MobileNavToggle
+              isOpen={mobileMenuOpen}
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            />
+          </MobileNavHeader>
+          <MobileNavMenu isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)}>
+            <div className="flex items-center justify-between py-1 mb-2 border-b border-black/[0.06]">
+              <span className="text-xs font-bold text-neutral-500 uppercase tracking-wider">Navigation</span>
+              <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                Accepting Projects
+              </span>
+            </div>
+
+            {[
+              { name: 'Home', link: '/#home' },
+              { name: 'About ZYTRONA', link: '/about' },
+              { name: 'Capabilities & Services', link: '/#services' },
+              { name: 'Featured Work & Case Studies', link: '/#work' },
+              { name: 'Contact & Consultation', link: '/#contact' },
+            ].map((item, idx) => (
+              <a
+                key={idx}
+                href={item.link}
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center justify-between text-neutral-800 text-sm font-semibold py-2.5 px-1 hover:text-black transition-colors"
+              >
+                <span>{item.name}</span>
+                <ArrowRight className="w-3.5 h-3.5 text-neutral-400" />
+              </a>
+            ))}
+
+            <div className="flex w-full flex-col gap-2.5 mt-3 pt-3 border-t border-black/[0.06]">
+              <Link to="/#contact" onClick={() => setMobileMenuOpen(false)}>
+                <NavbarButton variant="primary" className="w-full justify-center gap-2 py-2.5">
+                  <span>Start Consultation</span>
+                  <ArrowRight className="w-4 h-4" />
+                </NavbarButton>
+              </Link>
+            </div>
+          </MobileNavMenu>
+        </MobileNav>
       </Navbar>
 
       {/* Hero Section */}

@@ -4,7 +4,9 @@ import {
   Navbar, 
   NavBody, 
   NavbarLogo, 
-  NavbarButton 
+  NavbarButton,
+  MobileNav,
+  MobileNavHeader
 } from '@/components/ui/resizable-navbar'
 import { Footer } from '@/components/ui/Footer'
 import '@/App.css'
@@ -29,6 +31,21 @@ export default function PrivacyPolicy() {
             </Link>
           </div>
         </NavBody>
+
+        {/* Mobile Navigation */}
+        <MobileNav>
+          <MobileNavHeader>
+            <NavbarLogo />
+            <div className="flex items-center gap-2">
+              <Link to="/">
+                <NavbarButton variant="secondary" className="text-xs py-1.5 px-3">← Home</NavbarButton>
+              </Link>
+              <Link to="/#contact">
+                <NavbarButton variant="primary" className="text-xs py-1.5 px-3">Contact</NavbarButton>
+              </Link>
+            </div>
+          </MobileNavHeader>
+        </MobileNav>
       </Navbar>
 
       <section className="legal-page">

@@ -57,7 +57,7 @@ const NavBody = ({ children, className }) => {
         mass: 0.8
       }}
       className={cn(
-        "mx-auto flex items-center justify-between transition-colors duration-300",
+        "mx-auto hidden md:flex items-center justify-between transition-colors duration-300",
         "bg-white/85 backdrop-blur-xl",
         scrolled
           ? "border border-black/[0.1] shadow-2xl shadow-black/[0.08] px-5 sm:px-6 py-2 bg-white/92"
