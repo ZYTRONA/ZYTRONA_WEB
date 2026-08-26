@@ -4329,6 +4329,10 @@
 }
 
 @media (max-width: 768px) {
+  .container {
+    padding: 0 1.25rem;
+  }
+
   .nav-menu,
   .nav-actions .nav-explore-btn {
     display: none;
@@ -4348,14 +4352,15 @@
 
   .hero {
     padding-top: 6.5rem;
+    padding-bottom: 2.5rem;
   }
 
   .hero-3d-container {
-    height: 340px;
+    height: 320px;
   }
 
   .carousel-slide-v2 {
-    flex: 0 0 85%;
+    flex: 0 0 88%;
   }
 
   .footer-grid {
@@ -4374,7 +4379,7 @@
 
   .contact-info-card,
   .contact-form-wrapper {
-    padding: 1.6rem 1.25rem;
+    padding: 1.5rem 1.15rem;
     border-radius: 1.25rem;
   }
 
@@ -4390,15 +4395,26 @@
     padding: 0.8rem 0.95rem;
     gap: 0.75rem;
   }
+
+  .form-input,
+  .select-trigger,
+  .form-textarea {
+    font-size: 16px !important; /* Prevents auto-zoom on iOS devices */
+  }
 }
 
 @media (max-width: 480px) {
+  .container {
+    padding: 0 1rem;
+  }
+
   .stats-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
   }
 
   .carousel-slide-v2 {
-    flex: 0 0 95%;
+    flex: 0 0 96%;
   }
 
   .contact-social-proof {
@@ -4408,5 +4424,24 @@
 
   .success-actions {
     flex-direction: column;
+  }
+
+  .hero-tags {
+    gap: 0.4rem;
+  }
+
+  .hero-tag {
+    font-size: 0.72rem;
+    padding: 0.35rem 0.65rem;
+  }
+
+  .section-badge {
+    font-size: 0.68rem;
+    padding: 0.3rem 0.75rem;
+  }
+
+  .service-tech-marquee-container::before,
+  .service-tech-marquee-container::after {
+    width: 24px;
   }
 }

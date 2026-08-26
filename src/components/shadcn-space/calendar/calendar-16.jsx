@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useId, useState } from "react";
+import React, { useId, useState, useRef, useEffect } from "react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
@@ -72,42 +72,83 @@ function ClockDial({ hours, minutes, size = 46 }) {
 
 /* ══════════════════════════════════════════════
    Ultra-Clean Custom Time Dropdown
+   Card: [ 🕒 10:30 AM ⌄ ]
    ══════════════════════════════════════════════ */
 function TimeCard({ timeStr, onChange, label, isError }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setIsOpen(false);
+      }
+    };
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-1 relative" ref={dropdownRef}>
       <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
         {label}
       </span>
-      <div
+
+      {/* Trigger Card: [ 🕒 10:30 AM ⌄ ] */}
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          "relative flex items-center justify-between px-3 h-10 rounded-xl bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50/50 focus-within:border-slate-900 focus-within:ring-2 focus-within:ring-slate-900/10 transition-all shadow-xs cursor-pointer",
+          "w-full flex items-center justify-between px-3 h-10 rounded-xl bg-white border border-slate-200 hover:border-slate-300 hover:bg-slate-50/70 transition-all shadow-xs cursor-pointer select-none",
+          isOpen && "border-slate-900 ring-2 ring-slate-900/10 bg-slate-50/70",
           isError && "border-red-500 ring-2 ring-red-500/10"
         )}
       >
-        <div className="flex items-center gap-2 pointer-events-none">
+        <div className="flex items-center gap-2">
           <Clock className="w-3.5 h-3.5 text-slate-500 shrink-0" />
           <span className="text-xs font-bold text-slate-900 tabular-nums">
             {formatTime12h(timeStr)}
           </span>
         </div>
+        <ChevronDownIcon
+          className={cn(
+            "w-3.5 h-3.5 text-slate-400 transition-transform duration-200",
+            isOpen && "rotate-180 text-slate-900"
+          )}
+        />
+      </button>
 
-        <ChevronDownIcon className="w-3.5 h-3.5 text-slate-400 pointer-events-none" />
-
-        {/* Full-bleed transparent select for seamless 1-click native & web picker */}
-        <select
-          value={timeStr}
-          onChange={(e) => onChange(e.target.value)}
-          className="absolute inset-0 w-full h-full opacity-0 cursor-pointer text-xs"
-          aria-label={label}
-        >
-          {TIME_OPTIONS.map((time) => (
-            <option key={time} value={time} className="text-slate-900 font-semibold py-1">
-              {formatTime12h(time)}
-            </option>
-          ))}
-        </select>
-      </div>
+      {/* Floating 1-Click Dropdown List */}
+      {isOpen && (
+        <div className="absolute top-[calc(100%+4px)] left-0 right-0 max-h-48 overflow-y-auto bg-white rounded-xl border border-slate-200 shadow-xl z-50 p-1 flex flex-col gap-0.5 animate-in fade-in-0 zoom-in-95 duration-150">
+          {TIME_OPTIONS.map((time) => {
+            const isSelected = time === timeStr;
+            return (
+              <button
+                key={time}
+                type="button"
+                onClick={() => {
+                  onChange(time);
+                  setIsOpen(false);
+                }}
+                className={cn(
+                  "w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-colors cursor-pointer text-left",
+                  isSelected
+                    ? "bg-slate-900 text-white font-bold"
+                    : "text-slate-700 hover:bg-slate-100 hover:text-slate-950"
+                )}
+              >
+                <span>{formatTime12h(time)}</span>
+                {isSelected && <Check className="w-3 h-3 stroke-[3]" />}
+              </button>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
@@ -150,7 +191,7 @@ export function CalendarWithTimeRange({
     else setInternalDate(d);
   };
   const handleStartTimeChange = (t) => {
-    // If setting start time, keep previous duration if possible
+    // When changing start time, automatically maintain existing duration for end time
     const currentDur = getDurationHours(startTime, endTime) || 2;
     const newEnd = addHoursToTime(t, currentDur);
     if (onChange) fire(date, t, newEnd);
@@ -168,7 +209,7 @@ export function CalendarWithTimeRange({
   const currentDuration = getDurationHours(startTime, endTime);
   const isAllDayActive = startTime === "09:00" && endTime === "17:00";
 
-  // Parse start time for real-time dial animation
+  // Parse start time for real-time live clock dial animation
   const startParts = (startTime || "10:30").split(":").map(Number);
   const startH24 = isNaN(startParts[0]) ? 10 : startParts[0];
   const startMins = isNaN(startParts[1]) ? 30 : startParts[1];

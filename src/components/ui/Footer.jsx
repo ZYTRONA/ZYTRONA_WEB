@@ -219,18 +219,19 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/#projects" className="footer-nav-link">
+                <Link to="/#work" className="footer-nav-link">
                   Featured Case Studies
                 </Link>
               </li>
               <li>
-                <Link to="/#models" className="footer-nav-link">
+                <Link to="/#services" className="footer-nav-link">
                   Engagement Models
                 </Link>
               </li>
               <li>
-                <Link to="/#process" className="footer-nav-link">
+                <Link to="/about" className="footer-nav-link">
                   Agile Delivery Process
+                  <ArrowUpRight className="footer-link-arrow" />
                 </Link>
               </li>
               <li>
