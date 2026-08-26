@@ -2524,317 +2524,6 @@
   font-weight: 500;
 }
 
-/* DatePicker Component Styles */
-.date-picker-container {
-  position: relative;
-  width: 100%;
-}
-
-.date-picker-trigger {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  height: 2.75rem;
-  padding: 0 0.85rem;
-  border-radius: 12px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background: rgba(255, 255, 255, 0.95);
-  color: var(--color-heading);
-  font-size: 0.88rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
-}
-
-.date-picker-trigger:hover {
-  border-color: #000000;
-  background: #ffffff;
-}
-
-.date-picker-trigger:focus,
-.date-picker-trigger.is-open {
-  border-color: #000000;
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
-  background: #ffffff;
-}
-
-.date-picker-trigger-content {
-  display: flex;
-  align-items: center;
-  gap: 0.65rem;
-  min-width: 0;
-}
-
-.date-picker-icon-box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 26px;
-  height: 26px;
-  border-radius: 7px;
-  background: rgba(0, 0, 0, 0.04);
-  color: #000000;
-  flex-shrink: 0;
-}
-
-.date-picker-text-placeholder {
-  color: #94a3b8;
-  font-size: 0.88rem;
-}
-
-.date-picker-text-active {
-  color: #0f172a;
-  font-weight: 700;
-  font-size: 0.88rem;
-}
-
-.date-picker-actions-right {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.date-picker-chevron {
-  color: #64748b;
-  transition: transform 0.2s ease;
-}
-
-.date-picker-clear-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.05);
-  color: #0f172a;
-  transition: all 0.2s;
-  cursor: pointer;
-}
-
-.date-picker-clear-btn:hover {
-  background: #000000;
-  color: #ffffff;
-}
-
-/* Date Picker Dropdown Menu */
-.date-picker-dropdown {
-  position: absolute;
-  top: calc(100% + 6px);
-  left: 0;
-  z-index: 9999;
-  width: 290px;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  border-radius: 14px;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04);
-  padding: 0.75rem;
-}
-
-/* ============================================
-   Nuxt UI Style UCalendar Styles
-   ============================================ */
-.u-calendar-root {
-  width: 100%;
-  user-select: none;
-}
-
-.u-calendar-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.1rem 0.2rem 0.65rem;
-}
-
-.u-calendar-caption {
-  display: flex;
-  align-items: baseline;
-  gap: 0.35rem;
-}
-
-.u-calendar-month {
-  font-family: var(--font-heading);
-  font-size: 0.92rem;
-  font-weight: 800;
-  color: #0f172a;
-  letter-spacing: -0.01em;
-}
-
-.u-calendar-year {
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: #64748b;
-}
-
-.u-calendar-nav {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.u-calendar-nav-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 7px;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  background: #f8fafc;
-  color: #0f172a;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
-}
-
-.u-calendar-nav-btn:hover {
-  background: #000000;
-  border-color: #000000;
-  color: #ffffff;
-}
-
-.u-nav-icon {
-  width: 16px;
-  height: 16px;
-  stroke-width: 2.25;
-  color: currentColor;
-  display: block;
-}
-
-/* Weekday header codes (Mo, Tu, We, Th, Fr, Sa, Su) */
-.u-calendar-weekdays {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 2px;
-  margin-bottom: 0.3rem;
-}
-
-.u-calendar-weekday {
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: #94a3b8;
-  letter-spacing: 0.04em;
-}
-
-/* 7-column calendar grid */
-.u-calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 2px;
-}
-
-.u-calendar-day-btn {
-  position: relative;
-  height: 32px;
-  width: 100%;
-  border-radius: 7px;
-  border: none;
-  background: transparent;
-  color: #0f172a;
-  font-size: 0.82rem;
-  font-weight: 600;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.12s ease;
-  font-family: inherit;
-  padding: 0;
-}
-
-.u-calendar-day-btn:hover:not(:disabled):not(.is-selected):not(.is-outside) {
-  background: rgba(0, 0, 0, 0.06);
-  color: #000000;
-  font-weight: 700;
-}
-
-.u-calendar-day-btn.is-selected {
-  background: #000000 !important;
-  color: #ffffff !important;
-  font-weight: 700;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-}
-
-.u-calendar-day-btn.is-today:not(.is-selected) {
-  color: #000000;
-  font-weight: 800;
-}
-
-.u-calendar-today-dot {
-  position: absolute;
-  bottom: 2.5px;
-  width: 3.5px;
-  height: 3.5px;
-  border-radius: 50%;
-  background: #000000;
-}
-
-/* Previous/Past dates visible lightly */
-.u-calendar-day-btn.is-past {
-  color: #94a3b8 !important;
-  opacity: 0.65 !important;
-  font-weight: 500;
-  cursor: not-allowed;
-}
-
-/* Outside month trailing/leading dates visible lightly */
-.u-calendar-day-btn.is-outside {
-  color: #94a3b8 !important;
-  opacity: 0.45 !important;
-  font-weight: 400;
-  cursor: default;
-  pointer-events: none;
-}
-
-.u-calendar-day-btn.is-disabled {
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-/* Date Picker Footer */
-.date-picker-footer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 0.65rem;
-  padding-top: 0.65rem;
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
-}
-
-.date-selected-preview {
-  display: flex;
-  align-items: center;
-  gap: 0.35rem;
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: #0f172a;
-}
-
-.date-clear-link {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: #64748b;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0.2rem 0.4rem;
-  border-radius: 4px;
-  transition: all 0.2s;
-}
-
-.date-clear-link:hover {
-  color: #000000;
-  background: rgba(0, 0, 0, 0.05);
-}
-
 /* Select Component Styles */
 .select-trigger {
   display: flex;
@@ -4100,50 +3789,113 @@
   line-height: 1.5;
 }
 
-/* Technologies */
+/* Technologies Marquee */
 .service-modern-tech {
   padding: 5rem 0;
   background: #ffffff;
+  overflow: hidden;
 }
 
-.service-tech-bento {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.25rem;
+.service-tech-marquee-container {
+  position: relative;
+  width: 100%;
+  margin-top: 2.5rem;
+  overflow: hidden;
 }
 
+.service-tech-marquee-container::before,
+.service-tech-marquee-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 140px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.service-tech-marquee-container::before {
+  left: 0;
+  background: linear-gradient(to right, #ffffff, rgba(255, 255, 255, 0));
+}
+
+.service-tech-marquee-container::after {
+  right: 0;
+  background: linear-gradient(to left, #ffffff, rgba(255, 255, 255, 0));
+}
+
+.service-tech-item,
 .service-tech-card {
-  padding: 1.5rem 1.25rem;
-  border-radius: 14px;
-  background: rgba(248, 250, 252, 0.85);
-  border: 1px solid rgba(226, 232, 240, 0.7);
-  display: flex;
-  flex-direction: column;
+  display: inline-flex;
+  flex-direction: row;
   align-items: center;
-  gap: 0.75rem;
-  text-align: center;
-  transition: all 0.3s ease;
+  gap: 0.85rem;
+  padding: 0.65rem 1.75rem;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  min-width: auto;
+  max-width: none;
+  height: auto;
+  cursor: default;
+  user-select: none;
+  transition: transform 0.25s ease;
+  white-space: nowrap;
 }
 
+.service-tech-item:hover,
 .service-tech-card:hover {
-  background: #ffffff;
-  border-color: #000000;
-  transform: translateY(-3px);
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.06);
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  transform: translateY(-2px);
 }
 
-.service-tech-icon {
-  font-size: 1.85rem;
-  color: #000000;
+.service-tech-icon-box {
+  width: 38px;
+  height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+}
+
+.service-tech-logo-img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.06));
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: block;
+}
+
+.service-tech-item:hover .service-tech-logo-img,
+.service-tech-card:hover .service-tech-logo-img {
+  transform: scale(1.15);
+}
+
+.service-tech-icon {
+  font-size: 2rem;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease;
+}
+
+.service-tech-item:hover .service-tech-icon,
+.service-tech-card:hover .service-tech-icon {
+  transform: scale(1.12);
+  color: #000000;
 }
 
 .service-tech-name {
-  font-size: 0.88rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  color: var(--color-heading);
+  color: #0f172a;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
 }
 
 /* Process Grid */
@@ -4381,6 +4133,31 @@
 
   .service-deliverables-wrapper {
     padding: 2rem 1.5rem;
+  }
+
+  .service-tech-item,
+  .service-tech-card {
+    padding: 0.4rem 1rem;
+    gap: 0.65rem;
+  }
+
+  .service-tech-icon-box {
+    width: 32px;
+    height: 32px;
+  }
+
+  .service-tech-logo-img {
+    width: 28px;
+    height: 28px;
+  }
+
+  .service-tech-name {
+    font-size: 0.95rem;
+  }
+
+  .service-tech-marquee-container::before,
+  .service-tech-marquee-container::after {
+    width: 40px;
   }
 
   .service-modern-cta .cta-buttons {

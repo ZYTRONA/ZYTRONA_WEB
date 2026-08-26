@@ -13,6 +13,7 @@ import {
   MobileNavMenu
 } from '@/components/ui/resizable-navbar'
 import { Footer } from '@/components/ui/Footer'
+import { Marquee } from '@/components/shadcn-space/animations/marquee'
 import { 
   Globe, 
   Smartphone, 
@@ -41,8 +42,8 @@ import {
   Film
 } from 'lucide-react'
 import { 
-  FaReact, FaNodeJs, FaVuejs, FaWordpress, FaShopify, FaApple, FaAws, FaDocker, 
-  FaPython, FaCheck, FaWhatsapp
+  FaReact, FaNodeJs, FaApple, FaAws, FaDocker, 
+  FaPython, FaWhatsapp
 } from 'react-icons/fa'
 import { 
   SiNextdotjs, SiTypescript, SiTailwindcss, SiFlutter, SiKotlin, SiFirebase, SiGraphql, SiMongodb,
@@ -88,14 +89,14 @@ const SERVICES_FULL_DATA = {
       '100% intellectual property transfer and NDA protection'
     ],
     technologies: [
-      { name: 'React 19', icon: <FaReact size={24} /> },
-      { name: 'Next.js', icon: <SiNextdotjs size={24} /> },
-      { name: 'TypeScript', icon: <SiTypescript size={24} /> },
-      { name: 'Tailwind CSS', icon: <SiTailwindcss size={24} /> },
-      { name: 'Node.js', icon: <FaNodeJs size={24} /> },
-      { name: 'PostgreSQL', icon: <SiPostgresql size={24} /> },
-      { name: 'Redis', icon: <SiRedis size={24} /> },
-      { name: 'AWS Cloud', icon: <FaAws size={24} /> }
+      { name: 'React 19', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg', icon: <FaReact size={24} /> },
+      { name: 'Next.js', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg', icon: <SiNextdotjs size={24} /> },
+      { name: 'TypeScript', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg', icon: <SiTypescript size={24} /> },
+      { name: 'Tailwind CSS', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg', icon: <SiTailwindcss size={24} /> },
+      { name: 'Node.js', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg', icon: <FaNodeJs size={24} /> },
+      { name: 'PostgreSQL', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg', icon: <SiPostgresql size={24} /> },
+      { name: 'Redis', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg', icon: <SiRedis size={24} /> },
+      { name: 'AWS Cloud', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg', icon: <FaAws size={24} /> }
     ],
     process: [
       { step: '01', title: 'Architecture Discovery', desc: 'We analyze your product vision, target audience, database schemas, and performance requirements.' },
@@ -145,14 +146,14 @@ const SERVICES_FULL_DATA = {
       'Post-launch crash monitoring (Sentry / Firebase Crashlytics) setup'
     ],
     technologies: [
-      { name: 'React Native', icon: <FaReact size={24} /> },
-      { name: 'Flutter', icon: <SiFlutter size={24} /> },
-      { name: 'TypeScript', icon: <SiTypescript size={24} /> },
-      { name: 'iOS Swift', icon: <FaApple size={24} /> },
-      { name: 'Kotlin', icon: <SiKotlin size={24} /> },
-      { name: 'Firebase', icon: <SiFirebase size={24} /> },
-      { name: 'GraphQL', icon: <SiGraphql size={24} /> },
-      { name: 'MongoDB', icon: <SiMongodb size={24} /> }
+      { name: 'React Native', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg', icon: <FaReact size={24} /> },
+      { name: 'Flutter', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flutter/flutter-original.svg', icon: <SiFlutter size={24} /> },
+      { name: 'TypeScript', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg', icon: <SiTypescript size={24} /> },
+      { name: 'iOS Swift', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/swift/swift-original.svg', icon: <FaApple size={24} /> },
+      { name: 'Kotlin', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kotlin/kotlin-original.svg', icon: <SiKotlin size={24} /> },
+      { name: 'Firebase', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-plain.svg', icon: <SiFirebase size={24} /> },
+      { name: 'GraphQL', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/graphql/graphql-plain.svg', icon: <SiGraphql size={24} /> },
+      { name: 'MongoDB', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg', icon: <SiMongodb size={24} /> }
     ],
     process: [
       { step: '01', title: 'User Flow Mapping', desc: 'Architecting wireframes, navigation stacks, screen states, and offline behavior.' },
@@ -201,14 +202,14 @@ const SERVICES_FULL_DATA = {
       'Private cloud deployment script (AWS SageMaker, ECS, or bare metal)'
     ],
     technologies: [
-      { name: 'Python', icon: <FaPython size={24} /> },
-      { name: 'PyTorch', icon: <SiPytorch size={24} /> },
-      { name: 'TensorFlow', icon: <SiTensorflow size={24} /> },
-      { name: 'Keras', icon: <SiKeras size={24} /> },
-      { name: 'OpenCV', icon: <SiOpencv size={24} /> },
-      { name: 'scikit-learn', icon: <SiScikitlearn size={24} /> },
-      { name: 'Docker', icon: <FaDocker size={24} /> },
-      { name: 'AWS SageMaker', icon: <FaAws size={24} /> }
+      { name: 'Python', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg', icon: <FaPython size={24} /> },
+      { name: 'PyTorch', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pytorch/pytorch-original.svg', icon: <SiPytorch size={24} /> },
+      { name: 'TensorFlow', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg', icon: <SiTensorflow size={24} /> },
+      { name: 'Keras', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/keras/keras-original.svg', icon: <SiKeras size={24} /> },
+      { name: 'OpenCV', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/opencv/opencv-original.svg', icon: <SiOpencv size={24} /> },
+      { name: 'scikit-learn', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/scikitlearn/scikitlearn-original.svg', icon: <SiScikitlearn size={24} /> },
+      { name: 'Docker', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg', icon: <FaDocker size={24} /> },
+      { name: 'AWS SageMaker', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg', icon: <FaAws size={24} /> }
     ],
     process: [
       { step: '01', title: 'Data Audit & Feasibility', desc: 'Assessing your data quality, labeling requirements, and target accuracy metrics.' },
@@ -257,12 +258,12 @@ const SERVICES_FULL_DATA = {
       'Developer handoff documentation detailing animations and state transitions'
     ],
     technologies: [
-      { name: 'Figma', icon: <SiFigma size={24} /> },
-      { name: 'Framer', icon: <SiFramer size={24} /> },
-      { name: 'Tailwind Tokens', icon: <SiTailwindcss size={24} /> },
-      { name: 'Design Systems', icon: <Palette size={24} /> },
-      { name: 'Motion Design', icon: <Sparkles size={24} /> },
-      { name: 'UX Research', icon: <Layers size={24} /> }
+      { name: 'Figma', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/figma/figma-original.svg', icon: <SiFigma size={24} /> },
+      { name: 'Framer', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/framermotion/framermotion-original.svg', icon: <SiFramer size={24} /> },
+      { name: 'Tailwind Tokens', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg', icon: <SiTailwindcss size={24} /> },
+      { name: 'Design Systems', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/storybook/storybook-original.svg', icon: <Palette size={24} /> },
+      { name: 'Motion Design', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/aftereffects/aftereffects-original.svg', icon: <Sparkles size={24} /> },
+      { name: 'UI Systems', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/xd/xd-original.svg', icon: <Layers size={24} /> }
     ],
     process: [
       { step: '01', title: 'UX Research & Audit', desc: 'Analyzing user goals, existing product bottlenecks, and competitor design patterns.' },
@@ -311,14 +312,14 @@ const SERVICES_FULL_DATA = {
       'Comprehensive disaster recovery and automated backup runbook'
     ],
     technologies: [
-      { name: 'Docker', icon: <FaDocker size={24} /> },
-      { name: 'Kubernetes', icon: <SiKubernetes size={24} /> },
-      { name: 'Terraform', icon: <SiTerraform size={24} /> },
-      { name: 'AWS Cloud', icon: <FaAws size={24} /> },
-      { name: 'Prometheus', icon: <SiPrometheus size={24} /> },
-      { name: 'Linux OS', icon: <SiLinux size={24} /> },
-      { name: 'PostgreSQL', icon: <SiPostgresql size={24} /> },
-      { name: 'Redis', icon: <SiRedis size={24} /> }
+      { name: 'Docker', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg', icon: <FaDocker size={24} /> },
+      { name: 'Kubernetes', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-plain.svg', icon: <SiKubernetes size={24} /> },
+      { name: 'Terraform', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/terraform/terraform-original.svg', icon: <SiTerraform size={24} /> },
+      { name: 'AWS Cloud', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg', icon: <FaAws size={24} /> },
+      { name: 'Prometheus', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/prometheus/prometheus-original.svg', icon: <SiPrometheus size={24} /> },
+      { name: 'Linux OS', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg', icon: <SiLinux size={24} /> },
+      { name: 'PostgreSQL', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg', icon: <SiPostgresql size={24} /> },
+      { name: 'Redis', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg', icon: <SiRedis size={24} /> }
     ],
     process: [
       { step: '01', title: 'Infrastructure Audit', desc: 'Assessing your existing cloud setup, cost structure, security posture, and bottlenecks.' },
@@ -367,12 +368,12 @@ const SERVICES_FULL_DATA = {
       'Animated GIF and WebM micro-assets for web integration'
     ],
     technologies: [
-      { name: 'DaVinci Resolve', icon: <SiDavinciresolve size={24} /> },
-      { name: 'Premiere Pro', icon: <Film size={24} /> },
-      { name: 'After Effects', icon: <Sparkles size={24} /> },
-      { name: '4K Color Grading', icon: <Palette size={24} /> },
-      { name: 'Motion Graphics', icon: <Layers size={24} /> },
-      { name: 'Sound Mastering', icon: <Zap size={24} /> }
+      { name: 'DaVinci Resolve', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/davinciresolve/davinciresolve-original.svg', icon: <SiDavinciresolve size={24} /> },
+      { name: 'Premiere Pro', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/premierepro/premierepro-original.svg', icon: <Film size={24} /> },
+      { name: 'After Effects', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/aftereffects/aftereffects-original.svg', icon: <Sparkles size={24} /> },
+      { name: 'Blender 3D', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/blender/blender-original.svg', icon: <Palette size={24} /> },
+      { name: 'Photoshop', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/photoshop/photoshop-original.svg', icon: <Layers size={24} /> },
+      { name: 'Audio Mastering', logo: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/audition/audition-original.svg', icon: <Zap size={24} /> }
     ],
     process: [
       { step: '01', title: 'Creative Brief & Script', desc: 'Outlining video goals, key product messages, visual pacing, and storyboard concepts.' },
@@ -386,6 +387,30 @@ const SERVICES_FULL_DATA = {
       { q: 'Do you provide voiceovers and licensed background music?', a: 'Yes. We include full commercial licensing for all soundtrack selections and can arrange studio-grade AI or human voiceovers in multiple accents.' }
     ]
   }
+}
+
+function TechCardItem({ tech }) {
+  const [imgError, setImgError] = useState(false)
+
+  return (
+    <div className="service-tech-item">
+      <div className="service-tech-icon-box">
+        {tech.logo && !imgError ? (
+          <img
+            src={tech.logo}
+            alt={tech.name}
+            loading="lazy"
+            decoding="async"
+            className="service-tech-logo-img"
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <span className="service-tech-icon">{tech.icon}</span>
+        )}
+      </div>
+      <span className="service-tech-name">{tech.name}</span>
+    </div>
+  )
 }
 
 function ServiceDetail() {
@@ -658,20 +683,22 @@ function ServiceDetail() {
             <p className="section-desc">Battle-tested tools selected for reliability, speed, and maintainability</p>
           </motion.div>
 
-          <div className="service-tech-bento">
-            {service.technologies.map((tech, index) => (
-              <motion.div
-                key={index}
-                className="service-tech-card"
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true, amount: 0.15 }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-              >
-                <span className="service-tech-icon">{tech.icon}</span>
-                <span className="service-tech-name">{tech.name}</span>
-              </motion.div>
-            ))}
+          <div className="service-tech-marquee-container">
+            {/* Row 1: Smooth Continuous Forward Flow */}
+            <Marquee duration="28s" gap="1.25rem" repeat={4} className="py-2">
+              {service.technologies.map((tech, index) => (
+                <TechCardItem key={`tech-fwd-${index}`} tech={tech} />
+              ))}
+            </Marquee>
+
+            {/* Row 2: Smooth Continuous Reverse Flow */}
+            {service.technologies.length >= 4 && (
+              <Marquee duration="32s" gap="1.25rem" reverse repeat={4} className="py-2 mt-3">
+                {[...service.technologies].reverse().map((tech, index) => (
+                  <TechCardItem key={`tech-rev-${index}`} tech={tech} />
+                ))}
+              </Marquee>
+            )}
           </div>
         </div>
       </section>

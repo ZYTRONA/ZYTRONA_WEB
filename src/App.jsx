@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import emailjs from '@emailjs/browser'
 import { motion, AnimatePresence } from 'motion/react'
 import { 
-  FaLinkedinIn, FaGithub, FaInstagram, FaReact, FaNodeJs, FaAws
+  FaReact, FaNodeJs, FaAws
 } from 'react-icons/fa'
 import { 
   SiNextdotjs, SiTypescript, SiTensorflow
@@ -20,7 +20,8 @@ import {
 import SpotlightCard from './components/ui/SpotlightCard'
 import { TypewriterEffectSmooth } from './components/ui/typewriter-effect'
 import { AvatarGroup } from '@/components/animate-ui/components/animate/avatar-group'
-import { DatePicker } from './components/ui/date-picker'
+import { CalendarWithTimeRange } from '@/components/shadcn-space/calendar/calendar-16'
+import { formatTime12h } from '@/components/shadcn-space/calendar/calendar-utils'
 import { NumberTicker } from '@/registry/magicui/number-ticker'
 import {
   Accordion,
@@ -317,13 +318,6 @@ const CONTACT_SERVICES = [
   'Commercial Video & Motion Graphics'
 ]
 
-const REACH_TIMES = [
-  'Morning (9:00 AM – 12:00 PM)',
-  'Afternoon (12:00 PM – 4:00 PM)',
-  'Evening (4:00 PM – 8:00 PM)',
-  'Flexible / Any Time'
-]
-
 function App() {
   const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
   const EMAILJS_TEMPLATE_ID_OWNER = import.meta.env.VITE_EMAILJS_TEMPLATE_ID_OWNER
@@ -342,7 +336,9 @@ function App() {
     email: '',
     phone: '',
     preferredDate: null,
-    reachTime: 'Morning (9:00 AM – 12:00 PM)',
+    startTime: '10:30',
+    endTime: '12:30',
+    reachTime: '10:30 AM – 12:30 PM',
     projectDetails: '',
   })
   const [contactErrors, setContactErrors] = useState({})
@@ -448,7 +444,9 @@ function App() {
       email: '',
       phone: '',
       preferredDate: null,
-      reachTime: 'Morning (9:00 AM – 12:00 PM)',
+      startTime: '10:30',
+      endTime: '12:30',
+      reachTime: '10:30 AM – 12:30 PM',
       projectDetails: '',
     })
     setContactErrors({})
@@ -1321,7 +1319,7 @@ function App() {
                       </div>
                     </div>
 
-                    {/* 3. Phone Number & Preferred Date */}
+                    {/* 3. Phone Number & Preferred Schedule (Date + Time Range) */}
                     <div className="form-row-2col">
                       <div className="form-group">
                         <label htmlFor="phone">Phone Number *</label>
@@ -1338,36 +1336,25 @@ function App() {
                       </div>
 
                       <div className="form-group">
-                        <label>Preferred Discussion Date</label>
-                        <DatePicker 
-                          date={formData.preferredDate}
-                          setDate={(d) => handleInputChange('preferredDate', d)}
-                          placeholder="Pick a preferred date"
+                        <label>Preferred Discussion Schedule</label>
+                        <CalendarWithTimeRange 
+                          value={{
+                            date: formData.preferredDate,
+                            startTime: formData.startTime || '10:30',
+                            endTime: formData.endTime || '12:30',
+                          }}
+                          onChange={({ date, startTime, endTime }) => {
+                            setFormData((prev) => ({
+                              ...prev,
+                              preferredDate: date,
+                              startTime,
+                              endTime,
+                              reachTime: `${formatTime12h(startTime)} – ${formatTime12h(endTime)}`,
+                            }))
+                          }}
+                          disabledBefore={new Date()}
                         />
                       </div>
-                    </div>
-
-                    {/* 4. Time to Reach You */}
-                    <div className="form-group">
-                      <label>Time to Reach You</label>
-                      <Select 
-                        value={formData.reachTime} 
-                        onValueChange={(val) => handleInputChange('reachTime', val)}
-                      >
-                        <SelectTrigger className="w-full">
-                          <SelectValue placeholder="Select call / discussion window" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectGroup>
-                            <SelectLabel>Preferred Call Window</SelectLabel>
-                            {REACH_TIMES.map((time) => (
-                              <SelectItem key={time} value={time}>
-                                {time}
-                              </SelectItem>
-                            ))}
-                          </SelectGroup>
-                        </SelectContent>
-                      </Select>
                     </div>
 
                     {/* 5. Project Details */}
