@@ -48,14 +48,18 @@ const AVATARS = [
 ];
 
 const AvatarGroup = ({ className = '', avatars = AVATARS, size = 'md' }) => {
-  const sizeClasses = size === 'lg' ? 'size-14' : size === 'sm' ? 'size-9' : 'size-11';
+  const sizeClasses = size === 'lg' 
+    ? 'size-12 sm:size-14' 
+    : size === 'sm' 
+      ? 'size-8 sm:size-9' 
+      : 'size-9 sm:size-11';
 
   return (
     <div className={`avatar-group-container flex items-center ${className}`}>
       {avatars.map((avatar, index) => (
         <motion.div
           key={index}
-          className="group relative -ml-2.5 first:ml-0 cursor-pointer"
+          className="group relative -ml-2 sm:-ml-2.5 first:ml-0 cursor-pointer shrink-0"
           initial={{ opacity: 0, scale: 0.8, x: -10 }}
           animate={{ opacity: 1, scale: 1, x: 0 }}
           whileHover={{ y: -4, scale: 1.15, zIndex: 60 }}

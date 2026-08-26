@@ -144,17 +144,32 @@ export function About() {
               { name: 'Capabilities & Services', link: '/#services' },
               { name: 'Featured Work & Case Studies', link: '/#work' },
               { name: 'Contact & Consultation', link: '/#contact' },
-            ].map((item, idx) => (
-              <a
-                key={idx}
-                href={item.link}
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between text-neutral-800 text-sm font-semibold py-2.5 px-1 hover:text-black transition-colors"
-              >
-                <span>{item.name}</span>
-                <ArrowRight className="w-3.5 h-3.5 text-neutral-400" />
-              </a>
-            ))}
+            ].map((item, idx) => {
+              const isCurrent = item.link === '/about'
+              return (
+                <Link
+                  key={idx}
+                  to={item.link}
+                  onClick={() => {
+                    setMobileMenuOpen(false)
+                    if (isCurrent) {
+                      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+                    }
+                  }}
+                  className={`flex items-center justify-between text-sm font-semibold py-2.5 px-2 rounded-lg transition-colors ${
+                    isCurrent 
+                      ? 'text-black font-bold bg-neutral-100/90' 
+                      : 'text-neutral-700 hover:text-black hover:bg-neutral-50'
+                  }`}
+                >
+                  <span className="flex items-center gap-2">
+                    {isCurrent && <span className="w-1.5 h-1.5 rounded-full bg-black" />}
+                    <span>{item.name}</span>
+                  </span>
+                  <ArrowRight className={`w-3.5 h-3.5 ${isCurrent ? 'text-black' : 'text-neutral-400'}`} />
+                </Link>
+              )
+            })}
 
             <div className="flex w-full flex-col gap-2.5 mt-3 pt-3 border-t border-black/[0.06]">
               <Link to="/#contact" onClick={() => setMobileMenuOpen(false)}>

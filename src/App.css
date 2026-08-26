@@ -2190,6 +2190,7 @@
   position: relative;
   z-index: 2;
   background: #ffffff;
+  overflow-x: clip;
 }
 
 .contact-grid {
@@ -2216,6 +2217,7 @@
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.95));
   border: 1px solid rgba(226, 232, 240, 0.9);
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.05);
+  box-sizing: border-box;
 }
 
 .contact-info-header {
@@ -2244,6 +2246,8 @@
   font-family: var(--font-heading);
   line-height: 1.25;
   margin: 0;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .contact-subtitle {
@@ -2251,6 +2255,7 @@
   color: var(--color-muted);
   line-height: 1.6;
   margin: 0;
+  overflow-wrap: break-word;
 }
 
 /* Avatar Group Section */
@@ -2262,6 +2267,7 @@
   border-radius: 1.1rem;
   background: rgba(248, 250, 252, 0.9);
   border: 1px solid rgba(226, 232, 240, 0.8);
+  box-sizing: border-box;
 }
 
 .avatar-group-container {
@@ -2285,6 +2291,7 @@
   font-size: 0.82rem;
   color: var(--color-body);
   font-weight: 600;
+  line-height: 1.4;
 }
 
 /* Direct Channels */
@@ -2304,6 +2311,8 @@
   border: 1px solid rgba(226, 232, 240, 0.9);
   box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03);
   transition: all 0.2s ease;
+  box-sizing: border-box;
+  min-width: 0;
 }
 
 .contact-channel-item:hover {
@@ -2328,6 +2337,7 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
+  overflow: hidden;
 }
 
 .contact-channel-label {
@@ -2336,6 +2346,7 @@
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: #94a3b8;
+  line-height: 1.3;
 }
 
 .contact-channel-value {
@@ -2347,6 +2358,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   transition: color 0.2s;
+  line-height: 1.4;
 }
 
 .contact-channel-value:hover {
@@ -2357,13 +2369,16 @@
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--color-heading);
+  line-height: 1.4;
+  word-break: break-word;
 }
 
 .contact-copy-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.35rem;
-  padding: 0.4rem 0.75rem;
+  padding: 0.45rem 0.8rem;
   border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.12);
   background: rgba(248, 250, 252, 0.9);
@@ -2373,6 +2388,7 @@
   cursor: pointer;
   transition: all 0.2s;
   flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .contact-copy-btn:hover {
@@ -2384,7 +2400,8 @@
 .contact-whatsapp-btn {
   display: inline-flex;
   align-items: center;
-  padding: 0.4rem 0.85rem;
+  justify-content: center;
+  padding: 0.45rem 0.85rem;
   border-radius: 8px;
   background: #25D366;
   color: #ffffff;
@@ -2393,6 +2410,7 @@
   text-decoration: none;
   transition: all 0.2s;
   flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .contact-whatsapp-btn:hover {
@@ -2403,7 +2421,7 @@
 /* Trust Badges */
 .contact-trust-badges {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
   gap: 0.65rem;
   margin-top: auto;
 }
@@ -2412,13 +2430,21 @@
   display: flex;
   align-items: center;
   gap: 0.45rem;
-  padding: 0.6rem 0.85rem;
+  padding: 0.6rem 0.75rem;
   border-radius: 10px;
   background: rgba(248, 250, 252, 0.9);
   border: 1px solid rgba(226, 232, 240, 0.9);
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 600;
   color: var(--color-heading);
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.contact-trust-pill span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .contact-trust-pill svg {
@@ -2433,6 +2459,7 @@
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 1.5rem;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.04);
+  box-sizing: border-box;
 }
 
 .contact-form-header {
@@ -2457,6 +2484,9 @@
   color: var(--color-heading);
   margin-bottom: 0.35rem;
   font-family: var(--font-heading);
+  line-height: 1.3;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .contact-form-header p {
@@ -2464,6 +2494,7 @@
   color: var(--color-muted);
   line-height: 1.5;
   margin: 0;
+  overflow-wrap: break-word;
 }
 
 /* Form Groups & Inputs */
@@ -2478,12 +2509,14 @@
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
+  min-width: 0;
 }
 
 .form-group label {
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--color-heading);
+  line-height: 1.3;
 }
 
 .form-counter {
@@ -2491,18 +2524,36 @@
   color: #94a3b8;
 }
 
-.form-input,
-.form-textarea {
+.form-input {
   width: 100%;
-  padding: 0.8rem 1rem;
-  background: rgba(248, 250, 252, 0.9);
-  border: 1px solid rgba(203, 213, 225, 0.8);
-  border-radius: 10px;
+  height: 48px;
+  min-height: 48px;
+  padding: 0 1rem;
+  background: rgba(248, 250, 252, 0.95);
+  border: 1px solid rgba(203, 213, 225, 0.85);
+  border-radius: 12px;
   color: var(--color-heading);
   font-family: inherit;
   font-size: 0.9rem;
   transition: all 0.2s ease;
   outline: none;
+  box-sizing: border-box;
+}
+
+.form-textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  background: rgba(248, 250, 252, 0.95);
+  border: 1px solid rgba(203, 213, 225, 0.85);
+  border-radius: 12px;
+  color: var(--color-heading);
+  font-family: inherit;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  outline: none;
+  box-sizing: border-box;
+  resize: vertical;
+  min-height: 100px;
 }
 
 .form-input:focus,
@@ -2522,6 +2573,7 @@
   font-size: 0.78rem;
   color: #ef4444;
   font-weight: 500;
+  line-height: 1.3;
 }
 
 /* Select Component Styles */
@@ -2530,19 +2582,21 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 2.65rem;
-  padding: 0 0.85rem;
-  border-radius: 10px;
-  border: 1px solid rgba(203, 213, 225, 0.8);
-  background: rgba(248, 250, 252, 0.9);
+  height: 48px;
+  min-height: 48px;
+  padding: 0 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(203, 213, 225, 0.85);
+  background: rgba(248, 250, 252, 0.95);
   color: var(--color-body);
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   font-weight: 500;
   font-family: inherit;
   cursor: pointer;
   transition: border-color 0.2s, box-shadow 0.2s;
   outline: none;
   gap: 0.5rem;
+  box-sizing: border-box;
 }
 
 .select-trigger:focus,
@@ -4355,6 +4409,11 @@
     padding-bottom: 2.5rem;
   }
 
+  .about-hero-section {
+    padding-top: 6.5rem;
+    padding-bottom: 3rem;
+  }
+
   .hero-3d-container {
     height: 320px;
   }
@@ -4377,6 +4436,10 @@
     grid-template-columns: 1fr;
   }
 
+  .contact {
+    padding: 3.5rem 0;
+  }
+
   .contact-info-card,
   .contact-form-wrapper {
     padding: 1.5rem 1.15rem;
@@ -4387,12 +4450,17 @@
     font-size: 1.35rem;
   }
 
+  .contact-form-header h3 {
+    font-size: 1.25rem;
+  }
+
   .contact-trust-badges {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
   }
 
   .contact-channel-item {
-    padding: 0.8rem 0.95rem;
+    padding: 0.85rem 1rem;
     gap: 0.75rem;
   }
 
@@ -4400,6 +4468,42 @@
   .select-trigger,
   .form-textarea {
     font-size: 16px !important; /* Prevents auto-zoom on iOS devices */
+  }
+}
+
+@media (max-width: 520px) {
+  .contact-channel-item {
+    display: grid;
+    grid-template-columns: 36px 1fr auto;
+    align-items: center;
+    gap: 0.45rem 0.75rem;
+    padding: 0.85rem 0.95rem;
+  }
+
+  .contact-channel-icon {
+    grid-column: 1;
+    width: 36px;
+    height: 36px;
+  }
+
+  .contact-channel-body {
+    grid-column: 2;
+    min-width: 0;
+  }
+
+  .contact-channel-value {
+    font-size: 0.85rem;
+  }
+
+  .contact-copy-btn,
+  .contact-whatsapp-btn {
+    grid-column: 3;
+    padding: 0.38rem 0.7rem;
+    font-size: 0.72rem;
+  }
+
+  .contact-channel-item:last-child .contact-channel-body {
+    grid-column: 2 / -1;
   }
 }
 
@@ -4420,6 +4524,18 @@
   .contact-social-proof {
     flex-direction: column;
     align-items: flex-start;
+    gap: 0.35rem;
+  }
+
+  .success-summary-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+  }
+
+  .summary-value {
+    text-align: left;
+    word-break: break-word;
   }
 
   .success-actions {
@@ -4443,5 +4559,48 @@
   .service-tech-marquee-container::before,
   .service-tech-marquee-container::after {
     width: 24px;
+  }
+}
+
+@media (max-width: 390px) {
+  .contact-channel-item {
+    grid-template-columns: 34px 1fr;
+    grid-template-areas:
+      "icon body"
+      "icon action";
+    align-items: start;
+    gap: 0.35rem 0.65rem;
+  }
+
+  .contact-channel-icon {
+    grid-area: icon;
+    width: 34px;
+    height: 34px;
+    margin-top: 2px;
+  }
+
+  .contact-channel-body {
+    grid-area: body;
+  }
+
+  .contact-channel-value {
+    white-space: normal;
+    word-break: break-all;
+    font-size: 0.82rem;
+  }
+
+  .contact-copy-btn,
+  .contact-whatsapp-btn {
+    grid-area: action;
+    justify-self: start;
+    margin-top: 0.2rem;
+  }
+
+  .contact-channel-item:last-child {
+    grid-template-areas: "icon body";
+  }
+
+  .contact-trust-badges {
+    grid-template-columns: 1fr;
   }
 }

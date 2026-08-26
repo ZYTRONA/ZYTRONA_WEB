@@ -32,17 +32,23 @@ function ScrollToSection() {
     if (isInitialLoad.current) {
       isInitialLoad.current = false
 
-      // Always start from home/top on first load or browser reload.
       if (hash) {
-        window.history.replaceState(null, '', pathname)
+        setTimeout(() => {
+          const element = document.querySelector(hash)
+          if (element) {
+            const lowPerfMode = document.documentElement.classList.contains('low-perf-mobile')
+            element.scrollIntoView({ behavior: lowPerfMode ? 'auto' : 'smooth' })
+          }
+        }, 150)
+        return
       }
+
       window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
       return
     }
 
     // If there's a hash, scroll to that element
     if (hash) {
-      // Wait for the page to render
       setTimeout(() => {
         const element = document.querySelector(hash)
         if (element) {

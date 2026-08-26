@@ -630,15 +630,15 @@ function App() {
               { name: 'Featured Work & Case Studies', link: '/#work' },
               { name: 'Contact & Consultation', link: '/#contact' },
             ].map((item, idx) => (
-              <a
+              <Link
                 key={idx}
-                href={item.link}
+                to={item.link}
                 onClick={() => { setMobileMenuOpen(false); handleMenuLinkClick(); }}
-                className="flex items-center justify-between text-neutral-800 text-sm font-semibold py-2.5 px-1 hover:text-black transition-colors"
+                className="flex items-center justify-between text-neutral-800 text-sm font-semibold py-2.5 px-2 rounded-lg hover:text-black hover:bg-neutral-50 transition-colors"
               >
                 <span>{item.name}</span>
                 <ArrowRight className="w-3.5 h-3.5 text-neutral-400" />
-              </a>
+              </Link>
             ))}
 
             <div className="flex w-full flex-col gap-2.5 mt-3 pt-3 border-t border-black/[0.06]">
@@ -1077,10 +1077,10 @@ function App() {
             {/* LEFT - Avatar Group & Direct Engineering Panel */}
             <motion.div 
               className="contact-info"
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.6 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.5 }}
             >
               <div className="contact-info-card">
                 <div className="contact-info-header">
@@ -1180,10 +1180,10 @@ function App() {
             {/* RIGHT - Comprehensive Consultation Form */}
             <motion.div 
               className="contact-form-wrapper"
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.6 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
             >
               {contactSubmitted ? (
                 <motion.div 

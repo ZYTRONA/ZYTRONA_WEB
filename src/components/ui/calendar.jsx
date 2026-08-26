@@ -112,7 +112,7 @@ export function Calendar({
   };
 
   return (
-    <div className={cn("w-[268px] p-2 select-none", className)}>
+    <div className={cn("w-full max-w-[280px] p-2 select-none mx-auto", className)}>
       {/* Month Navigation Header */}
       <div className="flex items-center justify-between pb-3 px-1">
         <button

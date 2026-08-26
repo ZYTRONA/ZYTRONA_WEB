@@ -144,8 +144,8 @@ const NavItems = ({ items, className, onItemClick, activeSection }) => {
               onMouseEnter={() => setServicesOpen(true)}
               onMouseLeave={() => setServicesOpen(false)}
             >
-              <a
-                href={item.link}
+              <Link
+                to={item.link}
                 onClick={() => {
                   if (onItemClick) onItemClick();
                 }}
@@ -157,7 +157,7 @@ const NavItems = ({ items, className, onItemClick, activeSection }) => {
               >
                 <span>{item.name}</span>
                 <ChevronDown className={cn("w-3.5 h-3.5 transition-transform duration-200", servicesOpen && "rotate-180")} />
-              </a>
+              </Link>
 
               {/* Frosted Services Dropdown */}
               <AnimatePresence>
@@ -196,9 +196,9 @@ const NavItems = ({ items, className, onItemClick, activeSection }) => {
         }
 
         return (
-          <a
+          <Link
             key={item.name}
-            href={item.link}
+            to={item.link}
             onMouseEnter={() => setHoveredIndex(index)}
             onMouseLeave={() => setHoveredIndex(null)}
             onClick={onItemClick}
@@ -216,7 +216,7 @@ const NavItems = ({ items, className, onItemClick, activeSection }) => {
               />
             )}
             <span className="relative z-10">{item.name}</span>
-          </a>
+          </Link>
         );
       })}
     </nav>

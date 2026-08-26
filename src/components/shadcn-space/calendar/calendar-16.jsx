@@ -108,15 +108,15 @@ function TimeCard({ timeStr, onChange, label, isError }) {
           isError && "border-red-500 ring-2 ring-red-500/10"
         )}
       >
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 min-w-0">
           <Clock className="w-3.5 h-3.5 text-slate-500 shrink-0" />
-          <span className="text-xs font-bold text-slate-900 tabular-nums">
+          <span className="text-xs font-bold text-slate-900 tabular-nums truncate">
             {formatTime12h(timeStr)}
           </span>
         </div>
         <ChevronDownIcon
           className={cn(
-            "w-3.5 h-3.5 text-slate-400 transition-transform duration-200",
+            "w-3.5 h-3.5 text-slate-400 transition-transform duration-200 shrink-0",
             isOpen && "rotate-180 text-slate-900"
           )}
         />
@@ -124,7 +124,7 @@ function TimeCard({ timeStr, onChange, label, isError }) {
 
       {/* Floating 1-Click Dropdown List */}
       {isOpen && (
-        <div className="absolute top-[calc(100%+4px)] left-0 right-0 max-h-48 overflow-y-auto bg-white rounded-xl border border-slate-200 shadow-xl z-50 p-1 flex flex-col gap-0.5 animate-in fade-in-0 zoom-in-95 duration-150">
+        <div className="absolute top-[calc(100%+4px)] left-0 right-0 max-h-40 overflow-y-auto bg-white rounded-xl border border-slate-200 shadow-xl z-50 p-1 flex flex-col gap-0.5 animate-in fade-in-0 zoom-in-95 duration-150">
           {TIME_OPTIONS.map((time) => {
             const isSelected = time === timeStr;
             return (
@@ -191,7 +191,6 @@ export function CalendarWithTimeRange({
     else setInternalDate(d);
   };
   const handleStartTimeChange = (t) => {
-    // When changing start time, automatically maintain existing duration for end time
     const currentDur = getDurationHours(startTime, endTime) || 2;
     const newEnd = addHoursToTime(t, currentDur);
     if (onChange) fire(date, t, newEnd);
@@ -209,7 +208,6 @@ export function CalendarWithTimeRange({
   const currentDuration = getDurationHours(startTime, endTime);
   const isAllDayActive = startTime === "09:00" && endTime === "17:00";
 
-  // Parse start time for real-time live clock dial animation
   const startParts = (startTime || "10:30").split(":").map(Number);
   const startH24 = isNaN(startParts[0]) ? 10 : startParts[0];
   const startMins = isNaN(startParts[1]) ? 30 : startParts[1];
@@ -222,58 +220,52 @@ export function CalendarWithTimeRange({
           type="button"
           id={id}
           className={cn(
-            "group/pick w-full h-[52px] px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50/80 hover:border-slate-300 text-left font-normal transition-all duration-200 cursor-pointer shadow-xs flex items-center justify-between",
+            "group/pick w-full h-[48px] min-h-[48px] px-3.5 sm:px-4 rounded-xl border border-slate-200 bg-white hover:bg-slate-50/80 hover:border-slate-300 text-left font-normal transition-all duration-200 cursor-pointer shadow-xs flex items-center justify-between box-border",
             !date && "text-slate-400",
             open && "border-slate-900 ring-2 ring-slate-900/10",
             className
           )}
         >
-          <div className="flex items-center gap-2.5 min-w-0 truncate">
-            <div className="flex items-center justify-center w-8 h-8 rounded-lg bg-slate-100 text-slate-700 group-hover/pick:bg-slate-900 group-hover/pick:text-white transition-colors shrink-0">
-              <CalendarIcon aria-hidden className="h-4 w-4 transition-colors" />
+          <div className="flex items-center gap-2.5 min-w-0 flex-1 overflow-hidden pr-2">
+            <div className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-slate-100 text-slate-700 group-hover/pick:bg-slate-900 group-hover/pick:text-white transition-colors shrink-0">
+              <CalendarIcon aria-hidden className="h-3.5 w-3.5 sm:h-4 sm:w-4 transition-colors" />
             </div>
-            {date ? (
-              <span className="text-slate-900 font-bold text-sm truncate">
-                {format(date, "MMM d, yyyy")}
+            <div className="flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-2 min-w-0 overflow-hidden">
+              <span className="text-slate-900 font-bold text-xs sm:text-sm truncate">
+                {date ? format(date, "MMM d, yyyy") : "Pick a date and time"}
               </span>
-            ) : (
-              <span className="text-slate-400 text-sm font-medium">
-                Pick a date and time
-              </span>
-            )}
-            {date && (startTime || endTime) && (
-              <>
-                <span className="text-slate-200 select-none font-light">|</span>
-                <div className="flex items-center gap-1.5 truncate text-slate-600">
-                  <Clock className="h-3.5 w-3.5 shrink-0 text-slate-400" />
-                  <span className="text-xs font-semibold tabular-nums">
+              {date && (startTime || endTime) && (
+                <div className="flex items-center gap-1 text-slate-500 min-w-0">
+                  <span className="hidden sm:inline text-slate-300 select-none">•</span>
+                  <Clock className="h-3 w-3 shrink-0 text-slate-400 hidden xs:inline" />
+                  <span className="text-[11px] sm:text-xs font-semibold tabular-nums text-slate-600 truncate">
                     {startTime ? formatTime12h(startTime) : "—"}
                     {" – "}
                     {endTime ? formatTime12h(endTime) : "—"}
                   </span>
                 </div>
-              </>
-            )}
+              )}
+            </div>
           </div>
           <ChevronDownIcon
             className={cn(
-              "h-4 w-4 text-slate-400 group-hover/pick:text-slate-600 shrink-0 transition-transform duration-300 ml-2",
+              "h-4 w-4 text-slate-400 group-hover/pick:text-slate-600 shrink-0 transition-transform duration-300",
               open && "rotate-180 text-slate-900"
             )}
           />
         </button>
       </PopoverTrigger>
 
-      {/* ── Professional Popover Dialog (Side-by-Side 2-Column) ── */}
+      {/* ── Professional Popover Dialog (Side-by-Side 2-Column / Mobile Stacked) ── */}
       <PopoverContent
-        align="start"
+        align="center"
         sideOffset={8}
-        className="w-auto p-0 rounded-2xl border border-slate-200 bg-white shadow-2xl overflow-hidden z-[100] max-w-[95vw]"
+        className="w-auto p-0 rounded-2xl border border-slate-200 bg-white shadow-2xl overflow-y-auto max-h-[85vh] z-[100] max-w-[calc(100vw-24px)] sm:max-w-none"
       >
         <div className="flex flex-col sm:flex-row">
           {/* Left Column: Interactive Month Calendar */}
-          <div className="p-3 sm:pr-4">
-            <div className="flex items-center justify-between px-2 pb-1">
+          <div className="p-3 sm:pr-4 flex flex-col items-center sm:items-stretch">
+            <div className="flex items-center justify-between w-full px-2 pb-1">
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
                 Select Date
               </span>
@@ -295,7 +287,7 @@ export function CalendarWithTimeRange({
           <div className="sm:hidden h-px bg-slate-100 mx-3" />
 
           {/* Right Column: Time Window & Preset Controls */}
-          <div className="p-4 sm:pl-4 sm:w-[250px] flex flex-col justify-between bg-slate-50/40">
+          <div className="p-3.5 sm:p-4 sm:w-[250px] flex flex-col justify-between bg-slate-50/40 gap-4">
             <div className="flex flex-col gap-3.5">
               {/* Header with Live Animated Dial */}
               <div className="flex items-center justify-between pb-1 border-b border-slate-100">
@@ -372,7 +364,7 @@ export function CalendarWithTimeRange({
 
             {/* Error Message */}
             {isInvalid && (
-              <p className="text-[11px] text-red-600 font-semibold text-center mt-2 bg-red-50 py-1 px-2 rounded-md border border-red-200">
+              <p className="text-[11px] text-red-600 font-semibold text-center bg-red-50 py-1 px-2 rounded-md border border-red-200">
                 End time must be after start
               </p>
             )}

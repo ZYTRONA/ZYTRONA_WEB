@@ -516,15 +516,15 @@ function ServiceDetail() {
               { name: 'Featured Work & Case Studies', link: '/#work' },
               { name: 'Contact & Consultation', link: '/#contact' },
             ].map((item, idx) => (
-              <a
+              <Link
                 key={idx}
-                href={item.link}
+                to={item.link}
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between text-neutral-800 text-sm font-semibold py-2.5 px-1 hover:text-black transition-colors"
+                className="flex items-center justify-between text-neutral-800 text-sm font-semibold py-2.5 px-2 rounded-lg hover:text-black hover:bg-neutral-50 transition-colors"
               >
                 <span>{item.name}</span>
                 <ArrowRight className="w-3.5 h-3.5 text-neutral-400" />
-              </a>
+              </Link>
             ))}
 
             <div className="flex w-full flex-col gap-2.5 mt-3 pt-3 border-t border-black/[0.06]">
