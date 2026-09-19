@@ -1,299 +1,168 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { 
-  ArrowUpRight, 
-  Copy, 
-  Check, 
-  Phone, 
-  Mail, 
-  Sparkles, 
-  ShieldCheck,
-  ExternalLink
-} from 'lucide-react'
-import { FaWhatsapp } from 'react-icons/fa'
-
-const LOGO_SRC = '/Logo.png'
-
-
+import { Send, Check, Phone, Mail } from 'lucide-react'
+import { ZytronaLogo } from '../ZytronaFigmaAssets'
 
 export function Footer() {
-  const [copiedEmail, setCopiedEmail] = useState(false)
+  const [email, setEmail] = useState('')
+  const [subscribed, setSubscribed] = useState(false)
 
-  const handleCopyEmail = (e) => {
+  const handleSubscribe = (e) => {
     e.preventDefault()
-    navigator.clipboard.writeText('zytronabusiness@gmail.com')
-    setCopiedEmail(true)
-    setTimeout(() => setCopiedEmail(false), 2500)
+    if (email.trim()) {
+      setSubscribed(true)
+      setEmail('')
+      setTimeout(() => setSubscribed(false), 3000)
+    }
   }
 
-  const currentYear = new Date().getFullYear()
-
   return (
-    <footer className="footer-modern">
-      {/* Top Banner / Scoping Strip */}
-      <div className="footer-top-strip">
-        <div className="container">
-          <div className="footer-strip-wrapper">
-            <div className="footer-status-pill">
-              <span className="status-live-dot" />
-              <span>Accepting New Enterprise & Startup Projects</span>
-            </div>
-
-            <div className="footer-strip-actions">
-              <a 
-                href="https://wa.me/918667273159?text=Hi%20ZYTRONA,%20I%20would%20like%20to%20discuss%20a%20project" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="footer-strip-link"
-              >
-                <FaWhatsapp className="text-emerald-500 w-4 h-4" />
-                <span>WhatsApp Direct</span>
-              </a>
-
-              <a href="tel:+918667273159" className="footer-strip-link">
-                <Phone className="w-3.5 h-3.5" />
-                <span>+91 8667273159</span>
-              </a>
-
-              <button 
-                onClick={handleCopyEmail}
-                className="footer-strip-copy-btn"
-                title="Copy business email"
-              >
-                {copiedEmail ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                <span>{copiedEmail ? 'Copied!' : 'zytronabusiness@gmail.com'}</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Multi-Column Bento Grid */}
-      <div className="container">
-        <div className="footer-main-grid">
-          {/* Col 1: Brand & Narrative */}
-          <div className="footer-col-brand">
-            <Link to="/#home" className="footer-brand-logo">
-              <img src={LOGO_SRC} alt="ZYTRONA Logo" className="footer-logo-img" />
-              <span className="footer-logo-text">ZYTRONA</span>
+    <footer className="bg-[#263238] text-white py-16 px-6 lg:px-16 border-t border-[#37474F]">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-14">
+        {/* Col 1: Brand & Copyright (5 cols) */}
+        <div className="md:col-span-5 flex flex-col justify-between space-y-8">
+          <div>
+            <Link to="/" className="inline-block mb-6">
+              <ZytronaLogo light={true} />
             </Link>
             
-            <p className="footer-brand-tagline">
-              Engineering world-class AI systems, modern web platforms, high-performance mobile apps, and scalable cloud architectures.
+            <p className="text-neutral-300 text-sm leading-relaxed max-w-sm mb-6">
+              Engineering high-performance web platforms, mobile applications, and conversion-driven UI/UX systems with 100% IP ownership.
             </p>
 
-            <div className="footer-badges-row">
-              <span className="footer-mini-badge">
-                <ShieldCheck className="w-3.5 h-3.5" />
-                100% IP Ownership
-              </span>
-              <span className="footer-mini-badge">
-                <Sparkles className="w-3.5 h-3.5" />
-                Sub-Second Vitals
-              </span>
+            <div className="text-neutral-400 text-xs space-y-1">
+              <p>Copyright © 2026 ZYTRONA Inc.</p>
+              <p>All rights reserved • 100% IP & NDA Protected</p>
             </div>
-
-            <ul className="footer-social-cluster example-2">
-              <li className="icon-content">
-                <a 
-                  href="https://www.linkedin.com/company/zytrona" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  aria-label="LinkedIn" 
-                  data-social="linkedin"
-                >
-                  <div className="filled" />
-                  <svg xmlns="http://www.w3.org/2000/svg" width={18} height={18} fill="currentColor" className="bi bi-linkedin" viewBox="0 0 16 16" xmlSpace="preserve">
-                    <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854zm4.943 12.248V6.169H2.542v7.225zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248S2.4 3.226 2.4 3.934c0 .694.521 1.248 1.327 1.248zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016l.016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225z" fill="currentColor" />
-                  </svg>
-                </a>
-                <div className="tooltip">LinkedIn</div>
-              </li>
-
-              <li className="icon-content">
-                <a 
-                  href="https://github.com/ZYTRONA" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  aria-label="GitHub" 
-                  data-social="github"
-                >
-                  <div className="filled" />
-                  <svg xmlns="http://www.w3.org/2000/svg" width={18} height={18} fill="currentColor" className="bi bi-github" viewBox="0 0 16 16" xmlSpace="preserve">
-                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8" fill="currentColor" />
-                  </svg>
-                </a>
-                <div className="tooltip">GitHub</div>
-              </li>
-
-              <li className="icon-content">
-                <a 
-                  href="https://www.instagram.com/zytrona_official/" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  aria-label="Instagram" 
-                  data-social="instagram"
-                >
-                  <div className="filled" />
-                  <svg xmlns="http://www.w3.org/2000/svg" width={18} height={18} fill="currentColor" className="bi bi-instagram" viewBox="0 0 16 16" xmlSpace="preserve">
-                    <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334" fill="currentColor" />
-                  </svg>
-                </a>
-                <div className="tooltip">Instagram</div>
-              </li>
-
-              <li className="icon-content">
-                <a 
-                  href="https://wa.me/918667273159" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  aria-label="WhatsApp" 
-                  data-social="whatsapp"
-                >
-                  <div className="filled" />
-                  <svg xmlns="http://www.w3.org/2000/svg" width={18} height={18} fill="currentColor" className="bi bi-whatsapp" viewBox="0 0 16 16" xmlSpace="preserve">
-                    <path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.364 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.707 2.029.807 2.162c.099.133 1.39 2.122 3.37 2.975.471.203.838.324 1.124.415.473.151.903.129 1.243.079.38-.057 1.17-.478 1.336-.94.166-.462.166-.857.116-.94-.048-.083-.182-.133-.38-.232" fill="currentColor"/>
-                  </svg>
-                </a>
-                <div className="tooltip">WhatsApp</div>
-              </li>
-            </ul>
           </div>
 
-          {/* Col 2: Capabilities & Services */}
-          <div className="footer-col-nav">
-            <h4 className="footer-col-title">Capabilities</h4>
-            <ul className="footer-nav-list">
-              <li>
-                <Link to="/service/website-development" className="footer-nav-link">
-                  Web & Cloud SaaS
-                  <ArrowUpRight className="footer-link-arrow" />
-                </Link>
-              </li>
-              <li>
-                <Link to="/service/app-development" className="footer-nav-link">
-                  Mobile App Engineering
-                  <ArrowUpRight className="footer-link-arrow" />
-                </Link>
-              </li>
-              <li>
-                <Link to="/service/tensorflow-ai" className="footer-nav-link">
-                  AI & ML Automation
-                  <ArrowUpRight className="footer-link-arrow" />
-                </Link>
-              </li>
-              <li>
-                <Link to="/service/ui-designs" className="footer-nav-link">
-                  UI/UX & Design Systems
-                  <ArrowUpRight className="footer-link-arrow" />
-                </Link>
-              </li>
-              <li>
-                <Link to="/service/devops-linux" className="footer-nav-link">
-                  DevOps & Cloud SRE
-                  <ArrowUpRight className="footer-link-arrow" />
-                </Link>
-              </li>
-              <li>
-                <Link to="/service/video-editing" className="footer-nav-link">
-                  Commercial Motion & VFX
-                  <ArrowUpRight className="footer-link-arrow" />
-                </Link>
-              </li>
-            </ul>
-          </div>
+          {/* Social Icons */}
+          <div className="flex items-center gap-4">
+            {/* LinkedIn */}
+            <a
+              href="https://www.linkedin.com/company/zytrona"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+              className="w-8 h-8 rounded-full bg-[#37474F] hover:bg-[#4CAF4F] text-white flex items-center justify-center transition-colors"
+            >
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+              </svg>
+            </a>
 
-          {/* Col 3: Company & Approach */}
-          <div className="footer-col-nav">
-            <h4 className="footer-col-title">Company</h4>
-            <ul className="footer-nav-list">
-              <li>
-                <Link to="/about" className="footer-nav-link">
-                  About ZYTRONA
-                  <ArrowUpRight className="footer-link-arrow" />
-                </Link>
-              </li>
-              <li>
-                <Link to="/#about" className="footer-nav-link">
-                  Engineering Values
-                </Link>
-              </li>
-              <li>
-                <Link to="/#work" className="footer-nav-link">
-                  Featured Case Studies
-                </Link>
-              </li>
-              <li>
-                <Link to="/#services" className="footer-nav-link">
-                  Engagement Models
-                </Link>
-              </li>
-              <li>
-                <Link to="/about" className="footer-nav-link">
-                  Agile Delivery Process
-                  <ArrowUpRight className="footer-link-arrow" />
-                </Link>
-              </li>
-              <li>
-                <Link to="/#faq" className="footer-nav-link">
-                  Client FAQs
-                </Link>
-              </li>
-              <li>
-                <Link to="/#contact" className="footer-nav-link">
-                  Senior Engineering Hub
-                </Link>
-              </li>
-            </ul>
-          </div>
+            {/* Instagram */}
+            <a
+              href="https://www.instagram.com/zytrona_official/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="w-8 h-8 rounded-full bg-[#37474F] hover:bg-[#4CAF4F] text-white flex items-center justify-center transition-colors"
+            >
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+              </svg>
+            </a>
 
-          {/* Col 4: Consultation Direct */}
-          <div className="footer-col-nav">
-            <h4 className="footer-col-title">Direct Connect</h4>
-            <p className="footer-contact-desc">
-              Zero middlemen. Connect directly with senior software architects and designers.
-            </p>
-            
-            <div className="footer-direct-box">
-              <span className="footer-direct-label">Senior Technical Inquiries</span>
-              <a href="mailto:zytronabusiness@gmail.com" className="footer-direct-email">
-                zytronabusiness@gmail.com
-              </a>
-            </div>
-
-            <div className="footer-direct-box" style={{ marginTop: '0.75rem' }}>
-              <span className="footer-direct-label">Direct Hotline</span>
-              <a href="tel:+918667273159" className="footer-direct-phone">
-                +91 8667273159
-              </a>
-            </div>
-
-            <Link to="/#contact" className="footer-cta-action-btn">
-              <span>Start a Consultation</span>
-              <ArrowUpRight size={16} />
-            </Link>
+            {/* WhatsApp */}
+            <a
+              href="https://wa.me/918667273159"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="WhatsApp"
+              className="w-8 h-8 rounded-full bg-[#37474F] hover:bg-[#4CAF4F] text-white flex items-center justify-center transition-colors"
+            >
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+              </svg>
+            </a>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="footer-bottom-bar">
-          <div className="footer-bottom-left">
-            <p>© {currentYear} ZYTRONA Inc. All rights reserved.</p>
-          </div>
+        {/* Col 2: Capabilities (2 cols) */}
+        <div className="md:col-span-2">
+          <h4 className="!text-white font-bold text-lg mb-5 tracking-tight" style={{ color: '#FFFFFF' }}>Capabilities</h4>
+          <ul className="space-y-3 text-neutral-300 text-sm">
+            <li>
+              <Link to="/service/website-development" className="hover:text-[#4CAF4F] transition-colors">Web Platforms</Link>
+            </li>
+            <li>
+              <Link to="/service/app-development" className="hover:text-[#4CAF4F] transition-colors">Mobile Engineering</Link>
+            </li>
+            <li>
+              <Link to="/service/ui-designs" className="hover:text-[#4CAF4F] transition-colors">UI/UX Systems</Link>
+            </li>
+            <li>
+              <a href="#work" className="hover:text-[#4CAF4F] transition-colors">Case Studies</a>
+            </li>
+            <li>
+              <a href="#stats" className="hover:text-[#4CAF4F] transition-colors">Performance SLAs</a>
+            </li>
+          </ul>
+        </div>
 
-          <div className="footer-bottom-right">
-            <Link to="/privacy-policy" className="footer-legal-link">Privacy Policy</Link>
-            <span className="footer-legal-dot">•</span>
-            <Link to="/terms-of-service" className="footer-legal-link">Terms of Service</Link>
-            <span className="footer-legal-dot">•</span>
-            <span className="footer-legal-link" style={{ cursor: 'default' }}>NDA Protected</span>
+        {/* Col 3: Company (2 cols) */}
+        <div className="md:col-span-2">
+          <h4 className="!text-white font-bold text-lg mb-5 tracking-tight" style={{ color: '#FFFFFF' }}>Company</h4>
+          <ul className="space-y-3 text-neutral-300 text-sm">
+            <li>
+              <Link to="/about" className="hover:text-[#4CAF4F] transition-colors">About ZYTRONA</Link>
+            </li>
+            <li>
+              <a href="#testimonials" className="hover:text-[#4CAF4F] transition-colors">Client Reviews</a>
+            </li>
+            <li>
+              <Link to="/privacy-policy" className="hover:text-[#4CAF4F] transition-colors">Privacy Policy</Link>
+            </li>
+            <li>
+              <Link to="/terms-of-service" className="hover:text-[#4CAF4F] transition-colors">Terms of Service</Link>
+            </li>
+            <li>
+              <a href="mailto:zytronabusiness@gmail.com" className="hover:text-[#4CAF4F] transition-colors">Direct Contact</a>
+            </li>
+          </ul>
+        </div>
+
+        {/* Col 4: Consultation & Newsletter (3 cols) */}
+        <div className="md:col-span-3">
+          <h4 className="!text-white font-bold text-lg mb-5 tracking-tight" style={{ color: '#FFFFFF' }}>Stay Connected</h4>
+          <p className="text-neutral-400 text-xs mb-3">
+            Subscribe for senior software engineering insights, case studies, and architecture updates.
+          </p>
+
+          <form onSubmit={handleSubscribe} className="relative">
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Your business email"
+              required
+              className="w-full bg-[#515B60]/80 text-white placeholder-neutral-400 text-sm py-2.5 pl-4 pr-11 rounded-md border border-transparent focus:border-[#4CAF4F] focus:outline-none transition-colors"
+            />
+            <button
+              type="submit"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-neutral-300 hover:text-white transition-colors p-1"
+              aria-label="Subscribe"
+            >
+              {subscribed ? <Check className="w-4 h-4 text-[#4CAF4F]" /> : <Send className="w-4 h-4" />}
+            </button>
+          </form>
+
+          {subscribed && (
+            <p className="text-xs text-[#81C784] mt-2">Thank you for connecting with ZYTRONA!</p>
+          )}
+
+          <div className="mt-5 pt-4 border-t border-[#37474F] text-xs text-neutral-400 space-y-1">
+            <p className="flex items-center gap-2">
+              <Mail className="w-3.5 h-3.5 text-[#4CAF4F]" />
+              <span>zytronabusiness@gmail.com</span>
+            </p>
+            <p className="flex items-center gap-2">
+              <Phone className="w-3.5 h-3.5 text-[#4CAF4F]" />
+              <span>+91 8667273159</span>
+            </p>
           </div>
         </div>
-      </div>
-
-      {/* Oversized Subtle Watermark */}
-      <div className="footer-giant-watermark">
-        <span>ZYTRONA</span>
       </div>
     </footer>
   )

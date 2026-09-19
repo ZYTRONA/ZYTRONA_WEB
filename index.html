@@ -2,28 +2,69 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" href="/Logo.png" />
     <link rel="apple-touch-icon" href="/Logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
-    <meta name="theme-color" content="#0d9488" />
-    <meta name="description" content="Zytrona builds high-performance web platforms, mobile apps, and AI solutions. Full-cycle software engineering for startups and enterprises." />
-    <meta name="keywords" content="Zytrona, software development, web development, mobile apps, AI solutions, UI/UX design, tech agency, SaaS, cloud" />
-    <meta property="og:title" content="Zytrona | Software Engineering & Digital Solutions" />
+    <meta name="theme-color" content="#4CAF4F" />
+    <script>
+      // Fix Permissions policy violation for deprecated 'unload' event (Chrome bfcache deprecation)
+      (function() {
+        if (typeof window !== 'undefined') {
+          if (window.addEventListener) {
+            const _origAdd = window.addEventListener;
+            window.addEventListener = function(type, listener, options) {
+              if (type === 'unload') {
+                return _origAdd.call(this, 'pagehide', listener, options);
+              }
+              return _origAdd.call(this, type, listener, options);
+            };
+          }
+          if (window.removeEventListener) {
+            const _origRemove = window.removeEventListener;
+            window.removeEventListener = function(type, listener, options) {
+              if (type === 'unload') {
+                return _origRemove.call(this, 'pagehide', listener, options);
+              }
+              return _origRemove.call(this, type, listener, options);
+            };
+          }
+          try {
+            Object.defineProperty(window, 'onunload', {
+              get() { return null; },
+              set(fn) {
+                if (typeof fn === 'function') {
+                  window.addEventListener('pagehide', fn);
+                }
+              },
+              configurable: true,
+              enumerable: true
+            });
+          } catch (e) {}
+        }
+      })();
+    </script>
+    <meta name="description" content="ZYTRONA builds high-performance web platforms, mobile apps, AI automation, and cloud infrastructure for startups and enterprises. High-performance delivery, 100% IP ownership." />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="author" content="ZYTRONA" />
+    <link rel="canonical" href="https://zytrona.vercel.app/" />
+    <meta property="og:title" content="ZYTRONA" />
     <meta property="og:description" content="Full-cycle software engineering — web platforms, mobile apps, and AI solutions for startups and enterprises." />
-    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:image" content="https://zytrona.vercel.app/og-image.png" />
+    <meta property="og:url" content="https://zytrona.vercel.app/" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Zytrona" />
+    <meta property="og:site_name" content="ZYTRONA" />
+    <meta property="og:locale" content="en_US" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Zytrona | Software Engineering & Digital Solutions" />
+    <meta name="twitter:title" content="ZYTRONA" />
     <meta name="twitter:description" content="Full-cycle software engineering — web platforms, mobile apps, and AI solutions for startups and enterprises." />
-    <meta name="twitter:image" content="/og-image.png" />
-
+    <meta name="twitter:image" content="https://zytrona.vercel.app/og-image.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
-    <title>Zytrona | Software Engineering & Digital Agency</title>
+    <link href="https://fonts.googleapis.com/css2?family=Allerta+Stencil&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>ZYTRONA</title>
   </head>
   <body>
     <div id="root"></div>

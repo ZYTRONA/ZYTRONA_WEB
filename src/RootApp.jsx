@@ -1,11 +1,13 @@
 import { useEffect, useRef } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import App from './App.jsx'
 import About from './pages/About.jsx'
 import ServiceDetail from './pages/ServiceDetail.jsx'
 import PrivacyPolicy from './pages/PrivacyPolicy.jsx'
 import TermsOfService from './pages/TermsOfService.jsx'
+import NotFound from './pages/NotFound.jsx'
 import BackgroundGrid from './components/ui/BackgroundGrid'
+import { Seo } from './components/Seo.jsx'
 
 function isLowPerformanceMobile() {
   if (typeof window === 'undefined') return false
@@ -91,12 +93,24 @@ export function RootApp() {
     <>
       <BackgroundGrid />
       <ScrollToSection />
+      <Seo />
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/about" element={<About />} />
         <Route path="/service/:serviceId" element={<ServiceDetail />} />
+        <Route path="/404" element={<NotFound />} />
+        <Route path="/services" element={<Navigate to="/service/website-development" replace />} />
+        <Route path="/work" element={<Navigate to="/#work" replace />} />
+        <Route path="/portfolio" element={<Navigate to="/#work" replace />} />
+        <Route path="/contact" element={<Navigate to="/#contact" replace />} />
+        <Route path="/pricing" element={<Navigate to="/" replace />} />
+        <Route path="/price" element={<Navigate to="/" replace />} />
+        <Route path="/reviews" element={<Navigate to="/" replace />} />
+        <Route path="/testimonials" element={<Navigate to="/" replace />} />
+        <Route path="/engagement" element={<Navigate to="/" replace />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-of-service" element={<TermsOfService />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   )

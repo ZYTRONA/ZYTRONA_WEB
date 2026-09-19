@@ -6,23 +6,33 @@ import { cn } from "@/lib/utils";
 import { 
   Globe, 
   Smartphone, 
-  Cpu, 
   Palette, 
-  Server, 
-  Video, 
   ArrowRight, 
-  ChevronDown 
+  ChevronDown,
+  Building2,
+  FolderGit2,
+  ShieldCheck,
+  Users
 } from "lucide-react";
+import { ZytronaLogo } from "@/components/ZytronaFigmaAssets";
 
 const Navbar = ({ children, className }) => {
+  const { scrollY } = useScroll();
+  const [scrolled, setScrolled] = useState(false);
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setScrolled(latest > 10);
+  });
+
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 pointer-events-none",
+        "fixed top-0 left-0 right-0 z-50 w-full transition-shadow duration-200",
+        scrolled ? "shadow-md" : "shadow-sm",
         className
       )}
     >
-      <div className="pointer-events-auto w-full">
+      <div className="w-full">
         {children}
       </div>
     </header>
@@ -34,223 +44,172 @@ const NavBody = ({ children, className }) => {
   const [scrolled, setScrolled] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    if (latest > 30) {
-      setScrolled(true);
-    } else {
-      setScrolled(false);
-    }
+    setScrolled(latest > 20);
   });
 
   return (
-    <motion.div
-      initial={{ width: "100%", y: 0, borderRadius: "0px" }}
-      animate={{
-        width: scrolled ? "86%" : "100%",
-        maxWidth: scrolled ? "980px" : "100%",
-        y: scrolled ? 14 : 0,
-        borderRadius: scrolled ? "9999px" : "0px",
-      }}
-      transition={{
-        type: "spring",
-        stiffness: 260,
-        damping: 24,
-        mass: 0.8
-      }}
+    <div
       className={cn(
-        "mx-auto hidden md:flex items-center justify-between transition-colors duration-300",
-        "bg-white/85 backdrop-blur-xl",
-        scrolled
-          ? "border border-black/[0.1] shadow-2xl shadow-black/[0.08] px-5 sm:px-6 py-2 bg-white/92"
-          : "border-b border-black/[0.08] px-6 lg:px-12 py-3.5 bg-white/85",
+        "w-full hidden md:flex items-center justify-between transition-all duration-200",
+        "bg-white/95 dark:bg-[#0B0D0F]/95 backdrop-blur-md border-b border-[#E0E0E0] dark:border-[#232936] px-6 lg:px-16 py-4 text-[#18191F] dark:text-[#F8FAFC]",
+        scrolled && "shadow-sm py-3.5",
         className
       )}
     >
       {children}
-    </motion.div>
+    </div>
   );
 };
 
+// 3 Core Services for Dropdown
 const SERVICES_MENU = [
   {
     name: "Web Platform & SaaS",
-    desc: "React 19, Next.js & Sub-Second Cloud",
-    icon: <Globe className="w-4 h-4 text-black" />,
+    desc: "React 19, Next.js & Sub-Second Speed",
+    icon: <Globe className="w-4 h-4 text-[#4CAF4F]" />,
     link: "/service/website-development"
   },
   {
     name: "Mobile App Engineering",
     desc: "React Native & Swift Native Performance",
-    icon: <Smartphone className="w-4 h-4 text-black" />,
+    icon: <Smartphone className="w-4 h-4 text-[#4CAF4F]" />,
     link: "/service/app-development"
-  },
-  {
-    name: "AI & Neural Automation",
-    desc: "Deep Learning, LLMs & Computer Vision",
-    icon: <Cpu className="w-4 h-4 text-black" />,
-    link: "/service/tensorflow-ai"
   },
   {
     name: "UI/UX & Design Systems",
     desc: "Figma Tokens, Micro-Interactions & Prototyping",
-    icon: <Palette className="w-4 h-4 text-black" />,
+    icon: <Palette className="w-4 h-4 text-[#4CAF4F]" />,
     link: "/service/ui-designs"
-  },
-  {
-    name: "DevOps & Cloud SRE",
-    desc: "CI/CD, Kubernetes, Docker & 99.99% Uptime",
-    icon: <Server className="w-4 h-4 text-black" />,
-    link: "/service/devops-linux"
-  },
-  {
-    name: "Commercial Motion & Media",
-    desc: "4K Brand Reels, 3D VFX & Motion Graphics",
-    icon: <Video className="w-4 h-4 text-black" />,
-    link: "/service/video-editing"
   }
 ];
 
-const NavItems = ({ items, className, onItemClick, activeSection }) => {
-  const [hoveredIndex, setHoveredIndex] = useState(null);
-  const [servicesOpen, setServicesOpen] = useState(false);
-  const dropdownRef = useRef(null);
+const NavItems = ({ className, onItemClick, activeSection }) => {
+  const [activeDropdown, setActiveDropdown] = useState(null);
+  const timeoutRef = useRef(null);
 
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setServicesOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  const handleMouseEnter = (menuName) => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    setActiveDropdown(menuName);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutRef.current = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 150);
+  };
 
   return (
-    <nav
-      className={cn(
-        "hidden md:flex items-center gap-1 lg:gap-1.5 relative",
-        className
-      )}
-    >
-      {items.map((item, index) => {
-        const isServices = item.name === 'Services';
-        const isActive = activeSection ? activeSection === item.name.toLowerCase() : false;
+    <nav className={cn("hidden md:flex items-center gap-6 lg:gap-10 relative", className)}>
+      <Link
+        to="/"
+        onClick={onItemClick}
+        className={cn(
+          "text-[15px] font-medium text-[#18191F] hover:text-[#4CAF4F] transition-colors py-1.5",
+          activeSection === "home" && "text-[#4CAF4F] font-semibold"
+        )}
+      >
+        Home
+      </Link>
 
-        if (isServices) {
-          return (
-            <div 
-              key={item.name} 
-              className="relative"
-              ref={dropdownRef}
-              onMouseEnter={() => setServicesOpen(true)}
-              onMouseLeave={() => setServicesOpen(false)}
+      {/* SERVICES DROPDOWN */}
+      <div 
+        className="relative"
+        onMouseEnter={() => handleMouseEnter("services")}
+        onMouseLeave={handleMouseLeave}
+      >
+        <Link
+          to="/#services"
+          onClick={() => {
+            setActiveDropdown(null);
+            if (onItemClick) onItemClick();
+          }}
+          className={cn(
+            "text-[15px] font-medium text-[#18191F] hover:text-[#4CAF4F] flex items-center gap-1.5 py-1.5 transition-colors cursor-pointer",
+            activeDropdown === "services" && "text-[#4CAF4F] font-semibold"
+          )}
+        >
+          <span>Services</span>
+          <ChevronDown className={cn("w-3.5 h-3.5 text-neutral-400 transition-transform duration-200", activeDropdown === "services" && "rotate-180 text-[#4CAF4F]")} />
+        </Link>
+
+        <AnimatePresence>
+          {activeDropdown === "services" && (
+            <motion.div
+              initial={{ opacity: 0, y: 6, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 6, scale: 0.98 }}
+              transition={{ duration: 0.15, ease: "easeOut" }}
+              className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[380px] p-2.5 rounded-md bg-white border border-[#E0E0E0] shadow-xl z-50 flex flex-col gap-1"
             >
-              <Link
-                to={item.link}
-                onClick={() => {
-                  if (onItemClick) onItemClick();
-                }}
-                className={cn(
-                  "relative px-3.5 py-1.5 text-xs lg:text-sm font-semibold transition-colors duration-200 rounded-full flex items-center gap-1 cursor-pointer",
-                  "text-neutral-700 hover:text-black",
-                  (servicesOpen || isActive) && "text-black font-bold"
-                )}
-              >
-                <span>{item.name}</span>
-                <ChevronDown className={cn("w-3.5 h-3.5 transition-transform duration-200", servicesOpen && "rotate-180")} />
-              </Link>
+              <div className="px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-[#4CAF4F] border-b border-[#F0F0F0]">
+                Core Engineering Capabilities
+              </div>
+              {SERVICES_MENU.map((srv, sIdx) => (
+                <Link
+                  key={sIdx}
+                  to={srv.link}
+                  onClick={() => {
+                    setActiveDropdown(null);
+                    if (onItemClick) onItemClick();
+                  }}
+                  className="p-2.5 rounded hover:bg-[#F5F7FA] transition-colors flex items-start gap-3 group"
+                >
+                  <div className="p-2 rounded bg-[#E8F5E9] text-[#4CAF4F] group-hover:bg-[#4CAF4F] group-hover:text-white transition-colors shrink-0">
+                    {srv.icon}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-bold text-[#263238] group-hover:text-[#4CAF4F] flex items-center justify-between">
+                      <span>{srv.name}</span>
+                      <ArrowRight className="w-3.5 h-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-150" />
+                    </div>
+                    <p className="text-xs text-[#717171] leading-snug mt-0.5">{srv.desc}</p>
+                  </div>
+                </Link>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
 
-              {/* Frosted Services Dropdown */}
-              <AnimatePresence>
-                {servicesOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 8, scale: 0.96 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 8, scale: 0.96 }}
-                    transition={{ duration: 0.2, ease: "easeOut" }}
-                    className="absolute top-full left-1/2 -translate-x-1/2 mt-2.5 w-[500px] p-3 rounded-2xl bg-white/95 backdrop-blur-2xl border border-black/[0.08] shadow-2xl shadow-black/10 grid grid-cols-2 gap-2 z-50"
-                  >
-                    {SERVICES_MENU.map((srv, sIdx) => (
-                      <Link
-                        key={sIdx}
-                        to={srv.link}
-                        onClick={() => setServicesOpen(false)}
-                        className="p-2.5 rounded-xl hover:bg-neutral-50 border border-transparent hover:border-black/[0.06] transition-all duration-200 flex items-start gap-2.5 group"
-                      >
-                        <div className="p-2 rounded-lg bg-neutral-100 group-hover:bg-black group-hover:text-white transition-colors duration-200 flex-shrink-0">
-                          {React.cloneElement(srv.icon, { className: "w-4 h-4 group-hover:text-white" })}
-                        </div>
-                        <div>
-                          <div className="text-xs font-bold text-neutral-900 group-hover:text-black flex items-center gap-1">
-                            {srv.name}
-                            <ArrowRight className="w-3 h-3 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" />
-                          </div>
-                          <p className="text-[10px] text-neutral-500 leading-snug mt-0.5">{srv.desc}</p>
-                        </div>
-                      </Link>
-                    ))}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          );
-        }
+      <Link
+        to="/about"
+        onClick={onItemClick}
+        className={cn(
+          "text-[15px] font-medium text-[#18191F] hover:text-[#4CAF4F] transition-colors py-1.5",
+          activeSection === "about" && "text-[#4CAF4F] font-semibold"
+        )}
+      >
+        About
+      </Link>
 
-        return (
-          <Link
-            key={item.name}
-            to={item.link}
-            onMouseEnter={() => setHoveredIndex(index)}
-            onMouseLeave={() => setHoveredIndex(null)}
-            onClick={onItemClick}
-            className={cn(
-              "relative px-3.5 py-1.5 text-xs lg:text-sm font-semibold transition-colors duration-200 rounded-full",
-              "text-neutral-700 hover:text-black",
-              isActive && "text-black font-bold"
-            )}
-          >
-            {hoveredIndex === index && (
-              <motion.span
-                layoutId="nav-hover"
-                className="absolute inset-0 bg-neutral-100/90 rounded-full -z-10"
-                transition={{ duration: 0.2, ease: "easeOut" }}
-              />
-            )}
-            <span className="relative z-10">{item.name}</span>
-          </Link>
-        );
-      })}
+      <Link
+        to="/#insights"
+        onClick={onItemClick}
+        className="text-[15px] font-medium text-[#18191F] hover:text-[#4CAF4F] transition-colors py-1.5"
+      >
+        Insights
+      </Link>
     </nav>
   );
 };
 
 const NavbarLogo = ({ className }) => {
   return (
-    <Link to="/" className={cn("flex items-center gap-2.5 group flex-shrink-0", className)}>
-      <div className="relative">
-        <img
-          src="/Logo.png"
-          alt="ZYTRONA Logo"
-          className="w-7 h-7 rounded-full object-cover border border-black/10 group-hover:scale-105 transition-transform duration-200"
-        />
-        <span className="absolute -bottom-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-white" />
-      </div>
-      <div className="flex flex-col">
-        <span className="font-['Allerta_Stencil'] text-base font-bold text-neutral-900 tracking-wider group-hover:text-black transition-colors">
-          ZYTRONA
-        </span>
-      </div>
+    <Link to="/" className={cn("flex items-center", className)}>
+      <ZytronaLogo />
     </Link>
   );
 };
 
+// Boxy Green Button
 const NavbarButton = ({ children, variant = "primary", className, ...props }) => {
   return (
     <button
       className={cn(
-        "px-4 py-2 text-xs lg:text-sm font-bold rounded-full transition-all duration-200 inline-flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap",
+        "px-6 py-2.5 text-sm font-semibold transition-all duration-200 inline-flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap rounded-md",
         variant === "primary"
-          ? "bg-black text-white hover:bg-neutral-800 shadow-md shadow-black/10 hover:shadow-lg hover:-translate-y-0.5"
-          : "bg-white/80 backdrop-blur-md text-neutral-900 border border-neutral-200/90 hover:bg-neutral-100 hover:border-neutral-300",
+          ? "bg-[#4CAF4F] text-white hover:bg-[#388E3C] shadow-sm hover:shadow-md hover:-translate-y-0.5 active:translate-y-0"
+          : "bg-transparent text-[#4CAF4F] border border-[#4CAF4F] hover:bg-[#E8F5E9] dark:hover:bg-[#4CAF4F]/10",
         className
       )}
       {...props}
@@ -262,7 +221,7 @@ const NavbarButton = ({ children, variant = "primary", className, ...props }) =>
 
 const MobileNav = ({ children, className }) => {
   return (
-    <div className={cn("md:hidden pointer-events-auto", className)}>
+    <div className={cn("md:hidden pointer-events-auto w-full", className)}>
       {children}
     </div>
   );
@@ -272,7 +231,7 @@ const MobileNavHeader = ({ children, className }) => {
   return (
     <div
       className={cn(
-        "flex items-center justify-between px-5 py-3 bg-white/90 backdrop-blur-xl border-b border-black/[0.08]",
+        "flex items-center justify-between px-4 sm:px-6 py-4 bg-white dark:bg-[#0B0D0F] border-b border-[#E0E0E0] dark:border-[#232936] w-full text-[#18191F] dark:text-[#F8FAFC]",
         className
       )}
     >
@@ -285,7 +244,7 @@ const MobileNavToggle = ({ isOpen, onClick, className }) => {
   return (
     <button
       onClick={onClick}
-      className={cn("p-2 text-neutral-800 rounded-lg hover:bg-neutral-100 transition-colors", className)}
+      className={cn("p-2 text-[#263238] dark:text-[#E2E8F0] rounded-md hover:bg-[#F5F7FA] dark:hover:bg-[#15181E] transition-colors cursor-pointer", className)}
       aria-label="Toggle menu"
     >
       <div className="w-5 h-4 flex flex-col justify-between">
@@ -294,12 +253,12 @@ const MobileNavToggle = ({ isOpen, onClick, className }) => {
             rotate: isOpen ? 45 : 0,
             y: isOpen ? 7 : 0,
           }}
-          className="w-full h-0.5 bg-neutral-900 block rounded-full"
+          className="w-full h-0.5 bg-[#263238] dark:bg-[#E2E8F0] block rounded-full"
           transition={{ duration: 0.2 }}
         />
         <motion.span
           animate={{ opacity: isOpen ? 0 : 1 }}
-          className="w-full h-0.5 bg-neutral-900 block rounded-full"
+          className="w-full h-0.5 bg-[#263238] dark:bg-[#E2E8F0] block rounded-full"
           transition={{ duration: 0.2 }}
         />
         <motion.span
@@ -307,7 +266,7 @@ const MobileNavToggle = ({ isOpen, onClick, className }) => {
             rotate: isOpen ? -45 : 0,
             y: isOpen ? -7 : 0,
           }}
-          className="w-full h-0.5 bg-neutral-900 block rounded-full"
+          className="w-full h-0.5 bg-[#263238] dark:bg-[#E2E8F0] block rounded-full"
           transition={{ duration: 0.2 }}
         />
       </div>
@@ -325,11 +284,11 @@ const MobileNavMenu = ({ children, isOpen, className }) => {
           exit={{ opacity: 0, height: 0 }}
           transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
           className={cn(
-            "overflow-hidden bg-white/95 backdrop-blur-2xl border-b border-black/[0.08] shadow-2xl",
+            "overflow-hidden bg-white dark:bg-[#15181E] border-b border-[#E0E0E0] dark:border-[#232936] shadow-lg text-[#18191F] dark:text-[#F8FAFC]",
             className
           )}
         >
-          <div className="flex flex-col gap-2 px-5 py-5 max-h-[85vh] overflow-y-auto">
+          <div className="flex flex-col gap-3 px-6 py-5 max-h-[85vh] overflow-y-auto">
             {children}
           </div>
         </motion.div>

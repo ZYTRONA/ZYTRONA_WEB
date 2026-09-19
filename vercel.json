@@ -3,6 +3,8 @@
   "outputDirectory": "dist",
   "devCommand": "npm run dev",
   "framework": "vite",
+  "cleanUrls": true,
+  "trailingSlash": false,
   "headers": [
     {
       "source": "/(.*)",

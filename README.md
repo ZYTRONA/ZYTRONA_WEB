@@ -11,7 +11,7 @@
 
 ---
 
-**ZYTRONA** is a modern technology solutions company website built with React and Vite. We deliver cutting-edge web development, app development, video editing, and UI design services that empower businesses to thrive in the digital age.
+**ZYTRONA** is a modern technology solutions company website built with React and Vite. We deliver cutting-edge web development, mobile app engineering, and UI/UX design systems that empower businesses to thrive in the digital age.
 
 [Website](#) • [Services](#services) • [Projects](#projects) • [Contact](#contact)
 
@@ -42,17 +42,17 @@
 
 ## Features
 
-- **Responsive Design** — Fully optimized for desktop, tablet, and mobile devices
-- **Performance Optimized** — Intersection Observer-based lazy loading, throttled scroll events, and low-perf mode for constrained devices
-- **Smooth Animations** — Motion-powered transitions and Framer Motion-inspired effects
-- **3D Visualizations** — Three.js-powered interactive tech globe component
-- **Custom Cursor Effects** — Animated cursor with click spark effects
-- **Email Integration** — EmailJS-powered contact form with auto-reply functionality
-- **Multi-Page Routing** — React Router v7 with hash-based navigation
-- **Carousel Components** — Embla Carousel for smooth, accessible carousels
-- **Icon System** — React Icons and Lucide React icon libraries
-- **SEO Friendly** — Semantic HTML structure with proper meta tags
-- **Accessibility** — ARIA-compliant interactive components
+- **Responsive Design** — Fully optimized for ultra-wide, desktop, tablet, and mobile devices
+- **Performance Optimized** — Throttled scroll listeners, hardware concurrency detection, and low-perf fallback mode for constrained devices
+- **Smooth Micro-Animations** — Motion-powered transitions, spring physics, and frosted glassmorphism
+- **Dynamic Consultation Scheduler** — Interactive date & time range picker with animated analog SVG clock dial
+- **Executive Social Proof** — Verified client testimonials and enterprise ratings from delivered commercial platforms
+- **Flexible Engagement Models** — Fixed-Milestone Sprints, Dedicated Engineering Pods, and Full-Stack Retainers
+- **EmailJS Integration** — Full consultation form pipeline with client auto-reply and honeypot spam protection
+- **Multi-Route System** — React Router v7 supporting hash scrolling, direct section navigation, dynamic `/service/:serviceId` pages, and custom 404 handler
+- **Comprehensive Service Architecture** — In-depth technical specifications, deliverables, and SLAs across 3 core domains
+- **SEO & Social Optimization** — Complete sitemap.xml, semantic HTML5, and OpenGraph/Twitter social share preview card
+- **Core Engineering Leadership** — Direct senior architect collaboration model with zero agency middlemen
 
 ---
 
@@ -63,13 +63,12 @@
 | **Framework** | React 19 |
 | **Build Tool** | Vite 8 |
 | **Routing** | React Router DOM 7 |
-| **Styling** | Custom CSS |
-| **Animation** | Motion (Framer Motion) |
-| **3D Graphics** | Three.js |
-| **Carousel** | Embla Carousel |
-| **Email** | EmailJS |
-| **Icons** | React Icons, Lucide React |
-| **Linting** | ESLint 9 |
+| **Styling** | Vanilla CSS Tokens & Tailwind CSS 4 |
+| **Animation** | Motion (Framer Motion engine) |
+| **Email** | EmailJS Browser SDK |
+| **Icons** | Lucide React & React Icons |
+| **Primitives** | Radix UI (Select, Accordion, Popover) |
+| **Date & Time** | React Day Picker & Date-fns |
 | **Deployment** | Vercel |
 
 ---
@@ -98,16 +97,15 @@ npm install
 
 ### Environment Variables
 
-Create a `.env` file in the root directory and add the following:
+Create a `.env` file in the root directory (copy from `.env.example`):
 
 ```env
 # EmailJS Configuration
+VITE_EMAILJS_SERVICE_ID=your_emailjs_service_id
+VITE_EMAILJS_PUBLIC_KEY=your_public_key
 VITE_EMAILJS_TEMPLATE_ID_OWNER=your_owner_template_id
 VITE_EMAILJS_TEMPLATE_ID_REPLY=your_reply_template_id
-VITE_EMAILJS_PUBLIC_KEY=your_public_key
 ```
-
-> **Note:** The EmailJS Service ID and Business Email are pre-configured in the application. You only need to provide the template IDs and public key from your EmailJS account.
 
 ### Development
 
@@ -115,7 +113,7 @@ VITE_EMAILJS_PUBLIC_KEY=your_public_key
 npm run dev
 ```
 
-The application will be available at `http://localhost:5173`.
+The application will be available at `http://localhost:3000` (or `http://localhost:5173`).
 
 ### Build
 
@@ -135,68 +133,59 @@ Preview the production build locally at `http://localhost:4173`.
 
 ---
 
-## Scripts
-
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start the development server |
-| `npm run build` | Create a production build |
-| `npm run preview` | Preview the production build |
-| `npm run lint` | Run ESLint |
-| `npm run deploy:vercel` | Deploy to Vercel (production) |
-| `npm run deploy:preview` | Build and preview locally |
-
----
-
 ## Project Structure
 
 ```
 ZYTRONA_WEB/
 ├── public/                    # Static assets
+│   ├── Logo.png               # Primary brand logo
+│   ├── og-image.png           # OpenGraph social share card
+│   ├── robots.txt             # Search crawler directives
+│   └── sitemap.xml            # Full XML sitemap
 ├── src/
-│   ├── assets/               # Images and media files
+│   ├── assets/                # Logos & vector media
 │   ├── components/
-│   │   └── ui/               # Reusable UI components
-│   │       ├── AnimatedCursor.jsx
-│   │       ├── ClickSpark.jsx
-│   │       ├── MotionCarousel.jsx
-│   │       ├── TechGlobe.jsx
-│   │       ├── ripple-button.jsx
-│   │       └── button-variants.js
-│   ├── lib/                  # Utility functions
-│   ├── pages/                # Page components
-│   │   ├── AboutPage.jsx
-│   │   ├── FaqPage.jsx
-│   │   ├── PortfolioPage.jsx
-│   │   ├── ServiceDetail.jsx
-│   │   └── ServicesPage.jsx
-│   ├── App.jsx               # Main application
-│   ├── App.css               # Global styles
-│   ├── index.css             # Base styles
-│   ├── RootApp.jsx           # Root component
-│   └── main.jsx              # Entry point
-├── .env                      # Environment variables
-├── .gitignore
-├── .nvmrc                    # Node version manager config
-├── .vercelignore             # Vercel deployment ignore
-├── eslint.config.js          # ESLint configuration
-├── index.html                # HTML entry point
-├── jsconfig.json             # JavaScript config
+│   │   ├── ui/                # Core reusable UI components
+│   │   │   ├── resizable-navbar.jsx # Floating sticky navbar
+│   │   │   ├── Footer.jsx           # 4-column modern footer
+│   │   │   ├── BackgroundGrid.jsx   # Ambient grid & gradient orbs
+│   │   │   ├── SpotlightCard.jsx    # Card wrapper with hover elevation
+│   │   │   ├── typewriter-effect.jsx # Animated typewriter headline
+│   │   │   ├── accordion.jsx        # FAQ accordion
+│   │   │   ├── select.jsx           # Custom select dropdown
+│   │   │   ├── calendar.jsx         # Calendar primitive
+│   │   │   ├── button.jsx           # Button component
+│   │   │   └── number-ticker.jsx    # Animated metrics counter
+│   │   ├── shadcn-space/
+│   │   │   └── calendar/            # Time slot & clock dial component
+│   │   └── animate-ui/              # Avatar cluster component
+│   ├── lib/                   # Utility helpers (cn)
+│   ├── pages/                 # Route page components
+│   │   ├── About.jsx          # Company story, pillars, leadership team
+│   │   ├── ServiceDetail.jsx  # Dynamic service specifications & deliverables
+│   │   ├── PrivacyPolicy.jsx  # Legal privacy compliance
+│   │   ├── TermsOfService.jsx # Legal client engagement terms
+│   │   └── NotFound.jsx       # 404 Error page
+│   ├── App.jsx                # Main landing platform
+│   ├── App.css                # Global & component stylesheet
+│   ├── index.css              # Design tokens & base variables
+│   ├── RootApp.jsx            # Top-level routing & performance adaptations
+│   └── main.jsx               # Application entry point
+├── .env.example               # Environment variables template
 ├── package.json
-├── vercel.json               # Vercel deployment config
-└── vite.config.js            # Vite configuration
+├── vercel.json                # Vercel deployment configuration
+└── vite.config.js             # Vite configuration & path aliases
 ```
 
 ---
 
-## Services
+## Core Services
 
-| Service | Description |
-|---------|-------------|
-| **Website Development** | Build stunning, responsive websites that captivate your audience and drive business growth |
-| **App Development** | Create powerful mobile applications for iOS and Android that deliver exceptional user experiences |
-| **Video Editing** | Professional video editing services to bring your visual content to life with stunning effects |
-| **UI Designs** | Craft beautiful and intuitive user interfaces that enhance user engagement and satisfaction |
+| Service | Key Capabilities |
+|---------|------------------|
+| **Web Development & SaaS Platforms** | React 19, Next.js, sub-second Core Web Vitals, microservices & multi-tenancy |
+| **Mobile App Engineering** | Fluid 60fps native iOS & Android, React Native, Flutter, offline-first data sync |
+| **UI/UX & Product Design Systems** | Tokenized Figma systems, interactive prototyping, conversion-driven user journeys |
 
 ---
 
