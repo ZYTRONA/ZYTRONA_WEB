@@ -4,7 +4,8 @@ import { motion, AnimatePresence } from 'motion/react'
 import { 
   ArrowRight, Globe, Smartphone, Palette, 
   Layers, Star, CheckCircle2, Zap,
-  Menu, X, Check, ExternalLink, Sparkles, Calendar, Mail, Phone
+  Menu, X, Check, ExternalLink, Sparkles, Calendar, Mail, Phone,
+  Loader2, AlertCircle
 } from 'lucide-react'
 import { 
   ZytronaLogo, 
@@ -19,6 +20,7 @@ import { NumberTicker } from './components/ui/number-ticker'
 import { SpotlightCard } from './components/ui/SpotlightCard'
 import { CustomSelect } from './components/ui/CustomSelect'
 import { ThemeToggle } from './components/ui/ThemeToggle'
+import { sendEmail } from './lib/emailService'
 import './App.css'
 
 // 3 Core ZYTRONA Capabilities (Boxy Cards)
@@ -117,6 +119,8 @@ export default function App() {
   // Interactive Project Inquiry & Consultation Modals
   const [modalType, setModalType] = useState(null) // 'project' | 'consultation' | 'learnMore'
   const [formSuccess, setFormSuccess] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [formError, setFormError] = useState(null)
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -127,11 +131,15 @@ export default function App() {
   const handleOpenModal = (type) => {
     setModalType(type)
     setFormSuccess(false)
+    setFormError(null)
+    setIsSubmitting(false)
   }
 
   const handleCloseModal = () => {
     setModalType(null)
     setFormSuccess(false)
+    setFormError(null)
+    setIsSubmitting(false)
     setFormData({
       fullName: '',
       email: '',
@@ -140,12 +148,22 @@ export default function App() {
     })
   }
 
-  const handleSubmitForm = (e) => {
+  const handleSubmitForm = async (e) => {
     e.preventDefault()
-    setFormSuccess(true)
-    setTimeout(() => {
-      handleCloseModal()
-    }, 2400)
+    setIsSubmitting(true)
+    setFormError(null)
+
+    const result = await sendEmail(formData)
+    setIsSubmitting(false)
+
+    if (result.success) {
+      setFormSuccess(true)
+      setTimeout(() => {
+        handleCloseModal()
+      }, 2500)
+    } else {
+      setFormError(result.error)
+    }
   }
 
   return (
@@ -679,6 +697,12 @@ export default function App() {
                   </div>
                 ) : (
                   <form onSubmit={handleSubmitForm} className="space-y-4">
+                    {formError && (
+                      <div className="p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 rounded text-red-600 dark:text-red-400 text-xs flex items-center gap-2">
+                        <AlertCircle className="w-4 h-4 shrink-0 text-red-500" />
+                        <span>{formError}</span>
+                      </div>
+                    )}
                     <div>
                       <label className="block text-xs font-semibold text-[#263238] uppercase mb-1">Full Name</label>
                       <input 
@@ -714,8 +738,29 @@ export default function App() {
                         ]}
                       />
                     </div>
-                    <button type="submit" className="w-full btn-nexcent-primary py-3 mt-2">
-                      Submit Project Brief
+                    <div>
+                      <label className="block text-xs font-semibold text-[#263238] uppercase mb-1">Project Scope / Details</label>
+                      <textarea 
+                        rows={3}
+                        value={formData.projectScope}
+                        onChange={(e) => setFormData({...formData, projectScope: e.target.value})}
+                        placeholder="Briefly describe your goals, required features, or timeline..." 
+                        className="w-full px-3.5 py-2 rounded border border-[#E0E0E0] text-xs focus:border-[#4CAF4F] focus:outline-none resize-none"
+                      />
+                    </div>
+                    <button 
+                      type="submit" 
+                      disabled={isSubmitting}
+                      className="w-full btn-nexcent-primary py-3 mt-2 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          <span>Sending Project Brief...</span>
+                        </>
+                      ) : (
+                        <span>Submit Project Brief</span>
+                      )}
                     </button>
                   </form>
                 )}

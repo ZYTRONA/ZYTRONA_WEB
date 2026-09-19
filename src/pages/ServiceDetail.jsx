@@ -19,7 +19,7 @@ import {
   Lock, 
   Sparkles, 
   Check, 
-  ChevronDown,
+  ChevronDown, 
   Code2, 
   GitBranch, 
   FileCheck, 
@@ -30,13 +30,16 @@ import {
   Award, 
   Clock, 
   ChevronRight, 
-  X,
-  Menu,
-  Flame
+  X, 
+  Menu, 
+  Flame,
+  Loader2,
+  AlertCircle
 } from 'lucide-react'
 import { 
   FaReact, FaNodeJs, FaApple, FaAws, FaDocker, FaCheck, FaTimes
 } from 'react-icons/fa'
+import { sendEmail } from '@/lib/emailService'
 import { 
   SiNextdotjs, SiTypescript, SiTailwindcss, SiFlutter, SiKotlin, SiFirebase, SiGraphql,
   SiFigma, SiPostgresql, SiRedis, SiKubernetes, SiMongodb, SiPython
@@ -469,6 +472,8 @@ export default function ServiceDetail() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
   const [formSuccess, setFormSuccess] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [formError, setFormError] = useState(null)
   const [activeFaq, setActiveFaq] = useState(null)
   const [scrolled, setScrolled] = useState(false)
 
@@ -497,19 +502,46 @@ export default function ServiceDetail() {
     return <NotFound />
   }
 
-  const handleSubmit = (e) => {
+  const handleOpenModal = () => {
+    setModalOpen(true)
+    setFormSuccess(false)
+    setFormError(null)
+    setIsSubmitting(false)
+  }
+
+  const handleCloseModal = () => {
+    setModalOpen(false)
+    setFormSuccess(false)
+    setFormError(null)
+    setIsSubmitting(false)
+    setFormData({
+      fullName: '',
+      email: '',
+      stage: 'Early-Stage MVP / Prototype',
+      scope: ''
+    })
+  }
+
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setFormSuccess(true)
-    setTimeout(() => {
-      setModalOpen(false)
-      setFormSuccess(false)
-      setFormData({
-        fullName: '',
-        email: '',
-        stage: 'Early-Stage MVP / Prototype',
-        scope: ''
-      })
-    }, 2400)
+    setIsSubmitting(true)
+    setFormError(null)
+
+    const result = await sendEmail({
+      ...formData,
+      service: service.title,
+      type: 'Service Technical Discovery'
+    })
+    setIsSubmitting(false)
+
+    if (result.success) {
+      setFormSuccess(true)
+      setTimeout(() => {
+        handleCloseModal()
+      }, 2500)
+    } else {
+      setFormError(result.error)
+    }
   }
 
   return (
@@ -1066,7 +1098,7 @@ export default function ServiceDetail() {
               className="bg-white rounded-lg shadow-2xl border border-[#E0E0E0] max-w-md w-full p-6 sm:p-8 relative"
             >
               <button 
-                onClick={() => setModalOpen(false)}
+                onClick={handleCloseModal}
                 className="absolute top-4 right-4 text-neutral-400 hover:text-neutral-700 p-1 cursor-pointer"
                 aria-label="Close modal"
               >
@@ -1090,6 +1122,12 @@ export default function ServiceDetail() {
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
+                  {formError && (
+                    <div className="p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 rounded text-red-600 dark:text-red-400 text-xs flex items-center gap-2">
+                      <AlertCircle className="w-4 h-4 shrink-0 text-red-500" />
+                      <span>{formError}</span>
+                    </div>
+                  )}
                   <div>
                     <label className="block text-xs font-semibold text-[#263238] uppercase mb-1">Full Name</label>
                     <input 
@@ -1135,8 +1173,19 @@ export default function ServiceDetail() {
                       className="w-full px-3.5 py-2 rounded border border-[#E0E0E0] text-xs text-neutral-700 focus:border-[#4CAF4F] focus:outline-none resize-none"
                     />
                   </div>
-                  <button type="submit" className="w-full btn-nexcent-primary py-3 mt-2">
-                    Confirm Discovery Session
+                  <button 
+                    type="submit" 
+                    disabled={isSubmitting}
+                    className="w-full btn-nexcent-primary py-3 mt-2 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span>Sending Discovery Request...</span>
+                      </>
+                    ) : (
+                      <span>Confirm Discovery Session</span>
+                    )}
                   </button>
                 </form>
               )}

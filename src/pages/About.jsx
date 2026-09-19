@@ -28,9 +28,12 @@ import {
   Cpu,
   Target,
   Clock,
-  Compass
+  Compass,
+  Loader2,
+  AlertCircle
 } from 'lucide-react'
 import { FaLinkedin } from 'react-icons/fa'
+import { sendEmail } from '@/lib/emailService'
 import '@/App.css'
 
 // 3. What Makes Us Different
@@ -153,9 +156,21 @@ export default function About() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [modalType, setModalType] = useState(null) // 'hire' | 'freelancer'
   const [formSuccess, setFormSuccess] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [formError, setFormError] = useState(null)
   const [scrolled, setScrolled] = useState(false)
-  const [talentNeeded, setTalentNeeded] = useState('Full-Stack Web Engineers (React/Next.js)')
-  const [primaryDiscipline, setPrimaryDiscipline] = useState('Full-Stack Web Development')
+  const [hireFormData, setHireFormData] = useState({
+    fullName: '',
+    email: '',
+    talentNeeded: 'Full-Stack Web Engineers (React/Next.js)',
+    projectScope: ''
+  })
+  const [careerFormData, setCareerFormData] = useState({
+    fullName: '',
+    email: '',
+    primaryDiscipline: 'Full-Stack Web Development',
+    portfolio: ''
+  })
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
@@ -172,19 +187,49 @@ export default function About() {
   const handleOpenModal = (type) => {
     setModalType(type)
     setFormSuccess(false)
+    setFormError(null)
+    setIsSubmitting(false)
   }
 
   const handleCloseModal = () => {
     setModalType(null)
     setFormSuccess(false)
+    setFormError(null)
+    setIsSubmitting(false)
+    setHireFormData({
+      fullName: '',
+      email: '',
+      talentNeeded: 'Full-Stack Web Engineers (React/Next.js)',
+      projectScope: ''
+    })
+    setCareerFormData({
+      fullName: '',
+      email: '',
+      primaryDiscipline: 'Full-Stack Web Development',
+      portfolio: ''
+    })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setFormSuccess(true)
-    setTimeout(() => {
-      handleCloseModal()
-    }, 2200)
+    setIsSubmitting(true)
+    setFormError(null)
+
+    const payload = modalType === 'hire'
+      ? { ...hireFormData, service: hireFormData.talentNeeded, type: 'Talent Hire Request' }
+      : { ...careerFormData, role: careerFormData.primaryDiscipline, type: 'Freelancer Application' }
+
+    const result = await sendEmail(payload)
+    setIsSubmitting(false)
+
+    if (result.success) {
+      setFormSuccess(true)
+      setTimeout(() => {
+        handleCloseModal()
+      }, 2500)
+    } else {
+      setFormError(result.error)
+    }
   }
 
   return (
@@ -809,11 +854,19 @@ export default function About() {
                     </div>
                   ) : (
                     <form onSubmit={handleSubmit} className="space-y-4">
+                      {formError && (
+                        <div className="p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 rounded text-red-600 dark:text-red-400 text-xs flex items-center gap-2">
+                          <AlertCircle className="w-4 h-4 shrink-0 text-red-500" />
+                          <span>{formError}</span>
+                        </div>
+                      )}
                       <div>
                         <label className="block text-xs font-semibold text-[#263238] uppercase mb-1">Your Name</label>
                         <input 
                           type="text" 
                           required 
+                          value={hireFormData.fullName}
+                          onChange={(e) => setHireFormData({ ...hireFormData, fullName: e.target.value })}
                           placeholder="Sarah Jenkins" 
                           className="w-full px-3.5 py-2.5 rounded border border-[#E0E0E0] text-sm focus:border-[#4CAF4F] focus:outline-none transition-colors"
                         />
@@ -823,6 +876,8 @@ export default function About() {
                         <input 
                           type="email" 
                           required 
+                          value={hireFormData.email}
+                          onChange={(e) => setHireFormData({ ...hireFormData, email: e.target.value })}
                           placeholder="sarah@company.com" 
                           className="w-full px-3.5 py-2.5 rounded border border-[#E0E0E0] text-sm focus:border-[#4CAF4F] focus:outline-none transition-colors"
                         />
@@ -830,8 +885,8 @@ export default function About() {
                       <div>
                         <label className="block text-xs font-semibold text-[#263238] uppercase mb-1.5">Talent Needed</label>
                         <CustomSelect 
-                          value={talentNeeded}
-                          onChange={setTalentNeeded}
+                          value={hireFormData.talentNeeded}
+                          onChange={(val) => setHireFormData({ ...hireFormData, talentNeeded: val })}
                           options={[
                             'Full-Stack Web Engineers (React/Next.js)',
                             'Mobile App Engineers (iOS / Android)',
@@ -840,8 +895,29 @@ export default function About() {
                           ]}
                         />
                       </div>
-                      <button type="submit" className="w-full btn-nexcent-primary py-3 mt-2">
-                        Submit Project Request
+                      <div>
+                        <label className="block text-xs font-semibold text-[#263238] uppercase mb-1">Project Scope / Requirements</label>
+                        <textarea 
+                          rows={3}
+                          value={hireFormData.projectScope}
+                          onChange={(e) => setHireFormData({ ...hireFormData, projectScope: e.target.value })}
+                          placeholder="Briefly describe your tech stack, timeline, and team size..."
+                          className="w-full px-3.5 py-2 rounded border border-[#E0E0E0] text-xs focus:border-[#4CAF4F] focus:outline-none resize-none"
+                        />
+                      </div>
+                      <button 
+                        type="submit" 
+                        disabled={isSubmitting}
+                        className="w-full btn-nexcent-primary py-3 mt-2 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      >
+                        {isSubmitting ? (
+                          <>
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                            <span>Sending Request...</span>
+                          </>
+                        ) : (
+                          <span>Submit Project Request</span>
+                        )}
                       </button>
                     </form>
                   )}
@@ -864,11 +940,19 @@ export default function About() {
                     </div>
                   ) : (
                     <form onSubmit={handleSubmit} className="space-y-4">
+                      {formError && (
+                        <div className="p-3 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900 rounded text-red-600 dark:text-red-400 text-xs flex items-center gap-2">
+                          <AlertCircle className="w-4 h-4 shrink-0 text-red-500" />
+                          <span>{formError}</span>
+                        </div>
+                      )}
                       <div>
                         <label className="block text-xs font-semibold text-[#263238] uppercase mb-1">Full Name</label>
                         <input 
                           type="text" 
                           required 
+                          value={careerFormData.fullName}
+                          onChange={(e) => setCareerFormData({ ...careerFormData, fullName: e.target.value })}
                           placeholder="David Miller" 
                           className="w-full px-3.5 py-2.5 rounded border border-[#E0E0E0] text-sm focus:border-[#4CAF4F] focus:outline-none transition-colors"
                         />
@@ -878,6 +962,8 @@ export default function About() {
                         <input 
                           type="email" 
                           required 
+                          value={careerFormData.email}
+                          onChange={(e) => setCareerFormData({ ...careerFormData, email: e.target.value })}
                           placeholder="david@miller.dev" 
                           className="w-full px-3.5 py-2.5 rounded border border-[#E0E0E0] text-sm focus:border-[#4CAF4F] focus:outline-none transition-colors"
                         />
@@ -885,8 +971,8 @@ export default function About() {
                       <div>
                         <label className="block text-xs font-semibold text-[#263238] uppercase mb-1.5">Primary Discipline</label>
                         <CustomSelect 
-                          value={primaryDiscipline}
-                          onChange={setPrimaryDiscipline}
+                          value={careerFormData.primaryDiscipline}
+                          onChange={(val) => setCareerFormData({ ...careerFormData, primaryDiscipline: val })}
                           options={[
                             'Full-Stack Web Development',
                             'Mobile App Engineering',
@@ -900,12 +986,25 @@ export default function About() {
                         <input 
                           type="url" 
                           required 
+                          value={careerFormData.portfolio}
+                          onChange={(e) => setCareerFormData({ ...careerFormData, portfolio: e.target.value })}
                           placeholder="https://linkedin.com/in/username" 
                           className="w-full px-3.5 py-2.5 rounded border border-[#E0E0E0] text-sm focus:border-[#4CAF4F] focus:outline-none transition-colors"
                         />
                       </div>
-                      <button type="submit" className="w-full btn-nexcent-primary py-3 mt-2">
-                        Submit Application
+                      <button 
+                        type="submit" 
+                        disabled={isSubmitting}
+                        className="w-full btn-nexcent-primary py-3 mt-2 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                      >
+                        {isSubmitting ? (
+                          <>
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                            <span>Sending Application...</span>
+                          </>
+                        ) : (
+                          <span>Submit Application</span>
+                        )}
                       </button>
                     </form>
                   )}
