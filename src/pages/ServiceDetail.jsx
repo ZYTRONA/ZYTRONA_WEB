@@ -170,37 +170,37 @@ const SERVICES_ENTERPRISE_DATA = {
       {
         category: 'Frontend & Edge Runtimes',
         skills: [
-          { name: 'React 19', desc: 'Server Components & Concurrent Hooks', tag: 'Edge UI', icon: <FaReact className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'Next.js 15', desc: 'App Router, Turbopack & Hybrid SSR', tag: 'Full-Stack', icon: <SiNextdotjs className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'TypeScript', desc: 'Strict End-to-End Type Safety Contracts', tag: 'Type System', icon: <SiTypescript className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'Tailwind CSS', desc: 'Utility-First Responsive Design System', tag: 'Styling Engine', icon: <SiTailwindcss className="w-5 h-5 text-[#4CAF4F]" /> }
+          { name: 'React 19', desc: 'Server Components & Concurrent Hooks', tag: 'Edge UI', icon: <FaReact className="w-10 h-10 sm:w-11 sm:h-11 text-[#61DAFB]" /> },
+          { name: 'Next.js 15', desc: 'App Router, Turbopack & Hybrid SSR', tag: 'Full-Stack', icon: <SiNextdotjs className="w-10 h-10 sm:w-11 sm:h-11 text-[#000000] dark:text-[#FFFFFF]" /> },
+          { name: 'TypeScript', desc: 'Strict End-to-End Type Safety Contracts', tag: 'Type System', icon: <SiTypescript className="w-10 h-10 sm:w-11 sm:h-11 text-[#3178C6]" /> },
+          { name: 'Tailwind CSS', desc: 'Utility-First Responsive Design System', tag: 'Styling Engine', icon: <SiTailwindcss className="w-10 h-10 sm:w-11 sm:h-11 text-[#06B6D4]" /> }
         ]
       },
       {
         category: 'Backend & Microservices',
         skills: [
-          { name: 'Node.js', desc: 'Asynchronous Event-Driven Microservices', tag: 'Backend Runtime', icon: <FaNodeJs className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'Python', desc: 'High-Throughput FastAPIs & AI Pipelines', tag: 'Data & AI', icon: <SiPython className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'GraphQL', desc: 'Declarative Data Fetching & Apollo Federation', tag: 'API Layer', icon: <SiGraphql className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'REST APIs', desc: 'OpenAPI 3.0 Standardized Strict Endpoints', tag: 'REST Standard', icon: <Code2 className="w-5 h-5 text-[#4CAF4F]" /> }
+          { name: 'Node.js', desc: 'Asynchronous Event-Driven Microservices', tag: 'Backend Runtime', icon: <FaNodeJs className="w-10 h-10 sm:w-11 sm:h-11 text-[#5FA04E]" /> },
+          { name: 'Python', desc: 'High-Throughput FastAPIs & AI Pipelines', tag: 'Data & AI', icon: <SiPython className="w-10 h-10 sm:w-11 sm:h-11 text-[#3776AB]" /> },
+          { name: 'GraphQL', desc: 'Declarative Data Fetching & Apollo Federation', tag: 'API Layer', icon: <SiGraphql className="w-10 h-10 sm:w-11 sm:h-11 text-[#E10098]" /> },
+          { name: 'REST APIs', desc: 'OpenAPI 3.0 Standardized Strict Endpoints', tag: 'REST Standard', icon: <Code2 className="w-10 h-10 sm:w-11 sm:h-11 text-[#6366F1]" /> }
         ]
       },
       {
         category: 'Database & Caching',
         skills: [
-          { name: 'PostgreSQL', desc: 'High-Concurrency ACID Relational Storage', tag: 'Primary DB', icon: <SiPostgresql className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'Redis', desc: 'Sub-Millisecond In-Memory Caching & Pub/Sub', tag: 'Memory Cache', icon: <SiRedis className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'MongoDB', desc: 'Flexible Distributed Document Database', tag: 'Document DB', icon: <SiMongodb className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'Prisma ORM', desc: 'Type-Safe Database Client & Migrations', tag: 'ORM Layer', icon: <Database className="w-5 h-5 text-[#4CAF4F]" /> }
+          { name: 'PostgreSQL', desc: 'High-Concurrency ACID Relational Storage', tag: 'Primary DB', icon: <SiPostgresql className="w-10 h-10 sm:w-11 sm:h-11 text-[#4169E1]" /> },
+          { name: 'Redis', desc: 'Sub-Millisecond In-Memory Caching & Pub/Sub', tag: 'Memory Cache', icon: <SiRedis className="w-10 h-10 sm:w-11 sm:h-11 text-[#DC382D]" /> },
+          { name: 'MongoDB', desc: 'Flexible Distributed Document Database', tag: 'Document DB', icon: <SiMongodb className="w-10 h-10 sm:w-11 sm:h-11 text-[#47A248]" /> },
+          { name: 'Prisma ORM', desc: 'Type-Safe Database Client & Migrations', tag: 'ORM Layer', icon: <Database className="w-10 h-10 sm:w-11 sm:h-11 text-[#2D3748] dark:text-[#E2E8F0]" /> }
         ]
       },
       {
         category: 'DevOps & Cloud Infrastructure',
         skills: [
-          { name: 'AWS Cloud', desc: 'Auto-Scaling ECS, Lambda & S3 Buckets', tag: 'Cloud Platform', icon: <FaAws className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'Docker', desc: 'Multi-Stage Production Containerization', tag: 'Containers', icon: <FaDocker className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'Kubernetes', desc: 'Automated Container Orchestration & Ingress', tag: 'Orchestration', icon: <SiKubernetes className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'CI/CD Pipelines', desc: 'Zero-Downtime Automated Test & Deploy', tag: 'DevOps', icon: <GitBranch className="w-5 h-5 text-[#4CAF4F]" /> }
+          { name: 'AWS Cloud', desc: 'Auto-Scaling ECS, Lambda & S3 Buckets', tag: 'Cloud Platform', icon: <FaAws className="w-10 h-10 sm:w-11 sm:h-11 text-[#FF9900]" /> },
+          { name: 'Docker', desc: 'Multi-Stage Production Containerization', tag: 'Containers', icon: <FaDocker className="w-10 h-10 sm:w-11 sm:h-11 text-[#2496ED]" /> },
+          { name: 'Kubernetes', desc: 'Automated Container Orchestration & Ingress', tag: 'Orchestration', icon: <SiKubernetes className="w-10 h-10 sm:w-11 sm:h-11 text-[#326CE5]" /> },
+          { name: 'CI/CD Pipelines', desc: 'Zero-Downtime Automated Test & Deploy', tag: 'DevOps', icon: <GitBranch className="w-10 h-10 sm:w-11 sm:h-11 text-[#F05032]" /> }
         ]
       }
     ],
@@ -288,37 +288,37 @@ const SERVICES_ENTERPRISE_DATA = {
       {
         category: 'Mobile Frameworks & Runtimes',
         skills: [
-          { name: 'React Native', desc: 'Single-Codebase 60fps Native UI', tag: 'Mobile Core', icon: <FaReact className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'Flutter', desc: 'High-Performance Skia Graphics Engine', tag: 'Cross-Platform', icon: <SiFlutter className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'TypeScript', desc: 'Strict Cross-Platform Type Safety', tag: 'Type System', icon: <SiTypescript className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'Swift (iOS)', desc: 'Native Apple Foundation & SwiftUI', tag: 'iOS Native', icon: <FaApple className="w-5 h-5 text-[#4CAF4F]" /> }
+          { name: 'React Native', desc: 'Single-Codebase 60fps Native UI', tag: 'Mobile Core', icon: <FaReact className="w-10 h-10 sm:w-11 sm:h-11 text-[#61DAFB]" /> },
+          { name: 'Flutter', desc: 'High-Performance Skia Graphics Engine', tag: 'Cross-Platform', icon: <SiFlutter className="w-10 h-10 sm:w-11 sm:h-11 text-[#02569B]" /> },
+          { name: 'TypeScript', desc: 'Strict Cross-Platform Type Safety', tag: 'Type System', icon: <SiTypescript className="w-10 h-10 sm:w-11 sm:h-11 text-[#3178C6]" /> },
+          { name: 'Swift (iOS)', desc: 'Native Apple Foundation & SwiftUI', tag: 'iOS Native', icon: <FaApple className="w-10 h-10 sm:w-11 sm:h-11 text-[#000000] dark:text-[#FFFFFF]" /> }
         ]
       },
       {
         category: 'Native Android & Architecture',
         skills: [
-          { name: 'Kotlin', desc: 'Modern Android Architecture & Coroutines', tag: 'Android Native', icon: <SiKotlin className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'Native Bridges', desc: 'Hardware Sensor & Camera JNI Binding', tag: 'Low-Level', icon: <Cpu className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'MMKV Storage', desc: 'Ultra-Fast Key-Value Storage Engine', tag: 'Persistent Cache', icon: <Database className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'SQLite DB', desc: 'ACID Compliant Local Offline Database', tag: 'Offline Engine', icon: <Database className="w-5 h-5 text-[#4CAF4F]" /> }
+          { name: 'Kotlin', desc: 'Modern Android Architecture & Coroutines', tag: 'Android Native', icon: <SiKotlin className="w-10 h-10 sm:w-11 sm:h-11 text-[#7F52FF]" /> },
+          { name: 'Native Bridges', desc: 'Hardware Sensor & Camera JNI Binding', tag: 'Low-Level', icon: <Cpu className="w-10 h-10 sm:w-11 sm:h-11 text-[#8B5CF6]" /> },
+          { name: 'MMKV Storage', desc: 'Ultra-Fast Key-Value Storage Engine', tag: 'Persistent Cache', icon: <Database className="w-10 h-10 sm:w-11 sm:h-11 text-[#0EA5E9]" /> },
+          { name: 'SQLite DB', desc: 'ACID Compliant Local Offline Database', tag: 'Offline Engine', icon: <Database className="w-10 h-10 sm:w-11 sm:h-11 text-[#003B57] dark:text-[#38BDF8]" /> }
         ]
       },
       {
         category: 'Cloud Services & Push Pipelines',
         skills: [
-          { name: 'Firebase', desc: 'Real-Time Firestore & Auth Pipelines', tag: 'BaaS Pipeline', icon: <SiFirebase className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'Apple APNs', desc: 'Sub-Second iOS Push Notifications', tag: 'Push Messaging', icon: <FaApple className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'Google FCM', desc: 'Reliable Cloud Messaging for Android', tag: 'Push Messaging', icon: <SiFirebase className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'RevenueCat', desc: 'In-App Subscriptions & Paywalls', tag: 'Monetization', icon: <Zap className="w-5 h-5 text-[#4CAF4F]" /> }
+          { name: 'Firebase', desc: 'Real-Time Firestore & Auth Pipelines', tag: 'BaaS Pipeline', icon: <SiFirebase className="w-10 h-10 sm:w-11 sm:h-11 text-[#FFCA28]" /> },
+          { name: 'Apple APNs', desc: 'Sub-Second iOS Push Notifications', tag: 'Push Messaging', icon: <FaApple className="w-10 h-10 sm:w-11 sm:h-11 text-[#000000] dark:text-[#FFFFFF]" /> },
+          { name: 'Google FCM', desc: 'Reliable Cloud Messaging for Android', tag: 'Push Messaging', icon: <SiFirebase className="w-10 h-10 sm:w-11 sm:h-11 text-[#FFA000]" /> },
+          { name: 'RevenueCat', desc: 'In-App Subscriptions & Paywalls', tag: 'Monetization', icon: <Zap className="w-10 h-10 sm:w-11 sm:h-11 text-[#F25F4C]" /> }
         ]
       },
       {
         category: 'Deployment & Mobile DevOps',
         skills: [
-          { name: 'Fastlane', desc: 'Automated Build, Signing & Release', tag: 'Automation', icon: <GitBranch className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'TestFlight', desc: 'Continuous Beta Distribution for iOS', tag: 'Beta Testing', icon: <FaApple className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'Play Console', desc: 'Staged Rollouts & Android Vitals', tag: 'Store Release', icon: <Globe className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'Sentry Crashlytics', desc: 'Real-Time Crash Reporting & Breadcrumbs', tag: 'Monitoring', icon: <Activity className="w-5 h-5 text-[#4CAF4F]" /> }
+          { name: 'Fastlane', desc: 'Automated Build, Signing & Release', tag: 'Automation', icon: <GitBranch className="w-10 h-10 sm:w-11 sm:h-11 text-[#E53935]" /> },
+          { name: 'TestFlight', desc: 'Continuous Beta Distribution for iOS', tag: 'Beta Testing', icon: <FaApple className="w-10 h-10 sm:w-11 sm:h-11 text-[#007AFF]" /> },
+          { name: 'Play Console', desc: 'Staged Rollouts & Android Vitals', tag: 'Store Release', icon: <Globe className="w-10 h-10 sm:w-11 sm:h-11 text-[#01875F]" /> },
+          { name: 'Sentry Crashlytics', desc: 'Real-Time Crash Reporting & Breadcrumbs', tag: 'Monitoring', icon: <Activity className="w-10 h-10 sm:w-11 sm:h-11 text-[#362D59] dark:text-[#A78BFA]" /> }
         ]
       }
     ],
@@ -402,37 +402,37 @@ const SERVICES_ENTERPRISE_DATA = {
       {
         category: 'Design & Prototyping Tools',
         skills: [
-          { name: 'Figma Master', desc: 'Auto-Layout 5.0 & Component Variants', tag: 'Core Tool', icon: <SiFigma className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'Design Tokens', desc: 'Standardized Color & Spatial Tokens', tag: 'Tokens System', icon: <Palette className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'Figma Variables', desc: 'Multi-Theme Dark & Light Modes', tag: 'Variables', icon: <Layers className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'Smart Animate', desc: 'Fluid Micro-Interaction Prototypes', tag: 'Interactions', icon: <Sparkles className="w-5 h-5 text-[#4CAF4F]" /> }
+          { name: 'Figma Master', desc: 'Auto-Layout 5.0 & Component Variants', tag: 'Core Tool', icon: <SiFigma className="w-10 h-10 sm:w-11 sm:h-11 text-[#F24E1E]" /> },
+          { name: 'Design Tokens', desc: 'Standardized Color & Spatial Tokens', tag: 'Tokens System', icon: <Palette className="w-10 h-10 sm:w-11 sm:h-11 text-[#EC4899]" /> },
+          { name: 'Figma Variables', desc: 'Multi-Theme Dark & Light Modes', tag: 'Variables', icon: <Layers className="w-10 h-10 sm:w-11 sm:h-11 text-[#8B5CF6]" /> },
+          { name: 'Smart Animate', desc: 'Fluid Micro-Interaction Prototypes', tag: 'Interactions', icon: <Sparkles className="w-10 h-10 sm:w-11 sm:h-11 text-[#3B82F6]" /> }
         ]
       },
       {
         category: 'Engineering Sync & Code Tokens',
         skills: [
-          { name: 'Tailwind Config', desc: '1:1 Figma-to-Utility Class Mapping', tag: 'Code Sync', icon: <SiTailwindcss className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'CSS Variables', desc: 'Semantic Dynamic Style Variables', tag: 'CSS Engine', icon: <Code2 className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'Design Tokens JSON', desc: 'Automated Style Dictionary Exports', tag: 'Handoff Format', icon: <FileCheck className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'SVG Asset Kit', desc: 'Optimized Scalable Vector Graphics', tag: 'Vector Assets', icon: <Palette className="w-5 h-5 text-[#4CAF4F]" /> }
+          { name: 'Tailwind Config', desc: '1:1 Figma-to-Utility Class Mapping', tag: 'Code Sync', icon: <SiTailwindcss className="w-10 h-10 sm:w-11 sm:h-11 text-[#06B6D4]" /> },
+          { name: 'CSS Variables', desc: 'Semantic Dynamic Style Variables', tag: 'CSS Engine', icon: <Code2 className="w-10 h-10 sm:w-11 sm:h-11 text-[#264DE4]" /> },
+          { name: 'Design Tokens JSON', desc: 'Automated Style Dictionary Exports', tag: 'Handoff Format', icon: <FileCheck className="w-10 h-10 sm:w-11 sm:h-11 text-[#F59E0B]" /> },
+          { name: 'SVG Asset Kit', desc: 'Optimized Scalable Vector Graphics', tag: 'Vector Assets', icon: <Palette className="w-10 h-10 sm:w-11 sm:h-11 text-[#10B981]" /> }
         ]
       },
       {
         category: 'UX Research & Validation',
         skills: [
-          { name: 'User Testing', desc: 'Unmoderated & Moderated Task Testing', tag: 'Validation', icon: <CheckCircle2 className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'Wireframing', desc: 'Rapid Low-Fidelity Layout Discovery', tag: 'UX Discovery', icon: <Layers className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'Flow Diagrams', desc: 'Frictionless Conversion Journeys', tag: 'Information Arch', icon: <GitBranch className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'Heuristic Review', desc: 'Nielsen Norman 10 Usability Heuristics', tag: 'Audit Standard', icon: <Award className="w-5 h-5 text-[#4CAF4F]" /> }
+          { name: 'User Testing', desc: 'Unmoderated & Moderated Task Testing', tag: 'Validation', icon: <CheckCircle2 className="w-10 h-10 sm:w-11 sm:h-11 text-[#6366F1]" /> },
+          { name: 'Wireframing', desc: 'Rapid Low-Fidelity Layout Discovery', tag: 'UX Discovery', icon: <Layers className="w-10 h-10 sm:w-11 sm:h-11 text-[#64748B]" /> },
+          { name: 'Flow Diagrams', desc: 'Frictionless Conversion Journeys', tag: 'Information Arch', icon: <GitBranch className="w-10 h-10 sm:w-11 sm:h-11 text-[#8B5CF6]" /> },
+          { name: 'Heuristic Review', desc: 'Nielsen Norman 10 Usability Heuristics', tag: 'Audit Standard', icon: <Award className="w-10 h-10 sm:w-11 sm:h-11 text-[#F59E0B]" /> }
         ]
       },
       {
         category: 'Compliance & Accessibility',
         skills: [
-          { name: 'WCAG 2.2 AAA', desc: 'Color Contrast & Accessible Ratios', tag: 'Accessibility', icon: <ShieldCheck className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'Color Contrast', desc: 'APCA & WCAG Contrast Verification', tag: 'Visual Quality', icon: <CheckCircle2 className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'Responsive Grids', desc: 'Adaptive 4px/8px Spatial Scale', tag: 'Grid System', icon: <Globe className="w-5 h-5 text-[#4CAF4F]" /> },
-          { name: 'Typography Scale', desc: 'Modular Fluid Typography Ratios', tag: 'Typography', icon: <Code2 className="w-5 h-5 text-[#4CAF4F]" /> }
+          { name: 'WCAG 2.2 AAA', desc: 'Color Contrast & Accessible Ratios', tag: 'Accessibility', icon: <ShieldCheck className="w-10 h-10 sm:w-11 sm:h-11 text-[#059669]" /> },
+          { name: 'Color Contrast', desc: 'APCA & WCAG Contrast Verification', tag: 'Visual Quality', icon: <CheckCircle2 className="w-10 h-10 sm:w-11 sm:h-11 text-[#3B82F6]" /> },
+          { name: 'Responsive Grids', desc: 'Adaptive 4px/8px Spatial Scale', tag: 'Grid System', icon: <Globe className="w-10 h-10 sm:w-11 sm:h-11 text-[#6366F1]" /> },
+          { name: 'Typography Scale', desc: 'Modular Fluid Typography Ratios', tag: 'Typography', icon: <Code2 className="w-10 h-10 sm:w-11 sm:h-11 text-[#EC4899]" /> }
         ]
       }
     ],
@@ -468,35 +468,28 @@ const SERVICES_ENTERPRISE_DATA = {
   }
 }
 
-// Technology & Framework Matrix Item Card
-function TechScrollCard({ skill, isExpanded = false }) {
+// Technology & Framework Matrix Item Card (Clean, borderless, authentic brand colors, vertical stack)
+function TechScrollCard({ skill }) {
   return (
     <div 
-      className={`group relative bg-white dark:bg-[#15181E] border border-[#E0E0E0] dark:border-[#232936] hover:border-[#4CAF4F] dark:hover:border-[#4CAF4F] rounded-xl p-3.5 sm:p-4 shadow-2xs hover:shadow-md transition-all duration-300 flex items-center gap-3.5 select-none shrink-0 ${
-        isExpanded ? 'w-full' : 'w-[280px] sm:w-[320px]'
-      }`}
+      className="group flex flex-col items-center justify-center text-center p-3.5 sm:p-4 rounded-2xl transition-all duration-300 select-none shrink-0 cursor-pointer hover:bg-black/[0.04] dark:hover:bg-white/[0.06] w-[130px] sm:w-[150px]"
     >
-      {/* Icon Squircle Container */}
-      <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#E8F5E9] dark:bg-[#1B2E21] border border-[#C8E6C9]/70 dark:border-[#2E5E3C] flex items-center justify-center text-[#4CAF4F] shrink-0 group-hover:scale-110 group-hover:bg-[#4CAF4F] group-hover:text-white transition-all duration-300 shadow-2xs">
+      {/* Real Brand Icon (Centered on Top, No Outline, Authentic Colors) */}
+      <div className="w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center mb-2.5 transition-transform duration-300 group-hover:scale-115">
         {skill.icon}
       </div>
 
-      {/* Text Content */}
-      <div className="min-w-0 flex-1">
-        <div className="flex items-center justify-between gap-1.5 mb-1">
-          <span className="text-xs sm:text-sm font-bold text-[#263238] dark:text-[#F8FAFC] truncate group-hover:text-[#4CAF4F] transition-colors">
-            {skill.name}
-          </span>
-          {skill.tag && (
-            <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#E8F5E9] dark:bg-[#1C2C20] text-[#2E7D32] dark:text-[#81C784] border border-[#C8E6C9]/50 dark:border-[#2E5E3C] shrink-0">
-              {skill.tag}
-            </span>
-          )}
-        </div>
-        <p className="text-[11px] sm:text-xs text-[#717171] dark:text-[#94A3B8] line-clamp-1 leading-normal">
-          {skill.desc || skill.category}
-        </p>
-      </div>
+      {/* Name Under the Icon */}
+      <span className="text-xs sm:text-sm font-bold text-[#263238] dark:text-[#F8FAFC] tracking-tight leading-tight group-hover:text-black dark:group-hover:text-white transition-colors">
+        {skill.name}
+      </span>
+
+      {/* Subtitle / Role Under the Name */}
+      {skill.tag && (
+        <span className="text-[10px] sm:text-[11px] text-[#717171] dark:text-[#94A3B8] font-medium mt-1 leading-none whitespace-nowrap">
+          {skill.tag}
+        </span>
+      )}
     </div>
   )
 }
@@ -972,22 +965,22 @@ export default function ServiceDetail() {
           <div className="flex items-center justify-center gap-2 flex-wrap max-w-4xl mx-auto px-2">
             <button
               onClick={() => setActiveTechCategory('all')}
-              className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer select-none ${
+              className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer select-none ${
                 activeTechCategory === 'all'
-                  ? 'bg-[#4CAF4F] text-white shadow-sm scale-105'
-                  : 'bg-white dark:bg-[#15181E] text-[#263238] dark:text-[#F8FAFC] border border-[#E0E0E0] dark:border-[#232936] hover:border-[#4CAF4F]'
+                  ? 'bg-[#263238] dark:bg-white text-white dark:text-[#18191F] shadow-xs'
+                  : 'text-[#717171] dark:text-[#94A3B8] hover:text-black dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'
               }`}
             >
-              All Technologies ({allSkills.length})
+              All ({allSkills.length})
             </button>
             {service.techCategories.map((cat, idx) => (
               <button
                 key={idx}
                 onClick={() => setActiveTechCategory(cat.category)}
-                className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer select-none ${
+                className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer select-none ${
                   activeTechCategory === cat.category
-                    ? 'bg-[#4CAF4F] text-white shadow-sm scale-105'
-                    : 'bg-white dark:bg-[#15181E] text-[#263238] dark:text-[#F8FAFC] border border-[#E0E0E0] dark:border-[#232936] hover:border-[#4CAF4F]'
+                    ? 'bg-[#263238] dark:bg-white text-white dark:text-[#18191F] shadow-xs'
+                    : 'text-[#717171] dark:text-[#94A3B8] hover:text-black dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'
                 }`}
               >
                 {cat.category}
@@ -1013,18 +1006,10 @@ export default function ServiceDetail() {
               </Marquee>
             </div>
           ) : (
-            <div className="pt-2">
-              {/* Horizontal Scroll Track for Selected Category */}
-              <div className="flex gap-4 overflow-x-auto pb-6 pt-2 px-1 scrollbar-thin snap-x snap-mandatory">
-                {selectedCategorySkills.map((skill, idx) => (
-                  <div key={idx} className="snap-start shrink-0 w-[280px] sm:w-[320px]">
-                    <TechScrollCard skill={skill} isExpanded />
-                  </div>
-                ))}
-              </div>
-              <p className="text-center text-xs text-neutral-400 mt-2">
-                ← Swipe horizontally to explore all {activeTechCategory} technologies →
-              </p>
+            <div className="pt-4 flex flex-wrap items-center justify-center gap-4 sm:gap-6 max-w-4xl mx-auto">
+              {selectedCategorySkills.map((skill, idx) => (
+                <TechScrollCard key={idx} skill={skill} />
+              ))}
             </div>
           )}
         </div>
