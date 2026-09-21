@@ -289,7 +289,7 @@ export default function App() {
       </header>
 
       {/* 2. HERO SECTION */}
-      <section id="home" className="bg-[#F5F7FA] pt-28 pb-16 lg:pt-36 lg:pb-24 px-6 lg:px-16 overflow-hidden">
+      <section id="home" className="bg-[#F5F7FA] pt-24 pb-12 sm:pt-28 sm:pb-16 lg:pt-36 lg:pb-24 px-5 sm:px-6 lg:px-16 overflow-hidden">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           {/* Left: Headline & Actions */}
           <div className="lg:col-span-7 space-y-6">
@@ -346,7 +346,7 @@ export default function App() {
       </section>
 
       {/* 3. OUR CLIENTS SECTION */}
-      <section className="py-14 px-6 lg:px-16 bg-white">
+      <section className="py-10 sm:py-14 px-5 sm:px-6 lg:px-16 bg-white">
         <div className="max-w-7xl mx-auto text-center space-y-3 mb-10">
           <h2 className="text-3xl font-bold text-[#263238]">Our Commercial & Production Platforms</h2>
           <p className="text-[#717171] text-base">Trusted by high-growth startups and established enterprises across industries</p>
@@ -358,21 +358,21 @@ export default function App() {
       </section>
 
       {/* 4. CORE SERVICES (3 Boxy Cards: Manage your entire ecosystem) */}
-      <section id="services" className="py-16 lg:py-20 px-6 lg:px-16 bg-white">
-        <div className="max-w-7xl mx-auto text-center space-y-3 mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-[#263238] max-w-2xl mx-auto leading-snug">
+      <section id="services" className="py-12 sm:py-16 lg:py-20 px-5 sm:px-6 lg:px-16 bg-white">
+        <div className="max-w-7xl mx-auto text-center space-y-3 mb-10 sm:mb-12">
+          <h2 className="text-2xl sm:text-4xl font-bold text-[#263238] max-w-2xl mx-auto leading-snug">
             Manage your entire digital ecosystem in a single system
           </h2>
-          <p className="text-[#717171] text-base">Full-cycle engineering tailored for ambitious brands and scalable startups</p>
+          <p className="text-[#717171] text-sm sm:text-base">Full-cycle engineering tailored for ambitious brands and scalable startups</p>
         </div>
 
         {/* 3 Boxy Feature Cards */}
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-stretch">
           {CORE_SERVICES.map((srv) => (
             <SpotlightCard 
               key={srv.id} 
               spotlightColor="rgba(76, 175, 79, 0.12)"
-              className="boxy-card p-8 sm:p-10 h-full flex flex-col"
+              className="boxy-card p-6 sm:p-8 lg:p-10 h-full flex flex-col"
             >
               <div className="flex-1 flex flex-col items-center text-center">
                 {/* Modern Squircle Icon Container */}
@@ -404,11 +404,11 @@ export default function App() {
       </section>
 
       {/* 5. ENGINEERING NARRATIVE SECTION */}
-      <section id="architecture" className="py-16 lg:py-24 px-6 lg:px-16 bg-white border-t border-[#F0F0F0]">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      <section id="architecture" className="py-12 sm:py-16 lg:py-24 px-5 sm:px-6 lg:px-16 bg-white border-t border-[#F0F0F0]">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
           {/* Left: Illustration */}
           <div className="lg:col-span-5 flex justify-center">
-            <ZytronaEngineeringIllustration className="w-full max-w-[440px]" />
+            <ZytronaEngineeringIllustration className="w-full max-w-[320px] sm:max-w-[440px]" />
           </div>
 
           {/* Right: Content */}
@@ -432,70 +432,70 @@ export default function App() {
       </section>
 
       {/* 6. STATS SECTION (Helping modern businesses reinvent themselves) */}
-      <section id="stats" className="bg-[#F5F7FA] py-16 lg:py-20 px-6 lg:px-16">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <section id="stats" className="bg-[#F5F7FA] py-12 sm:py-16 lg:py-20 px-5 sm:px-6 lg:px-16">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* Left: Narrative */}
-          <div className="lg:col-span-5 space-y-3">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#263238] leading-snug">
-              Helping ambitious businesses <br />
+          <div className="lg:col-span-5 space-y-2 sm:space-y-3 text-center sm:text-left">
+            <h2 className="text-2xl sm:text-4xl font-bold text-[#263238] leading-snug">
+              Helping ambitious businesses <br className="hidden sm:inline" />
               <span className="text-[#4CAF4F]">scale and reinvent themselves</span>
             </h2>
-            <p className="text-[#717171] text-base">
+            <p className="text-[#717171] text-xs sm:text-base">
               Milestone-backed delivery powered by experienced software engineers and transparent agile sprints.
             </p>
           </div>
 
-          {/* Right: 2x2 Stats Grid */}
-          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-8 lg:gap-10">
+          {/* Right: 2x2 Stats Grid on mobile & desktop */}
+          <div className="lg:col-span-7 grid grid-cols-2 gap-3 sm:gap-8 lg:gap-10">
             {/* Stat 1: Delivered Platforms */}
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 flex items-center justify-center text-[#4CAF4F]">
-                <Layers className="w-10 h-10" />
+            <div className="flex items-center gap-2.5 sm:gap-4 p-3 sm:p-0 bg-white/70 sm:bg-transparent rounded-lg sm:rounded-none border border-[#E0E0E0]/60 sm:border-0">
+              <div className="w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center text-[#4CAF4F] shrink-0">
+                <Layers className="w-7 h-7 sm:w-10 sm:h-10" />
               </div>
-              <div>
-                <div className="text-2xl sm:text-3xl font-extrabold text-[#263238]">
+              <div className="min-w-0">
+                <div className="text-xl sm:text-3xl font-extrabold text-[#263238]">
                   <AnimatedStatNumber value={10} suffix="+" />
                 </div>
-                <div className="text-sm text-[#717171]">Production Platforms</div>
+                <div className="text-xs sm:text-sm text-[#717171] truncate">Production Platforms</div>
               </div>
             </div>
 
             {/* Stat 2: Client Satisfaction */}
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 flex items-center justify-center text-[#4CAF4F]">
-                <Star className="w-10 h-10" />
+            <div className="flex items-center gap-2.5 sm:gap-4 p-3 sm:p-0 bg-white/70 sm:bg-transparent rounded-lg sm:rounded-none border border-[#E0E0E0]/60 sm:border-0">
+              <div className="w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center text-[#4CAF4F] shrink-0">
+                <Star className="w-7 h-7 sm:w-10 sm:h-10" />
               </div>
-              <div>
-                <div className="text-2xl sm:text-3xl font-extrabold text-[#263238]">
+              <div className="min-w-0">
+                <div className="text-xl sm:text-3xl font-extrabold text-[#263238]">
                   <AnimatedStatNumber value={98} suffix="%" />
                 </div>
-                <div className="text-sm text-[#717171]">Client Satisfaction</div>
+                <div className="text-xs sm:text-sm text-[#717171] truncate">Client Satisfaction</div>
               </div>
             </div>
 
             {/* Stat 3: On-Time Delivery */}
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 flex items-center justify-center text-[#4CAF4F]">
-                <CheckCircle2 className="w-10 h-10" />
+            <div className="flex items-center gap-2.5 sm:gap-4 p-3 sm:p-0 bg-white/70 sm:bg-transparent rounded-lg sm:rounded-none border border-[#E0E0E0]/60 sm:border-0">
+              <div className="w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center text-[#4CAF4F] shrink-0">
+                <CheckCircle2 className="w-7 h-7 sm:w-10 sm:h-10" />
               </div>
-              <div>
-                <div className="text-2xl sm:text-3xl font-extrabold text-[#263238]">
+              <div className="min-w-0">
+                <div className="text-xl sm:text-3xl font-extrabold text-[#263238]">
                   <AnimatedStatNumber value={100} suffix="%" />
                 </div>
-                <div className="text-sm text-[#717171]">On-Time Milestones</div>
+                <div className="text-xs sm:text-sm text-[#717171] truncate">On-Time Milestones</div>
               </div>
             </div>
 
             {/* Stat 4: Technical Support */}
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 flex items-center justify-center text-[#4CAF4F]">
-                <Zap className="w-10 h-10" />
+            <div className="flex items-center gap-2.5 sm:gap-4 p-3 sm:p-0 bg-white/70 sm:bg-transparent rounded-lg sm:rounded-none border border-[#E0E0E0]/60 sm:border-0">
+              <div className="w-9 h-9 sm:w-12 sm:h-12 flex items-center justify-center text-[#4CAF4F] shrink-0">
+                <Zap className="w-7 h-7 sm:w-10 sm:h-10" />
               </div>
-              <div>
-                <div className="text-2xl sm:text-3xl font-extrabold text-[#263238]">
+              <div className="min-w-0">
+                <div className="text-xl sm:text-3xl font-extrabold text-[#263238]">
                   <AnimatedStatNumber value={24} suffix="/7" />
                 </div>
-                <div className="text-sm text-[#717171]">Continuous SLA Support</div>
+                <div className="text-xs sm:text-sm text-[#717171] truncate">Continuous SLA</div>
               </div>
             </div>
           </div>
@@ -503,11 +503,11 @@ export default function App() {
       </section>
 
       {/* 7. ARCHITECTURE SHOWCASE */}
-      <section className="py-16 lg:py-24 px-6 lg:px-16 bg-white">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      <section className="py-12 sm:py-16 lg:py-24 px-5 sm:px-6 lg:px-16 bg-white">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
           {/* Left: Mobile Security Illustration */}
           <div className="lg:col-span-5 flex justify-center">
-            <ZytronaMobileSecurityIllustration className="w-full max-w-[440px]" />
+            <ZytronaMobileSecurityIllustration className="w-full max-w-[320px] sm:max-w-[440px]" />
           </div>
 
           {/* Right: Content */}
@@ -531,37 +531,37 @@ export default function App() {
       </section>
 
       {/* 8. TESTIMONIAL / COMMERCIAL SPOTLIGHT */}
-      <section id="testimonials" className="bg-[#F5F7FA] py-16 lg:py-20 px-6 lg:px-16">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+      <section id="testimonials" className="bg-[#F5F7FA] py-12 sm:py-16 lg:py-20 px-5 sm:px-6 lg:px-16">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
           {/* Left: Showcase Badge with Logo */}
           <div className="lg:col-span-4 flex justify-center">
-            <ShowcaseBadge className="w-full max-w-[280px]" />
+            <ShowcaseBadge className="w-full max-w-[220px] sm:max-w-[280px]" />
           </div>
 
           {/* Right: Client Quote */}
-          <div className="lg:col-span-8 space-y-5">
-            <p className="text-[#717171] text-sm sm:text-base leading-relaxed italic">
+          <div className="lg:col-span-8 space-y-4 sm:space-y-5">
+            <p className="text-[#717171] text-xs sm:text-base leading-relaxed italic">
               "ZYTRONA engineered our entire e-commerce platform with precision. The sub-second loading speeds, fluid animations, and mobile-first checkout flows boosted our mobile conversion by over 140%. Working directly with their senior engineers made the launch effortless."
             </p>
 
             <div>
-              <div className="text-[#4CAF4F] font-bold text-lg">Aravindhan K.</div>
-              <div className="text-[#89939E] text-sm">Founder & Director, ZOCA Crimson Charm</div>
+              <div className="text-[#4CAF4F] font-bold text-base sm:text-lg">Aravindhan K.</div>
+              <div className="text-[#89939E] text-xs sm:text-sm">Founder &amp; Director, ZOCA Crimson Charm</div>
             </div>
 
-            {/* Client Logos & Link Row */}
-            <div className="pt-4 flex flex-wrap items-center justify-between gap-6 border-t border-[#E0E0E0]">
-              <div className="flex flex-wrap items-center gap-6 text-[#263238] text-xs font-bold uppercase tracking-wider">
-                <span className="text-[#4CAF4F]">ZOCA</span>
-                <span>BLUE BASE</span>
-                <span>FLY STUDIO</span>
-                <span>CAKES & BITES</span>
-                <span>11 TO 11</span>
+            {/* Client Logos & Link Row (Responsive Badges so text never clips) */}
+            <div className="pt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6 border-t border-[#E0E0E0]">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-[#263238] text-[11px] sm:text-xs font-bold uppercase tracking-wider">
+                <span className="text-[#4CAF4F] whitespace-nowrap px-2.5 py-1 rounded bg-[#E8F5E9]/70 border border-[#C8E6C9]/60">ZOCA</span>
+                <span className="whitespace-nowrap px-2.5 py-1 rounded bg-white border border-[#E0E0E0]">BLUE BASE</span>
+                <span className="whitespace-nowrap px-2.5 py-1 rounded bg-white border border-[#E0E0E0]">FLY STUDIO</span>
+                <span className="whitespace-nowrap px-2.5 py-1 rounded bg-white border border-[#E0E0E0]">CAKES &amp; BITES</span>
+                <span className="whitespace-nowrap px-2.5 py-1 rounded bg-white border border-[#E0E0E0]">11 TO 11</span>
               </div>
 
               <a 
                 href="#insights" 
-                className="inline-flex items-center gap-2 text-[#4CAF4F] font-bold text-base hover:text-[#388E3C] transition-colors"
+                className="inline-flex items-center gap-2 text-[#4CAF4F] font-bold text-sm sm:text-base hover:text-[#388E3C] transition-colors"
               >
                 <span>Explore all case studies</span>
                 <ArrowRight className="w-4 h-4" />
@@ -572,22 +572,22 @@ export default function App() {
       </section>
 
       {/* 9. INSIGHTS & ENGINEERING CASE STUDIES */}
-      <section id="insights" className="py-16 lg:py-24 px-6 lg:px-16 bg-white">
-        <div className="max-w-7xl mx-auto text-center space-y-3 mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-[#263238]">
-            Engineering Insights & Production Case Studies
+      <section id="insights" className="py-12 sm:py-16 lg:py-24 px-5 sm:px-6 lg:px-16 bg-white">
+        <div className="max-w-7xl mx-auto text-center space-y-2.5 mb-10 sm:mb-16">
+          <h2 className="text-2xl sm:text-4xl font-bold text-[#263238]">
+            Engineering Insights &amp; Production Case Studies
           </h2>
-          <p className="text-[#717171] text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-[#717171] text-xs sm:text-base max-w-2xl mx-auto">
             Read technical breakdowns from our senior engineering team on modern software architecture, AI inference pipelines, and conversion-driven design systems.
           </p>
         </div>
 
         {/* 3 Blog Cards with Overlapping Floating White Cards */}
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-8 items-stretch">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-8 items-stretch">
           {INSIGHTS_POSTS.map((post) => (
             <div key={post.id} className="relative flex flex-col items-center h-full">
               {/* Image */}
-              <div className="w-full h-64 sm:h-72 rounded-2xl overflow-hidden shadow-sm border border-[#E5E7EB]">
+              <div className="w-full h-48 sm:h-72 rounded-xl sm:rounded-2xl overflow-hidden shadow-sm border border-[#E5E7EB]">
                 <img 
                   src={post.image} 
                   alt={post.title} 
@@ -597,29 +597,29 @@ export default function App() {
               </div>
 
               {/* Overlapping Boxy Card */}
-              <div className="relative -mt-16 w-[90%] bg-white rounded-2xl p-6 shadow-lg border border-[#E5E7EB] text-center flex flex-col items-center justify-between min-h-[170px] hover:border-[#4CAF4F]/50 transition-all">
-                <h4 className="text-base font-bold text-[#263238] leading-snug line-clamp-3 mb-4 flex-1 flex items-center justify-center">
+              <div className="relative -mt-10 sm:-mt-16 w-[92%] sm:w-[90%] bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-md sm:shadow-lg border border-[#E5E7EB] text-center flex flex-col items-center justify-between min-h-[140px] sm:min-h-[170px] hover:border-[#4CAF4F]/50 transition-all">
+                <h4 className="text-sm sm:text-base font-bold text-[#263238] leading-snug line-clamp-2 sm:line-clamp-3 mb-3 sm:mb-4 flex-1 flex items-center justify-center">
                   {post.title}
                 </h4>
 
-                <div className="mt-auto pt-3 border-t border-[#F0F0F0] w-full flex justify-center">
+                <div className="mt-auto pt-2.5 sm:pt-3 border-t border-[#F0F0F0] w-full flex justify-center">
                   {post.linkUrl.startsWith('http') ? (
                     <a 
                       href={post.linkUrl} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-[#4CAF4F] font-bold text-sm hover:text-[#388E3C] transition-colors"
+                      className="inline-flex items-center gap-1.5 sm:gap-2 text-[#4CAF4F] font-bold text-xs sm:text-sm hover:text-[#388E3C] transition-colors"
                     >
                       <span>{post.linkText}</span>
-                      <ArrowRight className="w-4 h-4" />
+                      <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     </a>
                   ) : (
                     <Link 
                       to={post.linkUrl}
-                      className="inline-flex items-center gap-2 text-[#4CAF4F] font-bold text-sm hover:text-[#388E3C] transition-colors"
+                      className="inline-flex items-center gap-1.5 sm:gap-2 text-[#4CAF4F] font-bold text-xs sm:text-sm hover:text-[#388E3C] transition-colors"
                     >
                       <span>{post.linkText}</span>
-                      <ArrowRight className="w-4 h-4" />
+                      <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     </Link>
                   )}
                 </div>
@@ -629,8 +629,8 @@ export default function App() {
         </div>
       </section>
 
-      {/* 10. CTA BANNER */}
-      <section className="bg-[#F5F7FA] py-16 lg:py-20 px-6 lg:px-16 text-center">
+      {/* 10. COMMUNITY / CTA BANNER (Nexcent standard) */}
+      <section className="bg-[#F5F7FA] py-12 sm:py-16 lg:py-20 px-5 sm:px-6 lg:px-16 text-center">
         <div className="max-w-4xl mx-auto space-y-6">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#263238] tracking-tight leading-tight">
             Ready to engineer your next <br /> high-performance platform?

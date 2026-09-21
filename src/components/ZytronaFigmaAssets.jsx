@@ -269,25 +269,25 @@ import { Marquee } from './shadcn-space/animations/marquee'
 // 7 Clean Client & Partner Logos in Infinite Smooth Marquee
 export function ZytronaClientLogosRow({ className = "" }) {
   const logos = [
-    { name: "ZOCA", title: "ZOCA Crimson Charm", style: "font-extrabold text-sm tracking-wider" },
-    { name: "BLUE BASE", title: "Blue Base Saloon", style: "font-bold text-xs tracking-wider uppercase" },
-    { name: "FLY", title: "Fly Studio", style: "font-black text-sm tracking-widest" },
-    { name: "CAKES & BITES", title: "Cakes & Bites", style: "font-bold text-xs tracking-wide" },
-    { name: "11 TO 11", title: "11 TO 11 Restaurant", style: "font-extrabold text-sm tracking-widest" },
-    { name: "ZYCARE", title: "ZYCARE Health", style: "font-black text-sm tracking-wider text-[#4CAF4F]" },
-    { name: "ZYGLASS", title: "ZYGLASS AI", style: "font-black text-sm tracking-wider" },
+    { name: "ZOCA", title: "ZOCA Crimson Charm", style: "font-extrabold text-xs sm:text-sm tracking-wider" },
+    { name: "BLUE BASE", title: "Blue Base Saloon", style: "font-bold text-[11px] sm:text-xs tracking-wider uppercase" },
+    { name: "FLY", title: "Fly Studio", style: "font-black text-xs sm:text-sm tracking-widest" },
+    { name: "CAKES & BITES", title: "Cakes & Bites", style: "font-bold text-[11px] sm:text-xs tracking-wide" },
+    { name: "11 TO 11", title: "11 TO 11 Restaurant", style: "font-extrabold text-xs sm:text-sm tracking-widest" },
+    { name: "ZYCARE", title: "ZYCARE Health", style: "font-black text-xs sm:text-sm tracking-wider text-[#4CAF4F]" },
+    { name: "ZYGLASS", title: "ZYGLASS AI", style: "font-black text-xs sm:text-sm tracking-wider" },
   ]
 
   return (
-    <div className={`w-full overflow-hidden py-2 ${className}`}>
-      <Marquee pauseOnHover duration="25s" repeat={4} gap="2.5rem">
+    <div className={`w-full overflow-hidden py-1 sm:py-2 ${className}`}>
+      <Marquee pauseOnHover duration="25s" repeat={4} gap="1.25rem" className="[--gap:1.25rem] sm:[--gap:2.5rem]">
         {logos.map((logo, idx) => (
           <div 
             key={idx} 
-            className="h-12 px-6 flex items-center justify-center text-[#263238] hover:text-[#4CAF4F] transition-all cursor-pointer bg-[#F5F7FA] border border-[#E0E0E0] hover:border-[#4CAF4F] rounded-md shadow-2xs hover:shadow-sm"
+            className="h-10 sm:h-12 px-3.5 sm:px-6 flex items-center justify-center text-[#263238] hover:text-[#4CAF4F] transition-all cursor-pointer bg-[#F5F7FA] border border-[#E0E0E0] hover:border-[#4CAF4F] rounded-md shadow-2xs hover:shadow-sm shrink-0 whitespace-nowrap select-none"
             title={logo.title}
           >
-            <span className={logo.style}>{logo.name}</span>
+            <span className={`${logo.style} whitespace-nowrap`}>{logo.name}</span>
           </div>
         ))}
       </Marquee>
@@ -298,16 +298,16 @@ export function ZytronaClientLogosRow({ className = "" }) {
 // Showcase / Production Spotlight Badge
 export function ShowcaseBadge({ className = "w-full max-w-[320px]" }) {
   return (
-    <div className={`aspect-square bg-[#0b1014] rounded-xl flex flex-col items-center justify-center p-8 shadow-xl border border-neutral-800 text-center ${className}`}>
+    <div className={`aspect-square bg-[#0b1014] rounded-xl flex flex-col items-center justify-center p-5 sm:p-8 shadow-xl border border-neutral-800 text-center ${className}`}>
       <img 
         src="/Logo.png" 
         alt="ZYTRONA Synergy" 
-        className="w-16 h-16 object-contain rounded-lg p-1 bg-white mb-4 shadow-md"
+        className="w-12 h-12 sm:w-16 sm:h-16 object-contain rounded-lg p-1 bg-white mb-3 sm:mb-4 shadow-md"
       />
-      <span className="text-white font-extrabold text-xl tracking-wider mb-1">ZYTRONA</span>
-      <span className="text-xs text-[#81C784] font-medium tracking-widest uppercase">Verified Enterprise SLA</span>
-      <div className="mt-4 px-3 py-1 bg-[#18231C] border border-[#2E5E3C] rounded-full text-[11px] text-neutral-300">
-        ⚡ 99.9% Uptime & 100% IP
+      <span className="text-white font-extrabold text-lg sm:text-xl tracking-wider mb-1">ZYTRONA</span>
+      <span className="text-[10px] sm:text-xs text-[#81C784] font-medium tracking-widest uppercase">Verified Enterprise SLA</span>
+      <div className="mt-3 sm:mt-4 px-2.5 sm:px-3 py-1 bg-[#18231C] border border-[#2E5E3C] rounded-full text-[10px] sm:text-[11px] text-neutral-300 whitespace-nowrap">
+        ⚡ 99.9% Uptime &amp; 100% IP
       </div>
     </div>
   )
