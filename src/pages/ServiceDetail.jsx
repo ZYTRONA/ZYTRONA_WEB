@@ -7,6 +7,7 @@ import { Footer } from '@/components/ui/Footer'
 import { SpotlightCard } from '@/components/ui/SpotlightCard'
 import { CustomSelect } from '@/components/ui/CustomSelect'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
+import { Marquee } from '@/components/shadcn-space/animations/marquee'
 import { 
   Globe, 
   Smartphone, 
@@ -169,37 +170,37 @@ const SERVICES_ENTERPRISE_DATA = {
       {
         category: 'Frontend & Edge Runtimes',
         skills: [
-          { name: 'React 19', icon: <FaReact className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'Next.js 15', icon: <SiNextdotjs className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'TypeScript', icon: <SiTypescript className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'Tailwind CSS', icon: <SiTailwindcss className="w-4 h-4 text-[#4CAF4F]" /> }
+          { name: 'React 19', desc: 'Server Components & Concurrent Hooks', tag: 'Edge UI', icon: <FaReact className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'Next.js 15', desc: 'App Router, Turbopack & Hybrid SSR', tag: 'Full-Stack', icon: <SiNextdotjs className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'TypeScript', desc: 'Strict End-to-End Type Safety Contracts', tag: 'Type System', icon: <SiTypescript className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'Tailwind CSS', desc: 'Utility-First Responsive Design System', tag: 'Styling Engine', icon: <SiTailwindcss className="w-5 h-5 text-[#4CAF4F]" /> }
         ]
       },
       {
         category: 'Backend & Microservices',
         skills: [
-          { name: 'Node.js', icon: <FaNodeJs className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'Python', icon: <SiPython className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'GraphQL', icon: <SiGraphql className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'REST APIs', icon: <Code2 className="w-4 h-4 text-[#4CAF4F]" /> }
+          { name: 'Node.js', desc: 'Asynchronous Event-Driven Microservices', tag: 'Backend Runtime', icon: <FaNodeJs className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'Python', desc: 'High-Throughput FastAPIs & AI Pipelines', tag: 'Data & AI', icon: <SiPython className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'GraphQL', desc: 'Declarative Data Fetching & Apollo Federation', tag: 'API Layer', icon: <SiGraphql className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'REST APIs', desc: 'OpenAPI 3.0 Standardized Strict Endpoints', tag: 'REST Standard', icon: <Code2 className="w-5 h-5 text-[#4CAF4F]" /> }
         ]
       },
       {
         category: 'Database & Caching',
         skills: [
-          { name: 'PostgreSQL', icon: <SiPostgresql className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'Redis', icon: <SiRedis className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'MongoDB', icon: <SiMongodb className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'Prisma ORM', icon: <Database className="w-4 h-4 text-[#4CAF4F]" /> }
+          { name: 'PostgreSQL', desc: 'High-Concurrency ACID Relational Storage', tag: 'Primary DB', icon: <SiPostgresql className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'Redis', desc: 'Sub-Millisecond In-Memory Caching & Pub/Sub', tag: 'Memory Cache', icon: <SiRedis className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'MongoDB', desc: 'Flexible Distributed Document Database', tag: 'Document DB', icon: <SiMongodb className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'Prisma ORM', desc: 'Type-Safe Database Client & Migrations', tag: 'ORM Layer', icon: <Database className="w-5 h-5 text-[#4CAF4F]" /> }
         ]
       },
       {
         category: 'DevOps & Cloud Infrastructure',
         skills: [
-          { name: 'AWS Cloud', icon: <FaAws className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'Docker', icon: <FaDocker className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'Kubernetes', icon: <SiKubernetes className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'CI/CD Pipelines', icon: <GitBranch className="w-4 h-4 text-[#4CAF4F]" /> }
+          { name: 'AWS Cloud', desc: 'Auto-Scaling ECS, Lambda & S3 Buckets', tag: 'Cloud Platform', icon: <FaAws className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'Docker', desc: 'Multi-Stage Production Containerization', tag: 'Containers', icon: <FaDocker className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'Kubernetes', desc: 'Automated Container Orchestration & Ingress', tag: 'Orchestration', icon: <SiKubernetes className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'CI/CD Pipelines', desc: 'Zero-Downtime Automated Test & Deploy', tag: 'DevOps', icon: <GitBranch className="w-5 h-5 text-[#4CAF4F]" /> }
         ]
       }
     ],
@@ -287,37 +288,37 @@ const SERVICES_ENTERPRISE_DATA = {
       {
         category: 'Mobile Frameworks & Runtimes',
         skills: [
-          { name: 'React Native', icon: <FaReact className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'Flutter', icon: <SiFlutter className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'TypeScript', icon: <SiTypescript className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'Swift (iOS)', icon: <FaApple className="w-4 h-4 text-[#4CAF4F]" /> }
+          { name: 'React Native', desc: 'Single-Codebase 60fps Native UI', tag: 'Mobile Core', icon: <FaReact className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'Flutter', desc: 'High-Performance Skia Graphics Engine', tag: 'Cross-Platform', icon: <SiFlutter className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'TypeScript', desc: 'Strict Cross-Platform Type Safety', tag: 'Type System', icon: <SiTypescript className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'Swift (iOS)', desc: 'Native Apple Foundation & SwiftUI', tag: 'iOS Native', icon: <FaApple className="w-5 h-5 text-[#4CAF4F]" /> }
         ]
       },
       {
         category: 'Native Android & Architecture',
         skills: [
-          { name: 'Kotlin', icon: <SiKotlin className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'Native Bridges', icon: <Cpu className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'MMKV Storage', icon: <Database className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'SQLite DB', icon: <Database className="w-4 h-4 text-[#4CAF4F]" /> }
+          { name: 'Kotlin', desc: 'Modern Android Architecture & Coroutines', tag: 'Android Native', icon: <SiKotlin className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'Native Bridges', desc: 'Hardware Sensor & Camera JNI Binding', tag: 'Low-Level', icon: <Cpu className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'MMKV Storage', desc: 'Ultra-Fast Key-Value Storage Engine', tag: 'Persistent Cache', icon: <Database className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'SQLite DB', desc: 'ACID Compliant Local Offline Database', tag: 'Offline Engine', icon: <Database className="w-5 h-5 text-[#4CAF4F]" /> }
         ]
       },
       {
         category: 'Cloud Services & Push Pipelines',
         skills: [
-          { name: 'Firebase', icon: <SiFirebase className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'Apple APNs', icon: <FaApple className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'Google FCM', icon: <SiFirebase className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'RevenueCat', icon: <Zap className="w-4 h-4 text-[#4CAF4F]" /> }
+          { name: 'Firebase', desc: 'Real-Time Firestore & Auth Pipelines', tag: 'BaaS Pipeline', icon: <SiFirebase className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'Apple APNs', desc: 'Sub-Second iOS Push Notifications', tag: 'Push Messaging', icon: <FaApple className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'Google FCM', desc: 'Reliable Cloud Messaging for Android', tag: 'Push Messaging', icon: <SiFirebase className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'RevenueCat', desc: 'In-App Subscriptions & Paywalls', tag: 'Monetization', icon: <Zap className="w-5 h-5 text-[#4CAF4F]" /> }
         ]
       },
       {
         category: 'Deployment & Mobile DevOps',
         skills: [
-          { name: 'Fastlane', icon: <GitBranch className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'TestFlight', icon: <FaApple className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'Play Console', icon: <Globe className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'Sentry Crashlytics', icon: <Activity className="w-4 h-4 text-[#4CAF4F]" /> }
+          { name: 'Fastlane', desc: 'Automated Build, Signing & Release', tag: 'Automation', icon: <GitBranch className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'TestFlight', desc: 'Continuous Beta Distribution for iOS', tag: 'Beta Testing', icon: <FaApple className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'Play Console', desc: 'Staged Rollouts & Android Vitals', tag: 'Store Release', icon: <Globe className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'Sentry Crashlytics', desc: 'Real-Time Crash Reporting & Breadcrumbs', tag: 'Monitoring', icon: <Activity className="w-5 h-5 text-[#4CAF4F]" /> }
         ]
       }
     ],
@@ -401,37 +402,37 @@ const SERVICES_ENTERPRISE_DATA = {
       {
         category: 'Design & Prototyping Tools',
         skills: [
-          { name: 'Figma Master', icon: <SiFigma className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'Design Tokens', icon: <Palette className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'Figma Variables', icon: <Layers className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'Smart Animate', icon: <Sparkles className="w-4 h-4 text-[#4CAF4F]" /> }
+          { name: 'Figma Master', desc: 'Auto-Layout 5.0 & Component Variants', tag: 'Core Tool', icon: <SiFigma className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'Design Tokens', desc: 'Standardized Color & Spatial Tokens', tag: 'Tokens System', icon: <Palette className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'Figma Variables', desc: 'Multi-Theme Dark & Light Modes', tag: 'Variables', icon: <Layers className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'Smart Animate', desc: 'Fluid Micro-Interaction Prototypes', tag: 'Interactions', icon: <Sparkles className="w-5 h-5 text-[#4CAF4F]" /> }
         ]
       },
       {
         category: 'Engineering Sync & Code Tokens',
         skills: [
-          { name: 'Tailwind Config', icon: <SiTailwindcss className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'CSS Variables', icon: <Code2 className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'Design Tokens JSON', icon: <FileCheck className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'SVG Asset Kit', icon: <Palette className="w-4 h-4 text-[#4CAF4F]" /> }
+          { name: 'Tailwind Config', desc: '1:1 Figma-to-Utility Class Mapping', tag: 'Code Sync', icon: <SiTailwindcss className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'CSS Variables', desc: 'Semantic Dynamic Style Variables', tag: 'CSS Engine', icon: <Code2 className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'Design Tokens JSON', desc: 'Automated Style Dictionary Exports', tag: 'Handoff Format', icon: <FileCheck className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'SVG Asset Kit', desc: 'Optimized Scalable Vector Graphics', tag: 'Vector Assets', icon: <Palette className="w-5 h-5 text-[#4CAF4F]" /> }
         ]
       },
       {
         category: 'UX Research & Validation',
         skills: [
-          { name: 'User Testing', icon: <CheckCircle2 className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'Wireframing', icon: <Layers className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'Flow Diagrams', icon: <GitBranch className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'Heuristic Review', icon: <Award className="w-4 h-4 text-[#4CAF4F]" /> }
+          { name: 'User Testing', desc: 'Unmoderated & Moderated Task Testing', tag: 'Validation', icon: <CheckCircle2 className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'Wireframing', desc: 'Rapid Low-Fidelity Layout Discovery', tag: 'UX Discovery', icon: <Layers className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'Flow Diagrams', desc: 'Frictionless Conversion Journeys', tag: 'Information Arch', icon: <GitBranch className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'Heuristic Review', desc: 'Nielsen Norman 10 Usability Heuristics', tag: 'Audit Standard', icon: <Award className="w-5 h-5 text-[#4CAF4F]" /> }
         ]
       },
       {
         category: 'Compliance & Accessibility',
         skills: [
-          { name: 'WCAG 2.2 AAA', icon: <ShieldCheck className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'Color Contrast', icon: <CheckCircle2 className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'Responsive Grids', icon: <Globe className="w-4 h-4 text-[#4CAF4F]" /> },
-          { name: 'Typography Scale', icon: <Code2 className="w-4 h-4 text-[#4CAF4F]" /> }
+          { name: 'WCAG 2.2 AAA', desc: 'Color Contrast & Accessible Ratios', tag: 'Accessibility', icon: <ShieldCheck className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'Color Contrast', desc: 'APCA & WCAG Contrast Verification', tag: 'Visual Quality', icon: <CheckCircle2 className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'Responsive Grids', desc: 'Adaptive 4px/8px Spatial Scale', tag: 'Grid System', icon: <Globe className="w-5 h-5 text-[#4CAF4F]" /> },
+          { name: 'Typography Scale', desc: 'Modular Fluid Typography Ratios', tag: 'Typography', icon: <Code2 className="w-5 h-5 text-[#4CAF4F]" /> }
         ]
       }
     ],
@@ -467,6 +468,39 @@ const SERVICES_ENTERPRISE_DATA = {
   }
 }
 
+// Technology & Framework Matrix Item Card
+function TechScrollCard({ skill, isExpanded = false }) {
+  return (
+    <div 
+      className={`group relative bg-white dark:bg-[#15181E] border border-[#E0E0E0] dark:border-[#232936] hover:border-[#4CAF4F] dark:hover:border-[#4CAF4F] rounded-xl p-3.5 sm:p-4 shadow-2xs hover:shadow-md transition-all duration-300 flex items-center gap-3.5 select-none shrink-0 ${
+        isExpanded ? 'w-full' : 'w-[280px] sm:w-[320px]'
+      }`}
+    >
+      {/* Icon Squircle Container */}
+      <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#E8F5E9] dark:bg-[#1B2E21] border border-[#C8E6C9]/70 dark:border-[#2E5E3C] flex items-center justify-center text-[#4CAF4F] shrink-0 group-hover:scale-110 group-hover:bg-[#4CAF4F] group-hover:text-white transition-all duration-300 shadow-2xs">
+        {skill.icon}
+      </div>
+
+      {/* Text Content */}
+      <div className="min-w-0 flex-1">
+        <div className="flex items-center justify-between gap-1.5 mb-1">
+          <span className="text-xs sm:text-sm font-bold text-[#263238] dark:text-[#F8FAFC] truncate group-hover:text-[#4CAF4F] transition-colors">
+            {skill.name}
+          </span>
+          {skill.tag && (
+            <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-[#E8F5E9] dark:bg-[#1C2C20] text-[#2E7D32] dark:text-[#81C784] border border-[#C8E6C9]/50 dark:border-[#2E5E3C] shrink-0">
+              {skill.tag}
+            </span>
+          )}
+        </div>
+        <p className="text-[11px] sm:text-xs text-[#717171] dark:text-[#94A3B8] line-clamp-1 leading-normal">
+          {skill.desc || skill.category}
+        </p>
+      </div>
+    </div>
+  )
+}
+
 export default function ServiceDetail() {
   const { serviceId } = useParams()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -476,6 +510,7 @@ export default function ServiceDetail() {
   const [formError, setFormError] = useState(null)
   const [activeFaq, setActiveFaq] = useState(null)
   const [scrolled, setScrolled] = useState(false)
+  const [activeTechCategory, setActiveTechCategory] = useState('all')
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -488,6 +523,7 @@ export default function ServiceDetail() {
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+    setActiveTechCategory('all')
   }, [serviceId])
 
   useEffect(() => {
@@ -501,6 +537,19 @@ export default function ServiceDetail() {
   if (!service) {
     return <NotFound />
   }
+
+  // Flatten skills with category info for the Scroll UI
+  const allSkills = service ? service.techCategories.flatMap(cat => 
+    cat.skills.map(s => ({ ...s, category: cat.category }))
+  ) : []
+
+  const halfLength = Math.ceil(allSkills.length / 2)
+  const row1Skills = allSkills.slice(0, halfLength)
+  const row2Skills = allSkills.slice(halfLength)
+
+  const selectedCategorySkills = activeTechCategory === 'all' 
+    ? allSkills 
+    : allSkills.filter(s => s.category === activeTechCategory)
 
   const handleOpenModal = () => {
     setModalOpen(true)
@@ -903,35 +952,81 @@ export default function ServiceDetail() {
         </div>
       </section>
 
-      {/* 6. TECH STACK MATRIX (Categorized) */}
-      <section id="tech-matrix" className="py-20 px-6 lg:px-16 bg-[#F5F7FA] border-b border-[#E0E0E0]">
-        <div className="max-w-7xl mx-auto space-y-12">
+      {/* 6. TECH STACK MATRIX (Interactive Scroll UI with Programming Icons) */}
+      <section id="tech-matrix" className="py-20 px-6 lg:px-16 bg-[#F5F7FA] dark:bg-[#0B0D0F] border-b border-[#E0E0E0] dark:border-[#232936] overflow-hidden">
+        <div className="max-w-7xl mx-auto space-y-10">
           <div className="text-center space-y-3 max-w-2xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#263238]">
-              Technology & Framework Matrix
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E8F5E9] dark:bg-[#1B2E21] text-[#2E7D32] dark:text-[#81C784] text-xs font-bold uppercase tracking-wider">
+              <Code2 className="w-3.5 h-3.5" />
+              <span>Production Stack</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold text-[#263238] dark:text-[#F8FAFC]">
+              Technology &amp; Framework Matrix
             </h2>
-            <p className="text-[#717171] text-base">
-              We leverage modern, type-safe, and industry-standard open-source ecosystems.
+            <p className="text-[#717171] dark:text-[#94A3B8] text-sm sm:text-base">
+              We leverage modern, type-safe, and industry-standard open-source ecosystems. Explore our production stack below.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {service.techCategories.map((cat, cIdx) => (
-              <div key={cIdx} className="boxy-card p-6 bg-white space-y-4">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-[#4CAF4F] border-b border-[#F0F0F0] pb-2">
-                  {cat.category}
-                </h4>
-                <div className="space-y-2.5">
-                  {cat.skills.map((skill, sIdx) => (
-                    <div key={sIdx} className="flex items-center gap-3 p-2.5 rounded bg-[#F5F7FA] border border-[#E0E0E0]">
-                      <div className="shrink-0">{skill.icon}</div>
-                      <span className="text-xs font-bold text-[#263238]">{skill.name}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+          {/* Interactive Category Filter Pills */}
+          <div className="flex items-center justify-center gap-2 flex-wrap max-w-4xl mx-auto px-2">
+            <button
+              onClick={() => setActiveTechCategory('all')}
+              className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer select-none ${
+                activeTechCategory === 'all'
+                  ? 'bg-[#4CAF4F] text-white shadow-sm scale-105'
+                  : 'bg-white dark:bg-[#15181E] text-[#263238] dark:text-[#F8FAFC] border border-[#E0E0E0] dark:border-[#232936] hover:border-[#4CAF4F]'
+              }`}
+            >
+              All Technologies ({allSkills.length})
+            </button>
+            {service.techCategories.map((cat, idx) => (
+              <button
+                key={idx}
+                onClick={() => setActiveTechCategory(cat.category)}
+                className={`px-4 py-2 rounded-full text-xs font-bold transition-all cursor-pointer select-none ${
+                  activeTechCategory === cat.category
+                    ? 'bg-[#4CAF4F] text-white shadow-sm scale-105'
+                    : 'bg-white dark:bg-[#15181E] text-[#263238] dark:text-[#F8FAFC] border border-[#E0E0E0] dark:border-[#232936] hover:border-[#4CAF4F]'
+                }`}
+              >
+                {cat.category}
+              </button>
             ))}
           </div>
+
+          {/* Dynamic Scroll UI */}
+          {activeTechCategory === 'all' ? (
+            <div className="space-y-4 pt-2">
+              {/* Row 1: Forward Marquee */}
+              <Marquee pauseOnHover duration="35s" repeat={3} gap="1.25rem" className="py-2 [--gap:1.25rem]">
+                {row1Skills.map((skill, idx) => (
+                  <TechScrollCard key={idx} skill={skill} />
+                ))}
+              </Marquee>
+
+              {/* Row 2: Reverse Marquee */}
+              <Marquee reverse pauseOnHover duration="38s" repeat={3} gap="1.25rem" className="py-2 [--gap:1.25rem]">
+                {row2Skills.map((skill, idx) => (
+                  <TechScrollCard key={idx} skill={skill} />
+                ))}
+              </Marquee>
+            </div>
+          ) : (
+            <div className="pt-2">
+              {/* Horizontal Scroll Track for Selected Category */}
+              <div className="flex gap-4 overflow-x-auto pb-6 pt-2 px-1 scrollbar-thin snap-x snap-mandatory">
+                {selectedCategorySkills.map((skill, idx) => (
+                  <div key={idx} className="snap-start shrink-0 w-[280px] sm:w-[320px]">
+                    <TechScrollCard skill={skill} isExpanded />
+                  </div>
+                ))}
+              </div>
+              <p className="text-center text-xs text-neutral-400 mt-2">
+                ← Swipe horizontally to explore all {activeTechCategory} technologies →
+              </p>
+            </div>
+          )}
         </div>
       </section>
 
