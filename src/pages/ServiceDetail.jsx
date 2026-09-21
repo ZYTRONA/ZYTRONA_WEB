@@ -592,7 +592,7 @@ export default function ServiceDetail() {
           <div className="hidden md:flex items-center gap-3">
             <ThemeToggle />
             <button 
-              onClick={() => setModalOpen(true)}
+              onClick={handleOpenModal}
               className="btn-nexcent-primary"
             >
               <span>Start a Project</span>
@@ -655,7 +655,7 @@ export default function ServiceDetail() {
               <button 
                 onClick={() => {
                   setMobileMenuOpen(false)
-                  setModalOpen(true)
+                  handleOpenModal()
                 }}
                 className="w-full btn-nexcent-primary py-2.5 text-sm"
               >
@@ -713,7 +713,7 @@ export default function ServiceDetail() {
 
               <div className="pt-2 flex flex-wrap gap-4">
                 <button 
-                  onClick={() => setModalOpen(true)}
+                  onClick={handleOpenModal}
                   className="btn-nexcent-primary text-base px-8 py-3.5"
                 >
                   <span>Book Technical Discovery</span>
@@ -1068,7 +1068,7 @@ export default function ServiceDetail() {
 
           <div className="pt-2">
             <button 
-              onClick={() => setModalOpen(true)}
+              onClick={handleOpenModal}
               className="btn-nexcent-primary text-base px-8 py-3.5"
             >
               <span>Book Technical Discovery</span>

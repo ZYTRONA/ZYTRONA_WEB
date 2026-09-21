@@ -28,10 +28,22 @@ export function SpotlightCard({
     <motion.div
       ref={cardRef}
       onClick={onClick}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       whileHover={enableHover ? { y: -4, transition: { duration: 0.25, ease: 'easeOut' } } : undefined}
       className={cn('spotlight-card-wrapper group relative overflow-hidden flex flex-col h-full bg-white', className)}
       {...props}
     >
+      {/* Spotlight Effect Glow */}
+      <div
+        className="pointer-events-none absolute -inset-px transition-opacity duration-300"
+        style={{
+          opacity,
+          background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, ${spotlightColor}, transparent 40%)`,
+        }}
+      />
+
       {/* Card Content Container */}
       <div className={cn('spotlight-content relative z-10 flex-1 flex flex-col h-full w-full', contentClassName)}>
         {children}
