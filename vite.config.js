@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { vitePrerenderPlugin } from 'vite-prerender-plugin'
 import { fileURLToPath, URL } from 'node:url'
+import process from 'node:process'
 
 const prerenderScript = fileURLToPath(new URL('./src/prerender.jsx', import.meta.url))
 
@@ -41,6 +42,31 @@ export default defineConfig({
           } catch {
             // prerender output may not exist during incomplete builds
           }
+        },
+      },
+    },
+    {
+      name: 'cleanup-prerender-handles',
+      closeBundle: {
+        sequential: true,
+        order: 'post',
+        handler() {
+          // React 19's react-dom/server creates a MessageChannel for internal task scheduling during prerender.
+          // In Node.js, the MessagePort keeps an active handle in the event loop, causing `vite build` to hang indefinitely.
+          // Closing the dangling MessagePort(s) allows the Node.js process to exit naturally once the build is finished.
+          setTimeout(() => {
+            if (typeof process !== 'undefined' && typeof process._getActiveHandles === 'function') {
+              for (const handle of process._getActiveHandles()) {
+                if (handle && handle.constructor && handle.constructor.name === 'MessagePort') {
+                  try {
+                    handle.close()
+                  } catch {
+                    // ignore
+                  }
+                }
+              }
+            }
+          }, 50)
         },
       },
     },
