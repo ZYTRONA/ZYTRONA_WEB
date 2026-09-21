@@ -1,6 +1,6 @@
 import { useLayoutEffect } from 'react'
 import { useLocation } from 'react-router-dom'
-import { getSeoForPath, SITE_OG_IMAGE } from '@/seo/config'
+import { getSeoForPath, SITE_OG_IMAGE, SITE_NAME } from '@/seo/config'
 
 function upsertMeta(attr, key, content) {
   const selector = `meta[${attr}="${key}"]`
@@ -32,23 +32,33 @@ export function Seo() {
     document.documentElement.lang = 'en'
 
     upsertMeta('name', 'description', seo.description)
+    if (seo.keywords) {
+      upsertMeta('name', 'keywords', seo.keywords)
+    }
     upsertMeta('name', 'robots', seo.robots)
     upsertMeta('name', 'googlebot', seo.robots)
-    upsertMeta('name', 'author', 'ZYTRONA')
+    upsertMeta('name', 'author', SITE_NAME)
     upsertLink('canonical', seo.canonical)
 
     upsertMeta('property', 'og:title', seo.title)
     upsertMeta('property', 'og:description', seo.description)
     upsertMeta('property', 'og:url', seo.canonical)
     upsertMeta('property', 'og:type', 'website')
-    upsertMeta('property', 'og:site_name', 'ZYTRONA')
+    upsertMeta('property', 'og:site_name', SITE_NAME)
     upsertMeta('property', 'og:image', SITE_OG_IMAGE)
+    upsertMeta('property', 'og:image:width', '1200')
+    upsertMeta('property', 'og:image:height', '630')
+    upsertMeta('property', 'og:image:type', 'image/png')
+    upsertMeta('property', 'og:image:alt', `${SITE_NAME} - Software Engineering & Design Studio`)
     upsertMeta('property', 'og:locale', 'en_US')
 
     upsertMeta('name', 'twitter:card', 'summary_large_image')
+    upsertMeta('name', 'twitter:site', '@zytrona_official')
+    upsertMeta('name', 'twitter:creator', '@zytrona_official')
     upsertMeta('name', 'twitter:title', seo.title)
     upsertMeta('name', 'twitter:description', seo.description)
     upsertMeta('name', 'twitter:image', SITE_OG_IMAGE)
+    upsertMeta('name', 'twitter:image:alt', `${SITE_NAME} - Software Engineering & Design Studio`)
 
     document.querySelectorAll('script[data-seo-jsonld="true"]').forEach((node) => node.remove())
     seo.jsonLd.forEach((schema) => {

@@ -16,24 +16,36 @@ export const PRERENDER_ROUTES = [
   '/404',
 ]
 
+const HOME_TITLE = 'ZYTRONA'
 const HOME_DESCRIPTION =
   'ZYTRONA builds high-performance web platforms, mobile apps, and modern UI/UX design systems for startups and enterprises. High-performance delivery, 100% IP ownership.'
+const HOME_KEYWORDS =
+  'web development, mobile app development, UI/UX design, React, Next.js, React Native, Flutter, full stack engineering, SaaS development, software studio, ZYTRONA'
 
 const SERVICE_PAGES = {
   'website-development': {
     title: 'Web Development & SaaS Platforms | ZYTRONA',
     description:
       'SEO-optimized React and Next.js web platforms and SaaS products engineered for conversion, Core Web Vitals, and global scale.',
+    keywords:
+      'web development, React web development, Next.js SaaS, full stack web apps, custom web software, responsive web design, ZYTRONA',
+    serviceType: 'Web Development & SaaS Engineering',
   },
   'app-development': {
     title: 'Mobile App Engineering | ZYTRONA',
     description:
       'Native-quality iOS and Android apps with React Native and Flutter, offline-first sync, and App Store launch support.',
+    keywords:
+      'mobile app development, iOS app development, Android apps, React Native development, Flutter apps, cross platform mobile apps, ZYTRONA',
+    serviceType: 'Mobile Application Engineering',
   },
   'ui-designs': {
     title: 'UI/UX & Product Design Systems | ZYTRONA',
     description:
       'Tokenized design systems, Figma prototypes, and conversion-focused product UI for SaaS and digital products.',
+    keywords:
+      'UI/UX design, product design systems, Figma design, SaaS UI design, mobile app UI/UX, user experience design, ZYTRONA',
+    serviceType: 'UI/UX & Product Design Systems',
   },
 }
 
@@ -86,7 +98,58 @@ function organizationSchema() {
     email: BUSINESS_EMAIL,
     telephone: BUSINESS_PHONE,
     description: HOME_DESCRIPTION,
+    priceRange: '$$$',
+    currenciesAccepted: 'USD, EUR, GBP, INR',
     areaServed: 'Worldwide',
+    knowsAbout: [
+      'Web Development',
+      'Mobile App Engineering',
+      'UI/UX Design Systems',
+      'React',
+      'Next.js',
+      'React Native',
+      'Flutter',
+      'Cloud Architecture',
+      'SaaS Platforms',
+      'Full-Stack Development'
+    ],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      telephone: BUSINESS_PHONE,
+      email: BUSINESS_EMAIL,
+      contactType: 'customer support',
+      availableLanguage: ['English']
+    },
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Software Engineering & Design Services',
+      itemListElement: [
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Website Development & SaaS Platforms',
+            url: `${SITE_URL}/service/website-development`
+          }
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'Mobile App Engineering',
+            url: `${SITE_URL}/service/app-development`
+          }
+        },
+        {
+          '@type': 'Offer',
+          itemOffered: {
+            '@type': 'Service',
+            name: 'UI/UX & Product Design Systems',
+            url: `${SITE_URL}/service/ui-designs`
+          }
+        }
+      ]
+    },
     address: {
       '@type': 'PostalAddress',
       addressRegion: 'Tamil Nadu',
@@ -105,7 +168,8 @@ function websiteSchema() {
     '@type': 'WebSite',
     name: SITE_NAME,
     url: SITE_URL,
-    publisher: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
+    description: HOME_DESCRIPTION,
+    publisher: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL, logo: SITE_LOGO },
   }
 }
 
@@ -130,8 +194,9 @@ export function getSeoForPath(url = '/') {
     return {
       pathname,
       canonical,
-      title: 'ZYTRONA',
+      title: HOME_TITLE,
       description: HOME_DESCRIPTION,
+      keywords: HOME_KEYWORDS,
       robots: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
       jsonLd: [
         organizationSchema(),
@@ -156,6 +221,7 @@ export function getSeoForPath(url = '/') {
       title: 'About ZYTRONA | Senior Software Engineering Studio',
       description:
         'ZYTRONA is a senior engineering studio building web, mobile, and UI/UX products with direct architect access and full source-code ownership.',
+      keywords: 'about ZYTRONA, software engineering studio, senior developers, direct architect access, custom software development',
       robots: 'index, follow',
       jsonLd: [
         organizationSchema(),
@@ -173,6 +239,7 @@ export function getSeoForPath(url = '/') {
       canonical,
       title: 'Privacy Policy | ZYTRONA',
       description: 'How ZYTRONA collects, uses, and protects information submitted through project inquiries and consultation forms.',
+      keywords: 'privacy policy, ZYTRONA data protection, client confidentiality',
       robots: 'index, follow',
       jsonLd: [
         breadcrumbSchema([
@@ -189,6 +256,7 @@ export function getSeoForPath(url = '/') {
       canonical,
       title: 'Terms of Service | ZYTRONA',
       description: 'Engagement terms for ZYTRONA software engineering, design, and consulting services.',
+      keywords: 'terms of service, engagement terms, software development contract, IP ownership terms',
       robots: 'index, follow',
       jsonLd: [
         breadcrumbSchema([
@@ -207,16 +275,23 @@ export function getSeoForPath(url = '/') {
       canonical,
       title: service.title,
       description: service.description,
+      keywords: service.keywords,
       robots: 'index, follow',
       jsonLd: [
         {
           '@context': 'https://schema.org',
           '@type': 'Service',
+          serviceType: service.serviceType,
           name: service.title.replace(' | ZYTRONA', ''),
           description: service.description,
-          provider: { '@type': 'ProfessionalService', name: SITE_NAME, url: SITE_URL },
+          provider: { '@type': 'ProfessionalService', name: SITE_NAME, url: SITE_URL, logo: SITE_LOGO },
           areaServed: 'Worldwide',
           url: canonical,
+          offers: {
+            '@type': 'Offer',
+            availability: 'https://schema.org/InStock',
+            priceCurrency: 'USD',
+          },
         },
         breadcrumbSchema([
           { name: 'Home', path: '/' },
@@ -232,6 +307,7 @@ export function getSeoForPath(url = '/') {
     canonical: `${SITE_URL}/404`,
     title: 'Page Not Found | ZYTRONA',
     description: 'The page you requested is not available. Return to ZYTRONA to explore services, work, and contact.',
+    keywords: '404, page not found, ZYTRONA',
     robots: 'noindex, follow',
     jsonLd: [organizationSchema()],
   }
@@ -240,6 +316,7 @@ export function getSeoForPath(url = '/') {
 export function seoHeadFromPage(seo) {
   const elements = new Set([
     { type: 'meta', props: { name: 'description', content: seo.description } },
+    ...(seo.keywords ? [{ type: 'meta', props: { name: 'keywords', content: seo.keywords } }] : []),
     { type: 'meta', props: { name: 'robots', content: seo.robots } },
     { type: 'meta', props: { name: 'googlebot', content: seo.robots } },
     { type: 'meta', props: { name: 'author', content: SITE_NAME } },
@@ -250,11 +327,18 @@ export function seoHeadFromPage(seo) {
     { type: 'meta', props: { property: 'og:type', content: 'website' } },
     { type: 'meta', props: { property: 'og:site_name', content: SITE_NAME } },
     { type: 'meta', props: { property: 'og:image', content: SITE_OG_IMAGE } },
+    { type: 'meta', props: { property: 'og:image:width', content: '1200' } },
+    { type: 'meta', props: { property: 'og:image:height', content: '630' } },
+    { type: 'meta', props: { property: 'og:image:type', content: 'image/png' } },
+    { type: 'meta', props: { property: 'og:image:alt', content: `${SITE_NAME} - Software Engineering & Design Studio` } },
     { type: 'meta', props: { property: 'og:locale', content: 'en_US' } },
     { type: 'meta', props: { name: 'twitter:card', content: 'summary_large_image' } },
+    { type: 'meta', props: { name: 'twitter:site', content: '@zytrona_official' } },
+    { type: 'meta', props: { name: 'twitter:creator', content: '@zytrona_official' } },
     { type: 'meta', props: { name: 'twitter:title', content: seo.title } },
     { type: 'meta', props: { name: 'twitter:description', content: seo.description } },
     { type: 'meta', props: { name: 'twitter:image', content: SITE_OG_IMAGE } },
+    { type: 'meta', props: { name: 'twitter:image:alt', content: `${SITE_NAME} - Software Engineering & Design Studio` } },
     ...seo.jsonLd.map((schema) => ({
       type: 'script',
       props: {

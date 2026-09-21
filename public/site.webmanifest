@@ -1,0 +1,24 @@
+{
+  "name": "ZYTRONA - Software Engineering & Design Studio",
+  "short_name": "ZYTRONA",
+  "description": "High-performance web platforms, mobile applications, and modern UI/UX design systems for startups and enterprises.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#4CAF4F",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/Logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
