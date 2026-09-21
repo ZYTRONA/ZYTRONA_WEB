@@ -83,6 +83,7 @@ const INSIGHTS_POSTS = [
     id: 1,
     image: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=700&q=80',
     title: 'Blue Base Family Saloon: High-Impact Brand & Booking Web App',
+    category: 'Booking Web App',
     linkText: 'View Live Site',
     linkUrl: 'https://bluebase-family-spot.lovable.app'
   },
@@ -90,6 +91,7 @@ const INSIGHTS_POSTS = [
     id: 2,
     image: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=700&q=80',
     title: 'Fly Studio Showcase: Interactive Portfolio Architecture & Design System',
+    category: 'Portfolio & Design System',
     linkText: 'View Live Site',
     linkUrl: 'https://fly-studio-showcase.lovable.app/'
   },
@@ -97,8 +99,25 @@ const INSIGHTS_POSTS = [
     id: 3,
     image: 'https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=700&q=80',
     title: 'Scaling ZOCA Crimson Charm: +140% Mobile Conversion via Sub-Second UX',
+    category: 'E-Commerce Platform',
     linkText: 'View Live Site',
     linkUrl: 'https://zoca-crimson-charm.lovable.app'
+  },
+  {
+    id: 4,
+    image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=700&q=80',
+    title: 'Cakes & Bites: Gourmet Culinary Showcase & WhatsApp Ordering Portal',
+    category: 'Culinary Showcase',
+    linkText: 'View Live Site',
+    linkUrl: 'https://bites-artisanal-charm.lovable.app'
+  },
+  {
+    id: 5,
+    image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=700&q=80',
+    title: '11 TO 11 Family Restaurant: Multi-Cuisine Interactive Dining Experience',
+    category: 'Restaurant Platform',
+    linkText: 'View Live Site',
+    linkUrl: 'https://a-11to11family.lovable.app'
   }
 ]
 
@@ -456,7 +475,7 @@ export default function App() {
                 <div className="text-xl sm:text-3xl font-extrabold text-[#263238]">
                   <AnimatedStatNumber value={10} suffix="+" />
                 </div>
-                <div className="text-xs sm:text-sm text-[#717171] truncate">Production Platforms</div>
+                <div className="text-xs sm:text-sm text-[#717171] leading-tight">Production Platforms</div>
               </div>
             </div>
 
@@ -469,7 +488,7 @@ export default function App() {
                 <div className="text-xl sm:text-3xl font-extrabold text-[#263238]">
                   <AnimatedStatNumber value={98} suffix="%" />
                 </div>
-                <div className="text-xs sm:text-sm text-[#717171] truncate">Client Satisfaction</div>
+                <div className="text-xs sm:text-sm text-[#717171] leading-tight">Client Satisfaction</div>
               </div>
             </div>
 
@@ -482,7 +501,7 @@ export default function App() {
                 <div className="text-xl sm:text-3xl font-extrabold text-[#263238]">
                   <AnimatedStatNumber value={100} suffix="%" />
                 </div>
-                <div className="text-xs sm:text-sm text-[#717171] truncate">On-Time Milestones</div>
+                <div className="text-xs sm:text-sm text-[#717171] leading-tight">On-Time Milestones</div>
               </div>
             </div>
 
@@ -495,7 +514,7 @@ export default function App() {
                 <div className="text-xl sm:text-3xl font-extrabold text-[#263238]">
                   <AnimatedStatNumber value={24} suffix="/7" />
                 </div>
-                <div className="text-xs sm:text-sm text-[#717171] truncate">Continuous SLA</div>
+                <div className="text-xs sm:text-sm text-[#717171] leading-tight">Continuous SLA</div>
               </div>
             </div>
           </div>
@@ -549,14 +568,59 @@ export default function App() {
               <div className="text-[#89939E] text-xs sm:text-sm">Founder &amp; Director, ZOCA Crimson Charm</div>
             </div>
 
-            {/* Client Logos & Link Row (Responsive Badges so text never clips) */}
+            {/* Client Logos & Link Row (Interactive Badges with live links) */}
             <div className="pt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6 border-t border-[#E0E0E0]">
-              <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-[#263238] text-[11px] sm:text-xs font-bold uppercase tracking-wider">
-                <span className="text-[#4CAF4F] whitespace-nowrap px-2.5 py-1 rounded bg-[#E8F5E9]/70 border border-[#C8E6C9]/60">ZOCA</span>
-                <span className="whitespace-nowrap px-2.5 py-1 rounded bg-white border border-[#E0E0E0]">BLUE BASE</span>
-                <span className="whitespace-nowrap px-2.5 py-1 rounded bg-white border border-[#E0E0E0]">FLY STUDIO</span>
-                <span className="whitespace-nowrap px-2.5 py-1 rounded bg-white border border-[#E0E0E0]">CAKES &amp; BITES</span>
-                <span className="whitespace-nowrap px-2.5 py-1 rounded bg-white border border-[#E0E0E0]">11 TO 11</span>
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-[#263238] text-[11px] sm:text-xs font-bold uppercase tracking-wider">
+                <a 
+                  href="https://zoca-crimson-charm.lovable.app" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="text-[#4CAF4F] whitespace-nowrap px-2.5 py-1 rounded bg-[#E8F5E9]/80 border border-[#C8E6C9]/60 hover:bg-[#E8F5E9] hover:scale-105 transition-all inline-flex items-center gap-1"
+                  title="View ZOCA Crimson Charm Live Site"
+                >
+                  <span>ZOCA</span>
+                  <ExternalLink className="w-3 h-3 opacity-60" />
+                </a>
+                <a 
+                  href="https://bluebase-family-spot.lovable.app" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="whitespace-nowrap px-2.5 py-1 rounded bg-white border border-[#E0E0E0] hover:border-[#4CAF4F] hover:text-[#4CAF4F] hover:scale-105 transition-all inline-flex items-center gap-1"
+                  title="View Blue Base Live Site"
+                >
+                  <span>BLUE BASE</span>
+                  <ExternalLink className="w-3 h-3 opacity-60" />
+                </a>
+                <a 
+                  href="https://fly-studio-showcase.lovable.app/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="whitespace-nowrap px-2.5 py-1 rounded bg-white border border-[#E0E0E0] hover:border-[#4CAF4F] hover:text-[#4CAF4F] hover:scale-105 transition-all inline-flex items-center gap-1"
+                  title="View Fly Studio Live Site"
+                >
+                  <span>FLY STUDIO</span>
+                  <ExternalLink className="w-3 h-3 opacity-60" />
+                </a>
+                <a 
+                  href="https://bites-artisanal-charm.lovable.app" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="whitespace-nowrap px-2.5 py-1 rounded bg-white border border-[#E0E0E0] hover:border-[#4CAF4F] hover:text-[#4CAF4F] hover:scale-105 transition-all inline-flex items-center gap-1"
+                  title="View Cakes &amp; Bites Live Site"
+                >
+                  <span>CAKES &amp; BITES</span>
+                  <ExternalLink className="w-3 h-3 opacity-60" />
+                </a>
+                <a 
+                  href="https://a-11to11family.lovable.app" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="whitespace-nowrap px-2.5 py-1 rounded bg-white border border-[#E0E0E0] hover:border-[#4CAF4F] hover:text-[#4CAF4F] hover:scale-105 transition-all inline-flex items-center gap-1"
+                  title="View 11 TO 11 Restaurant Live Site"
+                >
+                  <span>11 TO 11</span>
+                  <ExternalLink className="w-3 h-3 opacity-60" />
+                </a>
               </div>
 
               <a 
@@ -571,60 +635,60 @@ export default function App() {
         </div>
       </section>
 
-      {/* 9. INSIGHTS & ENGINEERING CASE STUDIES */}
-      <section id="insights" className="py-12 sm:py-16 lg:py-24 px-5 sm:px-6 lg:px-16 bg-white">
+      {/* 9. INSIGHTS & ENGINEERING CASE STUDIES (Aliased with #work) */}
+      <section id="insights" className="py-12 sm:py-16 lg:py-24 px-5 sm:px-6 lg:px-16 bg-white relative">
+        <div id="work" className="absolute -top-24 left-0 w-full pointer-events-none" />
         <div className="max-w-7xl mx-auto text-center space-y-2.5 mb-10 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E8F5E9] text-[#2E7D32] text-xs font-bold uppercase tracking-wider">
+            <span>Verified Case Studies</span>
+          </div>
           <h2 className="text-2xl sm:text-4xl font-bold text-[#263238]">
             Engineering Insights &amp; Production Case Studies
           </h2>
           <p className="text-[#717171] text-xs sm:text-base max-w-2xl mx-auto">
-            Read technical breakdowns from our senior engineering team on modern software architecture, AI inference pipelines, and conversion-driven design systems.
+            Explore live commercial platforms engineered by our senior software team. Click any card to launch the live site.
           </p>
         </div>
 
-        {/* 3 Blog Cards with Overlapping Floating White Cards */}
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-8 items-stretch">
+        {/* 5 Case Study Cards with Complete Links & No Text Cut-Off */}
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-8 items-stretch">
           {INSIGHTS_POSTS.map((post) => (
-            <div key={post.id} className="relative flex flex-col items-center h-full">
-              {/* Image */}
-              <div className="w-full h-48 sm:h-72 rounded-xl sm:rounded-2xl overflow-hidden shadow-sm border border-[#E5E7EB]">
+            <a
+              key={post.id}
+              href={post.linkUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group relative flex flex-col items-center h-full text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#4CAF4F] rounded-2xl no-underline"
+              aria-label={`View live site for ${post.title}`}
+            >
+              {/* Image with zoom effect and category pill */}
+              <div className="w-full h-52 sm:h-64 rounded-xl sm:rounded-2xl overflow-hidden shadow-sm border border-[#E5E7EB] bg-neutral-100 relative">
                 <img 
                   src={post.image} 
                   alt={post.title} 
-                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   loading="lazy"
                 />
+                <div className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-white/95 dark:bg-[#15181E]/95 backdrop-blur-xs text-[11px] font-bold text-[#263238] dark:text-[#F8FAFC] border border-[#E0E0E0] shadow-xs">
+                  {post.category}
+                </div>
+                <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/95 dark:bg-[#15181E]/95 backdrop-blur-xs flex items-center justify-center text-[#4CAF4F] opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-xs border border-[#E0E0E0]">
+                  <ExternalLink className="w-4 h-4" />
+                </div>
               </div>
 
-              {/* Overlapping Boxy Card */}
-              <div className="relative -mt-10 sm:-mt-16 w-[92%] sm:w-[90%] bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-md sm:shadow-lg border border-[#E5E7EB] text-center flex flex-col items-center justify-between min-h-[140px] sm:min-h-[170px] hover:border-[#4CAF4F]/50 transition-all">
-                <h4 className="text-sm sm:text-base font-bold text-[#263238] leading-snug line-clamp-2 sm:line-clamp-3 mb-3 sm:mb-4 flex-1 flex items-center justify-center">
+              {/* Overlapping Card: Full text visible, no ellipsis cut-off */}
+              <div className="relative -mt-10 sm:-mt-14 w-[92%] sm:w-[90%] bg-white dark:bg-[#15181E] rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-md sm:shadow-lg border border-[#E5E7EB] dark:border-[#232936] flex flex-col justify-between min-h-[140px] sm:min-h-[160px] group-hover:border-[#4CAF4F] transition-all">
+                <h4 className="text-sm sm:text-base font-bold text-[#263238] dark:text-[#F8FAFC] leading-snug mb-3 text-left group-hover:text-[#4CAF4F] transition-colors break-words">
                   {post.title}
                 </h4>
 
-                <div className="mt-auto pt-2.5 sm:pt-3 border-t border-[#F0F0F0] w-full flex justify-center">
-                  {post.linkUrl.startsWith('http') ? (
-                    <a 
-                      href={post.linkUrl} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 sm:gap-2 text-[#4CAF4F] font-bold text-xs sm:text-sm hover:text-[#388E3C] transition-colors"
-                    >
-                      <span>{post.linkText}</span>
-                      <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    </a>
-                  ) : (
-                    <Link 
-                      to={post.linkUrl}
-                      className="inline-flex items-center gap-1.5 sm:gap-2 text-[#4CAF4F] font-bold text-xs sm:text-sm hover:text-[#388E3C] transition-colors"
-                    >
-                      <span>{post.linkText}</span>
-                      <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    </Link>
-                  )}
+                <div className="mt-auto pt-2.5 sm:pt-3 border-t border-[#F0F0F0] dark:border-[#232936] w-full flex items-center justify-between text-[#4CAF4F] font-bold text-xs sm:text-sm">
+                  <span>{post.linkText}</span>
+                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                 </div>
               </div>
-            </div>
+            </a>
           ))}
         </div>
       </section>

@@ -31,28 +31,35 @@ const SEARCHABLE_ITEMS = [
     type: 'Client Project',
     title: 'ZOCA Crimson Charm',
     desc: 'Experiential Lifestyle & Fashion E-Commerce Storefront',
-    link: '/#work',
+    link: 'https://zoca-crimson-charm.lovable.app',
     icon: <Building2 className="w-4 h-4 text-blue-400" />
   },
   {
     type: 'Client Project',
     title: 'Blue Base Family Saloon',
     desc: 'Modern Multi-Branch Salon Booking Portal with Real-Time Scheduling',
-    link: '/#work',
+    link: 'https://bluebase-family-spot.lovable.app',
     icon: <Building2 className="w-4 h-4 text-blue-400" />
   },
   {
     type: 'Client Project',
     title: 'Fly Studio Showcase',
     desc: 'Interactive 4K Media Showcase & Digital Arts Portfolio',
-    link: '/#work',
+    link: 'https://fly-studio-showcase.lovable.app/',
     icon: <Building2 className="w-4 h-4 text-blue-400" />
   },
   {
     type: 'Client Project',
     title: 'Cakes & Bites',
     desc: 'Gourmet Culinary Showcase with WhatsApp Ordering Integration',
-    link: '/#work',
+    link: 'https://bites-artisanal-charm.lovable.app',
+    icon: <Building2 className="w-4 h-4 text-blue-400" />
+  },
+  {
+    type: 'Client Project',
+    title: '11 TO 11 Family Restaurant',
+    desc: 'Multi-Cuisine Interactive Dining Experience & Table Discovery',
+    link: 'https://a-11to11family.lovable.app',
     icon: <Building2 className="w-4 h-4 text-blue-400" />
   },
   {
@@ -127,7 +134,9 @@ export function SearchModal({ isOpen, onClose }) {
 
   const handleSelect = (link) => {
     onClose();
-    if (link.startsWith('/#')) {
+    if (link.startsWith('http')) {
+      window.open(link, '_blank', 'noopener,noreferrer');
+    } else if (link.startsWith('/#')) {
       navigate('/');
       setTimeout(() => {
         const id = link.replace('/#', '');

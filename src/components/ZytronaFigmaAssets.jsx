@@ -269,26 +269,28 @@ import { Marquee } from './shadcn-space/animations/marquee'
 // 7 Clean Client & Partner Logos in Infinite Smooth Marquee
 export function ZytronaClientLogosRow({ className = "" }) {
   const logos = [
-    { name: "ZOCA", title: "ZOCA Crimson Charm", style: "font-extrabold text-xs sm:text-sm tracking-wider" },
-    { name: "BLUE BASE", title: "Blue Base Saloon", style: "font-bold text-[11px] sm:text-xs tracking-wider uppercase" },
-    { name: "FLY", title: "Fly Studio", style: "font-black text-xs sm:text-sm tracking-widest" },
-    { name: "CAKES & BITES", title: "Cakes & Bites", style: "font-bold text-[11px] sm:text-xs tracking-wide" },
-    { name: "11 TO 11", title: "11 TO 11 Restaurant", style: "font-extrabold text-xs sm:text-sm tracking-widest" },
-    { name: "ZYCARE", title: "ZYCARE Health", style: "font-black text-xs sm:text-sm tracking-wider text-[#4CAF4F]" },
-    { name: "ZYGLASS", title: "ZYGLASS AI", style: "font-black text-xs sm:text-sm tracking-wider" },
+    { name: "ZOCA", title: "ZOCA Crimson Charm Live Site", style: "font-extrabold text-xs sm:text-sm tracking-wider", href: "https://zoca-crimson-charm.lovable.app" },
+    { name: "BLUE BASE", title: "Blue Base Saloon Live Site", style: "font-bold text-[11px] sm:text-xs tracking-wider uppercase", href: "https://bluebase-family-spot.lovable.app" },
+    { name: "FLY", title: "Fly Studio Showcase Live Site", style: "font-black text-xs sm:text-sm tracking-widest", href: "https://fly-studio-showcase.lovable.app/" },
+    { name: "CAKES & BITES", title: "Cakes & Bites Live Site", style: "font-bold text-[11px] sm:text-xs tracking-wide", href: "https://bites-artisanal-charm.lovable.app" },
+    { name: "11 TO 11", title: "11 TO 11 Restaurant Live Site", style: "font-extrabold text-xs sm:text-sm tracking-widest", href: "https://a-11to11family.lovable.app" },
+    { name: "ZYCARE", title: "ZYCARE Health Architecture", style: "font-black text-xs sm:text-sm tracking-wider text-[#4CAF4F]", href: "/#services" },
+    { name: "ZYGLASS", title: "ZYGLASS AI Systems", style: "font-black text-xs sm:text-sm tracking-wider", href: "/#services" },
   ]
 
   return (
     <div className={`w-full overflow-hidden py-1 sm:py-2 ${className}`}>
       <Marquee pauseOnHover duration="25s" repeat={4} gap="1.25rem" className="[--gap:1.25rem] sm:[--gap:2.5rem]">
         {logos.map((logo, idx) => (
-          <div 
-            key={idx} 
-            className="h-10 sm:h-12 px-3.5 sm:px-6 flex items-center justify-center text-[#263238] hover:text-[#4CAF4F] transition-all cursor-pointer bg-[#F5F7FA] border border-[#E0E0E0] hover:border-[#4CAF4F] rounded-md shadow-2xs hover:shadow-sm shrink-0 whitespace-nowrap select-none"
+          <a 
+            key={idx}
+            href={logo.href}
+            {...(logo.href.startsWith('http') ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+            className="h-10 sm:h-12 px-3.5 sm:px-6 flex items-center justify-center text-[#263238] hover:text-[#4CAF4F] transition-all cursor-pointer bg-[#F5F7FA] border border-[#E0E0E0] hover:border-[#4CAF4F] rounded-md shadow-2xs hover:shadow-sm shrink-0 whitespace-nowrap select-none no-underline"
             title={logo.title}
           >
             <span className={`${logo.style} whitespace-nowrap`}>{logo.name}</span>
-          </div>
+          </a>
         ))}
       </Marquee>
     </div>
