@@ -397,26 +397,32 @@ export default function ServiceDetail() {
   })
 
   const service = SERVICES_ENTERPRISE_DATA[serviceId]
+  const serviceModalRef = useRef(null)
+  const previousActiveElement = useRef(null)
+
+  const handleOpenModal = () => {
+    setModalOpen(true)
+    setFormSuccess(false)
+    setFormError(null)
+    setIsSubmitting(false)
+  }
+
+  const handleCloseModal = () => {
+    setModalOpen(false)
+    setFormSuccess(false)
+    setFormError(null)
+    setIsSubmitting(false)
+    setFormData({
+      fullName: '',
+      email: '',
+      stage: 'Early-Stage MVP / Prototype',
+      scope: ''
+    })
+  }
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   }, [serviceId])
-
-  if (!service) {
-    return <NotFound />
-  }
-
-  // Flatten skills with category info for the Scroll UI
-  const allSkills = service ? service.techCategories.flatMap(cat => 
-    cat.skills.map(s => ({ ...s, category: cat.category }))
-  ) : []
-
-  const halfLength = Math.ceil(allSkills.length / 2)
-  const row1Skills = allSkills.slice(0, halfLength)
-  const row2Skills = allSkills.slice(halfLength)
-
-  const serviceModalRef = useRef(null)
-  const previousActiveElement = useRef(null)
 
   // Lock both root and body scrolling + prevent layout shift when modal is open
   useEffect(() => {
@@ -496,25 +502,18 @@ export default function ServiceDetail() {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [modalOpen])
 
-  const handleOpenModal = () => {
-    setModalOpen(true)
-    setFormSuccess(false)
-    setFormError(null)
-    setIsSubmitting(false)
+  if (!service) {
+    return <NotFound />
   }
 
-  const handleCloseModal = () => {
-    setModalOpen(false)
-    setFormSuccess(false)
-    setFormError(null)
-    setIsSubmitting(false)
-    setFormData({
-      fullName: '',
-      email: '',
-      stage: 'Early-Stage MVP / Prototype',
-      scope: ''
-    })
-  }
+  // Flatten skills with category info for the Scroll UI
+  const allSkills = service.techCategories.flatMap(cat => 
+    cat.skills.map(s => ({ ...s, category: cat.category }))
+  )
+
+  const halfLength = Math.ceil(allSkills.length / 2)
+  const row1Skills = allSkills.slice(0, halfLength)
+  const row2Skills = allSkills.slice(halfLength)
 
   const handleSubmit = async (e) => {
     e.preventDefault()

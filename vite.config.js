@@ -72,7 +72,6 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@/registry/magicui/number-ticker': fileURLToPath(new URL('./src/components/ui/number-ticker.jsx', import.meta.url)),
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },

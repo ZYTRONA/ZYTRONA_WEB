@@ -71,11 +71,14 @@ export function SiteNavbar({
   }, []);
 
   // Close mobile menu and dropdowns on route change
-  useEffect(() => {
+  const currentLocationKey = location.pathname + location.hash;
+  const [prevLocationKey, setPrevLocationKey] = useState(currentLocationKey);
+  if (prevLocationKey !== currentLocationKey) {
+    setPrevLocationKey(currentLocationKey);
     setMobileMenuOpen(false);
     setActiveDropdown(null);
     setMobileServicesOpen(false);
-  }, [location.pathname, location.hash]);
+  }
 
   // Determine active item
   const currentPath = location.pathname;
@@ -477,52 +480,5 @@ export const Navbar = ({ children, className }) => (
     {children}
   </header>
 );
-
-export const NavBody = ({ children, className }) => (
-  <div className={cn("w-full hidden md:flex items-center justify-between px-6 lg:px-16 py-4", className)}>
-    {children}
-  </div>
-);
-
-export const NavItems = ({ className }) => null;
-
-export const NavbarLogo = ({ className }) => (
-  <Link to="/" className={cn("flex items-center", className)}>
-    <ZytronaLogo />
-  </Link>
-);
-
-export const NavbarButton = ({ children, variant = "primary", className, ...props }) => (
-  <button
-    className={cn(
-      "px-6 py-2.5 text-sm font-semibold transition-all duration-200 inline-flex items-center justify-center gap-1.5 cursor-pointer whitespace-nowrap rounded-md",
-      variant === "primary"
-        ? "bg-[#4CAF4F] text-white hover:bg-[#388E3C] shadow-sm hover:shadow-md"
-        : "bg-transparent text-[#4CAF4F] border border-[#4CAF4F] hover:bg-[#E8F5E9] dark:hover:bg-[#4CAF4F]/10",
-      className
-    )}
-    {...props}
-  >
-    {children}
-  </button>
-);
-
-export const MobileNav = ({ children, className }) => (
-  <div className={cn("md:hidden pointer-events-auto w-full", className)}>{children}</div>
-);
-
-export const MobileNavHeader = ({ children, className }) => (
-  <div className={cn("flex items-center justify-between px-4 sm:px-6 py-4", className)}>
-    {children}
-  </div>
-);
-
-export const MobileNavToggle = ({ isOpen, onClick, className }) => (
-  <button onClick={onClick} className={cn("p-2", className)}>
-    {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-  </button>
-);
-
-export const MobileNavMenu = ({ children, isOpen, className }) => null;
 
 export default SiteNavbar;

@@ -1,16 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useSyncExternalStore } from 'react'
 import { Sun, Moon } from 'lucide-react'
 import { useTheme } from '@/hooks/useTheme'
+
+const emptySubscribe = () => () => {}
 
 // Reusable ThemeToggle button with smooth micro-interactions
 export function ThemeToggle({ className = '', size = 'md' }) {
   const { isDark, toggleTheme } = useTheme()
-  const [mounted, setMounted] = useState(false)
-
-  // Avoid hydration mismatch
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  const mounted = useSyncExternalStore(emptySubscribe, () => true, () => false)
 
   if (!mounted) {
     return (

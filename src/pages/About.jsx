@@ -201,6 +201,26 @@ export default function About() {
     }
   }, [modalType])
 
+  const handleOpenModal = (type = 'project') => {
+    setModalType(type)
+    setFormSuccess(false)
+    setFormError(null)
+    setIsSubmitting(false)
+  }
+
+  const handleCloseModal = () => {
+    setModalType(null)
+    setFormSuccess(false)
+    setFormError(null)
+    setIsSubmitting(false)
+    setProjectFormData({
+      fullName: '',
+      email: '',
+      serviceNeeded: 'Web & Enterprise SaaS Platforms',
+      projectScope: ''
+    })
+  }
+
   // Focus trap & Escape key handling
   useEffect(() => {
     if (!modalType) return
@@ -248,26 +268,6 @@ export default function About() {
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   }, [])
-
-  const handleOpenModal = (type = 'project') => {
-    setModalType(type)
-    setFormSuccess(false)
-    setFormError(null)
-    setIsSubmitting(false)
-  }
-
-  const handleCloseModal = () => {
-    setModalType(null)
-    setFormSuccess(false)
-    setFormError(null)
-    setIsSubmitting(false)
-    setProjectFormData({
-      fullName: '',
-      email: '',
-      serviceNeeded: 'Web & Enterprise SaaS Platforms',
-      projectScope: ''
-    })
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()

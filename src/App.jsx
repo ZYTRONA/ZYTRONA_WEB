@@ -194,6 +194,26 @@ export default function App() {
     }
   }, [modalType])
 
+  const handleOpenModal = (type) => {
+    setModalType(type)
+    setFormSuccess(false)
+    setFormError(null)
+    setIsSubmitting(false)
+  }
+
+  const handleCloseModal = () => {
+    setModalType(null)
+    setFormSuccess(false)
+    setFormError(null)
+    setIsSubmitting(false)
+    setFormData({
+      fullName: '',
+      email: '',
+      service: 'Web & Enterprise SaaS Platforms',
+      projectScope: ''
+    })
+  }
+
   // Focus trap & Escape key handling
   useEffect(() => {
     if (!modalType) return
@@ -237,26 +257,6 @@ export default function App() {
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [modalType])
-
-  const handleOpenModal = (type) => {
-    setModalType(type)
-    setFormSuccess(false)
-    setFormError(null)
-    setIsSubmitting(false)
-  }
-
-  const handleCloseModal = () => {
-    setModalType(null)
-    setFormSuccess(false)
-    setFormError(null)
-    setIsSubmitting(false)
-    setFormData({
-      fullName: '',
-      email: '',
-      service: 'Web & Enterprise SaaS Platforms',
-      projectScope: ''
-    })
-  }
 
   const handleSubmitForm = async (e) => {
     e.preventDefault()

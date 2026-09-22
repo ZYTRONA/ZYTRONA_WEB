@@ -2305,9 +2305,6 @@
   box-sizing: border-box;
 }
 
-.avatar-group-container {
-  padding: 0.3rem 0;
-}
 
 .contact-social-proof {
   display: flex;
@@ -2679,78 +2676,6 @@
   }
 }
 
-.select-viewport {
-  padding: 0.35rem;
-}
-
-.select-viewport-popper {
-  width: 100%;
-  min-width: var(--radix-select-trigger-width);
-}
-
-.select-item {
-  position: relative;
-  display: flex;
-  align-items: center;
-  padding: 0.55rem 0.65rem 0.55rem 1.85rem;
-  border-radius: 6px;
-  font-size: 0.88rem;
-  font-weight: 500;
-  color: var(--color-body);
-  cursor: pointer;
-  outline: none;
-  transition: background 0.15s;
-  user-select: none;
-}
-
-.select-item[data-highlighted] {
-  background: rgba(0, 0, 0, 0.06);
-  color: #000000;
-}
-
-.select-item-indicator {
-  position: absolute;
-  left: 0.55rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 0.75rem;
-}
-
-.select-check-icon {
-  width: 0.75rem;
-  height: 0.75rem;
-  color: #000000;
-}
-
-.select-label {
-  padding: 0.35rem 0.5rem;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--color-muted, #94a3b8);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.select-separator {
-  margin: 0.25rem 0;
-  height: 1px;
-  background: rgba(203, 213, 225, 0.6);
-}
-
-.select-scroll-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 1.5rem;
-  cursor: default;
-}
-
-.select-scroll-icon {
-  width: 0.75rem;
-  height: 0.75rem;
-  opacity: 0.5;
-}
 
 /* Success Card */
 .contact-success-card {

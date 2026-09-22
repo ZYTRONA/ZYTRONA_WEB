@@ -93,46 +93,52 @@ export function SearchModal({ isOpen, onClose }) {
   const previousActiveElement = useRef(null);
   const navigate = useNavigate();
 
-  // Lock both root and body scrolling + prevent layout shift when modal is open
-  useEffect(() => {
-    if (isOpen) {
-      previousActiveElement.current = document.activeElement;
-
-      const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
-      const originalHtmlOverflow = document.documentElement.style.overflow;
-      const originalBodyOverflow = document.body.style.overflow;
-      const originalBodyPaddingRight = document.body.style.paddingRight;
-      const originalHtmlOverscroll = document.documentElement.style.overscrollBehavior;
-      const originalBodyOverscroll = document.body.style.overscrollBehavior;
-
-      document.documentElement.style.overflow = 'hidden';
-      document.body.style.overflow = 'hidden';
-      document.documentElement.style.overscrollBehavior = 'none';
-      document.body.style.overscrollBehavior = 'none';
-      if (scrollBarWidth > 0) {
-        document.body.style.paddingRight = `${scrollBarWidth}px`;
-      }
-
-      // Auto-focus input
-      const focusTimer = setTimeout(() => {
-        inputRef.current?.focus();
-      }, 50);
-
-      return () => {
-        clearTimeout(focusTimer);
-        document.documentElement.style.overflow = originalHtmlOverflow;
-        document.body.style.overflow = originalBodyOverflow;
-        document.body.style.paddingRight = originalBodyPaddingRight;
-        document.documentElement.style.overscrollBehavior = originalHtmlOverscroll;
-        document.body.style.overscrollBehavior = originalBodyOverscroll;
-
-        if (previousActiveElement.current && typeof previousActiveElement.current.focus === 'function') {
-          setTimeout(() => previousActiveElement.current?.focus(), 10);
-        }
-      };
-    } else {
+  const [prevIsOpen, setPrevIsOpen] = useState(isOpen);
+  if (prevIsOpen !== isOpen) {
+    setPrevIsOpen(isOpen);
+    if (!isOpen) {
       setQuery('');
     }
+  }
+
+  // Lock both root and body scrolling + prevent layout shift when modal is open
+  useEffect(() => {
+    if (!isOpen) return;
+
+    previousActiveElement.current = document.activeElement;
+
+    const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+    const originalHtmlOverflow = document.documentElement.style.overflow;
+    const originalBodyOverflow = document.body.style.overflow;
+    const originalBodyPaddingRight = document.body.style.paddingRight;
+    const originalHtmlOverscroll = document.documentElement.style.overscrollBehavior;
+    const originalBodyOverscroll = document.body.style.overscrollBehavior;
+
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overscrollBehavior = 'none';
+    document.body.style.overscrollBehavior = 'none';
+    if (scrollBarWidth > 0) {
+      document.body.style.paddingRight = `${scrollBarWidth}px`;
+    }
+
+    // Auto-focus input
+    const focusTimer = setTimeout(() => {
+      inputRef.current?.focus();
+    }, 50);
+
+    return () => {
+      clearTimeout(focusTimer);
+      document.documentElement.style.overflow = originalHtmlOverflow;
+      document.body.style.overflow = originalBodyOverflow;
+      document.body.style.paddingRight = originalBodyPaddingRight;
+      document.documentElement.style.overscrollBehavior = originalHtmlOverscroll;
+      document.body.style.overscrollBehavior = originalBodyOverscroll;
+
+      if (previousActiveElement.current && typeof previousActiveElement.current.focus === 'function') {
+        setTimeout(() => previousActiveElement.current?.focus(), 10);
+      }
+    };
   }, [isOpen]);
 
   // Focus trap & keyboard shortcuts
