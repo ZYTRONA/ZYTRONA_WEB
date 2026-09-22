@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'motion/react'
 import { 
@@ -11,10 +11,11 @@ import {
   ZytronaLogo, 
   ZytronaHeroIllustration, 
   ZytronaEngineeringIllustration, 
-  ZytronaMobileSecurityIllustration, 
+  ZytronaCloudArchitectureIllustration, 
   ZytronaClientLogosRow, 
   ShowcaseBadge 
 } from './components/ZytronaFigmaAssets'
+import { SiteNavbar } from './components/ui/resizable-navbar'
 import { Footer } from './components/ui/Footer'
 import { NumberTicker } from './components/ui/number-ticker'
 import { SpotlightCard } from './components/ui/SpotlightCard'
@@ -23,7 +24,7 @@ import { ThemeToggle } from './components/ui/ThemeToggle'
 import { sendEmail } from './lib/emailService'
 import './App.css'
 
-// 3 Core ZYTRONA Capabilities (Boxy Cards)
+// 2 Core ZYTRONA Capabilities (Boxy Cards)
 const CORE_SERVICES = [
   {
     id: 'web-development',
@@ -33,20 +34,8 @@ const CORE_SERVICES = [
     icon: (
       <svg className="w-8 h-8 text-[#4CAF4F]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <circle cx="12" cy="12" r="10"></circle>
-        <line x1="2" y1="12" x2="22" y2="12"></line>
-        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path>
-      </svg>
-    )
-  },
-  {
-    id: 'mobile-app',
-    title: 'Mobile App Engineering',
-    description: 'Engineering fluid, 60fps native iOS & Android applications with offline-first local caching, biometric security, and gesture-rich user interfaces.',
-    link: '/service/app-development',
-    icon: (
-      <svg className="w-8 h-8 text-[#4CAF4F]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
-        <line x1="12" y1="18" x2="12.01" y2="18"></line>
+        <line x1="2" y1="22" x2="22" y2="12"></line>
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4 10z"></path>
       </svg>
     )
   },
@@ -121,19 +110,42 @@ const INSIGHTS_POSTS = [
   }
 ]
 
-export default function App() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [activeNav, setActiveNav] = useState('home')
-  const [heroSlide, setHeroSlide] = useState(0)
-  const [scrolled, setScrolled] = useState(false)
+// 2 Dynamic Hero Slides
+const HERO_SLIDES = [
+  {
+    id: 0,
+    title: 'Next-Gen Software Engineering',
+    highlight: 'Built for Scale & Impact',
+    description: 'We engineer high-performance web platforms, scalable SaaS architectures, and enterprise AI automation with 100% intellectual property ownership and milestone-backed delivery.',
+    primaryCta: { label: 'Start a Project', action: 'project' },
+    secondaryCta: { label: 'Explore Capabilities', href: '#services', isRouterLink: false },
+    illustration: <ZytronaHeroIllustration className="w-full max-w-[480px]" />
+  },
+  {
+    id: 1,
+    title: 'Full-Stack Cloud & System Architecture',
+    highlight: 'Enterprise Reliability & Microservices',
+    description: 'Architecting resilient cloud systems, automated CI/CD pipelines, and high-throughput microservices designed for 99.9% uptime, data integrity, and seamless global scalability.',
+    primaryCta: { label: 'Start a Project', action: 'project' },
+    secondaryCta: { label: 'View Case Studies', href: '#insights', isRouterLink: false },
+    illustration: <ZytronaEngineeringIllustration className="w-full max-w-[440px]" />
+  }
+]
 
+export default function App() {
+  const [heroSlide, setHeroSlide] = useState(0)
+  const [isHeroHovered, setIsHeroHovered] = useState(false)
+
+  // Auto-advance hero slides every 6 seconds, pausing when hovered
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10)
-    }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    if (isHeroHovered) return
+
+    const timer = setInterval(() => {
+      setHeroSlide((prev) => (prev + 1) % HERO_SLIDES.length)
+    }, 6000)
+
+    return () => clearInterval(timer)
+  }, [isHeroHovered])
 
   // Interactive Project Inquiry & Consultation Modals
   const [modalType, setModalType] = useState(null) // 'project' | 'consultation' | 'learnMore'
@@ -146,6 +158,86 @@ export default function App() {
     service: 'Web & Enterprise SaaS Platforms',
     projectScope: ''
   })
+  const modalContainerRef = useRef(null)
+  const previousActiveElement = useRef(null)
+
+  // Lock both root and body scrolling + prevent layout shift when modal is open
+  useEffect(() => {
+    if (modalType) {
+      previousActiveElement.current = document.activeElement
+
+      const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth
+      const originalHtmlOverflow = document.documentElement.style.overflow
+      const originalBodyOverflow = document.body.style.overflow
+      const originalBodyPaddingRight = document.body.style.paddingRight
+      const originalHtmlOverscroll = document.documentElement.style.overscrollBehavior
+      const originalBodyOverscroll = document.body.style.overscrollBehavior
+
+      document.documentElement.style.overflow = 'hidden'
+      document.body.style.overflow = 'hidden'
+      document.documentElement.style.overscrollBehavior = 'none'
+      document.body.style.overscrollBehavior = 'none'
+      if (scrollBarWidth > 0) {
+        document.body.style.paddingRight = `${scrollBarWidth}px`
+      }
+
+      return () => {
+        document.documentElement.style.overflow = originalHtmlOverflow
+        document.body.style.overflow = originalBodyOverflow
+        document.body.style.paddingRight = originalBodyPaddingRight
+        document.documentElement.style.overscrollBehavior = originalHtmlOverscroll
+        document.body.style.overscrollBehavior = originalBodyOverscroll
+
+        if (previousActiveElement.current && typeof previousActiveElement.current.focus === 'function') {
+          setTimeout(() => previousActiveElement.current?.focus(), 10)
+        }
+      }
+    }
+  }, [modalType])
+
+  // Focus trap & Escape key handling
+  useEffect(() => {
+    if (!modalType) return
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault()
+        handleCloseModal()
+        return
+      }
+
+      if (e.key === 'Tab' && modalContainerRef.current) {
+        const focusable = Array.from(
+          modalContainerRef.current.querySelectorAll(
+            'a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+          )
+        ).filter((el) => el.offsetParent !== null)
+
+        if (focusable.length === 0) {
+          e.preventDefault()
+          return
+        }
+
+        const firstElement = focusable[0]
+        const lastElement = focusable[focusable.length - 1]
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement || !modalContainerRef.current.contains(document.activeElement)) {
+            e.preventDefault()
+            lastElement.focus()
+          }
+        } else {
+          if (document.activeElement === lastElement || !modalContainerRef.current.contains(document.activeElement)) {
+            e.preventDefault()
+            firstElement.focus()
+          }
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [modalType])
 
   const handleOpenModal = (type) => {
     setModalType(type)
@@ -187,180 +279,89 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#0B0D0F] text-[#4D4D4D] dark:text-[#94A3B8] font-['Inter',sans-serif]">
-      {/* 1. TOP NAVBAR (Always visible while scrolling) */}
-      <header className={`fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-[#0B0D0F]/95 backdrop-blur-md border-b border-[#E0E0E0] dark:border-[#232936] transition-all duration-200 ${scrolled ? 'shadow-md' : 'shadow-sm'}`}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-16 h-20 flex items-center justify-between">
-          {/* Official Brand Logo */}
-          <Link to="/" className="flex items-center">
-            <ZytronaLogo />
-          </Link>
-
-          {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center space-x-8 lg:space-x-12">
-            <a 
-              href="#home" 
-              onClick={() => setActiveNav('home')}
-              className={`text-[15px] font-medium transition-colors ${activeNav === 'home' ? 'text-[#4CAF4F] font-semibold' : 'text-[#18191F] dark:text-[#F8FAFC] hover:text-[#4CAF4F]'}`}
-            >
-              Home
-            </a>
-            <a 
-              href="#services" 
-              onClick={() => setActiveNav('services')}
-              className={`text-[15px] font-medium transition-colors ${activeNav === 'services' ? 'text-[#4CAF4F] font-semibold' : 'text-[#18191F] dark:text-[#F8FAFC] hover:text-[#4CAF4F]'}`}
-            >
-              Services
-            </a>
-            <a 
-              href="#architecture" 
-              onClick={() => setActiveNav('architecture')}
-              className={`text-[15px] font-medium transition-colors ${activeNav === 'architecture' ? 'text-[#4CAF4F] font-semibold' : 'text-[#18191F] dark:text-[#F8FAFC] hover:text-[#4CAF4F]'}`}
-            >
-              Engineering
-            </a>
-            <a 
-              href="#insights" 
-              onClick={() => setActiveNav('insights')}
-              className={`text-[15px] font-medium transition-colors ${activeNav === 'insights' ? 'text-[#4CAF4F] font-semibold' : 'text-[#18191F] dark:text-[#F8FAFC] hover:text-[#4CAF4F]'}`}
-            >
-              Case Studies
-            </a>
-            <Link 
-              to="/about" 
-              className="text-[15px] font-medium text-[#18191F] dark:text-[#F8FAFC] hover:text-[#4CAF4F] transition-colors"
-            >
-              About
-            </Link>
-          </nav>
-
-          {/* Right Action Button & Theme Toggle */}
-          <div className="hidden md:flex items-center gap-3">
-            <ThemeToggle />
-            <button 
-              onClick={() => handleOpenModal('project')}
-              className="btn-nexcent-primary"
-            >
-              <span>Start a Project</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
-
-          {/* Mobile Right Controls: Theme Toggle & Menu Hamburger */}
-          <div className="flex md:hidden items-center gap-2">
-            <ThemeToggle size="sm" />
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-[#263238] dark:text-[#E2E8F0] hover:text-[#4CAF4F] focus:outline-none"
-              aria-label="Toggle navigation menu"
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Dropdown */}
-        {mobileMenuOpen && (
-          <div className="md:hidden bg-white dark:bg-[#15181E] border-b border-[#E0E0E0] dark:border-[#232936] px-6 py-5 shadow-lg space-y-4 animate-in slide-in-from-top-2">
-            <a 
-              href="#home" 
-              onClick={() => { setActiveNav('home'); setMobileMenuOpen(false); }}
-              className="block text-base font-medium text-[#18191F] dark:text-[#F8FAFC] hover:text-[#4CAF4F]"
-            >
-              Home
-            </a>
-            <a 
-              href="#services" 
-              onClick={() => { setActiveNav('services'); setMobileMenuOpen(false); }}
-              className="block text-base font-medium text-[#18191F] dark:text-[#F8FAFC] hover:text-[#4CAF4F]"
-            >
-              Services
-            </a>
-            <a 
-              href="#architecture" 
-              onClick={() => { setActiveNav('architecture'); setMobileMenuOpen(false); }}
-              className="block text-base font-medium text-[#18191F] dark:text-[#F8FAFC] hover:text-[#4CAF4F]"
-            >
-              Engineering
-            </a>
-            <a 
-              href="#insights" 
-              onClick={() => { setActiveNav('insights'); setMobileMenuOpen(false); }}
-              className="block text-base font-medium text-[#18191F] dark:text-[#F8FAFC] hover:text-[#4CAF4F]"
-            >
-              Case Studies
-            </a>
-            <Link 
-              to="/about" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-base font-medium text-[#18191F] dark:text-[#F8FAFC] hover:text-[#4CAF4F]"
-            >
-              About
-            </Link>
-            <button 
-              onClick={() => { setMobileMenuOpen(false); handleOpenModal('project'); }}
-              className="w-full btn-nexcent-primary mt-2"
-            >
-              <span>Start a Project</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
-        )}
-      </header>
+      {/* 1. TOP NAVBAR (Unified Site Navbar) */}
+      <SiteNavbar onStartProject={() => handleOpenModal('project')} />
 
       {/* 2. HERO SECTION */}
-      <section id="home" className="bg-[#F5F7FA] pt-24 pb-12 sm:pt-28 sm:pb-16 lg:pt-36 lg:pb-24 px-5 sm:px-6 lg:px-16 overflow-hidden">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left: Headline & Actions */}
-          <div className="lg:col-span-7 space-y-6">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#263238] tracking-tight leading-[1.18]">
-              Next-Gen Software Engineering <br />
-              <span className="text-[#4CAF4F]">Built for Scale & Impact</span>
-            </h1>
+      <section 
+        id="home" 
+        className="bg-[#F5F7FA] dark:bg-[#11141A] pt-24 pb-12 sm:pt-28 sm:pb-16 lg:pt-36 lg:pb-24 px-5 sm:px-6 lg:px-16 overflow-hidden transition-colors"
+        onMouseEnter={() => setIsHeroHovered(true)}
+        onMouseLeave={() => setIsHeroHovered(false)}
+        aria-roledescription="carousel"
+        aria-label="Hero Highlights"
+      >
+        <div className="max-w-7xl mx-auto min-h-[420px] sm:min-h-[460px] flex items-center">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={heroSlide}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.35, ease: "easeInOut" }}
+              className="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center"
+            >
+              {/* Left: Headline & Actions */}
+              <div className="lg:col-span-7 space-y-6">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#263238] dark:text-[#F8FAFC] tracking-tight leading-[1.18]">
+                  {HERO_SLIDES[heroSlide].title} <br />
+                  <span className="text-[#4CAF4F]">{HERO_SLIDES[heroSlide].highlight}</span>
+                </h1>
 
-            <p className="text-base sm:text-lg text-[#717171] max-w-xl leading-relaxed">
-              We engineer high-performance web platforms, fluid 60fps mobile applications, and enterprise AI automation with 100% intellectual property ownership and milestone-backed delivery.
-            </p>
+                <p className="text-base sm:text-lg text-[#717171] dark:text-[#94A3B8] max-w-xl leading-relaxed">
+                  {HERO_SLIDES[heroSlide].description}
+                </p>
 
-            <div className="pt-2 flex flex-wrap gap-4">
-              <button 
-                onClick={() => handleOpenModal('project')}
-                className="btn-nexcent-primary text-base px-8 py-3.5"
-              >
-                <span>Start a Project</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-              <a 
-                href="#services"
-                className="btn-nexcent-secondary text-base px-8 py-3.5"
-              >
-                Explore Capabilities
-              </a>
-            </div>
-          </div>
+                <div className="pt-2 flex flex-wrap gap-4">
+                  <button 
+                    onClick={() => handleOpenModal(HERO_SLIDES[heroSlide].primaryCta.action)}
+                    className="btn-nexcent-primary text-base px-8 py-3.5 cursor-pointer"
+                  >
+                    <span>{HERO_SLIDES[heroSlide].primaryCta.label}</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                  {HERO_SLIDES[heroSlide].secondaryCta.isRouterLink ? (
+                    <Link 
+                      to={HERO_SLIDES[heroSlide].secondaryCta.href}
+                      className="btn-nexcent-secondary text-base px-8 py-3.5 cursor-pointer inline-flex items-center"
+                    >
+                      {HERO_SLIDES[heroSlide].secondaryCta.label}
+                    </Link>
+                  ) : (
+                    <a 
+                      href={HERO_SLIDES[heroSlide].secondaryCta.href}
+                      className="btn-nexcent-secondary text-base px-8 py-3.5 cursor-pointer inline-flex items-center"
+                    >
+                      {HERO_SLIDES[heroSlide].secondaryCta.label}
+                    </a>
+                  )}
+                </div>
+              </div>
 
-          {/* Right: Isometric Illustration */}
-          <div className="lg:col-span-5 flex justify-center">
-            <ZytronaHeroIllustration className="w-full max-w-[480px]" />
-          </div>
+              {/* Right: Isometric Illustration */}
+              <div className="lg:col-span-5 flex justify-center">
+                {HERO_SLIDES[heroSlide].illustration}
+              </div>
+            </motion.div>
+          </AnimatePresence>
         </div>
 
         {/* Carousel Indicators */}
-        <div className="flex justify-center items-center gap-2 mt-12">
-          <button 
-            onClick={() => setHeroSlide(0)}
-            className={`transition-all duration-300 rounded-full ${heroSlide === 0 ? 'w-6 h-2.5 bg-[#4CAF4F]' : 'w-2.5 h-2.5 bg-[#BDBDBD] hover:bg-[#81C784]'}`}
-            aria-label="Slide 1"
-          />
-          <button 
-            onClick={() => setHeroSlide(1)}
-            className={`transition-all duration-300 rounded-full ${heroSlide === 1 ? 'w-6 h-2.5 bg-[#4CAF4F]' : 'w-2.5 h-2.5 bg-[#BDBDBD] hover:bg-[#81C784]'}`}
-            aria-label="Slide 2"
-          />
-          <button 
-            onClick={() => setHeroSlide(2)}
-            className={`transition-all duration-300 rounded-full ${heroSlide === 2 ? 'w-6 h-2.5 bg-[#4CAF4F]' : 'w-2.5 h-2.5 bg-[#BDBDBD] hover:bg-[#81C784]'}`}
-            aria-label="Slide 3"
-          />
+        <div className="flex justify-center items-center gap-2 mt-12" role="tablist" aria-label="Hero slide indicators">
+          {HERO_SLIDES.map((slide, idx) => (
+            <button 
+              key={slide.id}
+              onClick={() => setHeroSlide(idx)}
+              className={`transition-all duration-300 rounded-full cursor-pointer ${
+                heroSlide === idx 
+                  ? 'w-7 h-2.5 bg-[#4CAF4F]' 
+                  : 'w-2.5 h-2.5 bg-[#BDBDBD] dark:bg-[#374151] hover:bg-[#81C784]'
+              }`}
+              aria-label={`Slide ${idx + 1}: ${slide.title}`}
+              aria-selected={heroSlide === idx}
+              role="tab"
+            />
+          ))}
         </div>
       </section>
 
@@ -385,8 +386,8 @@ export default function App() {
           <p className="text-[#717171] text-sm sm:text-base">Full-cycle engineering tailored for ambitious brands and scalable startups</p>
         </div>
 
-        {/* 3 Boxy Feature Cards */}
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 items-stretch">
+        {/* 2 Boxy Feature Cards */}
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 items-stretch">
           {CORE_SERVICES.map((srv) => (
             <SpotlightCard 
               key={srv.id} 
@@ -524,9 +525,9 @@ export default function App() {
       {/* 7. ARCHITECTURE SHOWCASE */}
       <section className="py-12 sm:py-16 lg:py-24 px-5 sm:px-6 lg:px-16 bg-white">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
-          {/* Left: Mobile Security Illustration */}
+          {/* Left: Cloud Architecture Illustration */}
           <div className="lg:col-span-5 flex justify-center">
-            <ZytronaMobileSecurityIllustration className="w-full max-w-[320px] sm:max-w-[440px]" />
+            <ZytronaCloudArchitectureIllustration className="w-full max-w-[320px] sm:max-w-[440px]" />
           </div>
 
           {/* Right: Content */}
@@ -560,7 +561,7 @@ export default function App() {
           {/* Right: Client Quote */}
           <div className="lg:col-span-8 space-y-4 sm:space-y-5">
             <p className="text-[#717171] text-xs sm:text-base leading-relaxed italic">
-              "ZYTRONA engineered our entire e-commerce platform with precision. The sub-second loading speeds, fluid animations, and mobile-first checkout flows boosted our mobile conversion by over 140%. Working directly with their senior engineers made the launch effortless."
+              "ZYTRONA engineered our entire e-commerce platform with precision. The sub-second loading speeds, fluid animations, and streamlined checkout flows boosted our customer conversion by over 140%. Working directly with their senior engineers made the launch effortless."
             </p>
 
             <div>
@@ -726,14 +727,27 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) handleCloseModal()
+            }}
+            onWheel={(e) => {
+              if (e.target === e.currentTarget) e.preventDefault()
+            }}
+            onTouchMove={(e) => {
+              if (e.target === e.currentTarget) e.preventDefault()
+            }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm overscroll-contain"
           >
             <motion.div 
+              ref={modalContainerRef}
+              role="dialog"
+              aria-modal="true"
+              tabIndex={-1}
               initial={{ scale: 0.95, opacity: 0, y: 15 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.95, opacity: 0, y: 15 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="bg-white rounded-lg shadow-2xl border border-[#E0E0E0] max-w-md w-full p-6 sm:p-8 relative"
+              className="bg-white rounded-lg shadow-2xl border border-[#E0E0E0] max-w-md w-full p-6 sm:p-8 relative overscroll-contain outline-none max-h-[90vh] overflow-y-auto"
             >
               <button 
                 onClick={handleCloseModal}
@@ -796,8 +810,8 @@ export default function App() {
                         onChange={(val) => setFormData({...formData, service: val})}
                         options={[
                           'Web & Enterprise SaaS Platforms',
-                          'Mobile App Engineering',
                           'UI/UX & Design Systems',
+                          'Cloud & DevOps Architecture',
                           'AI Automation & Neural Pipelines'
                         ]}
                       />
@@ -835,7 +849,7 @@ export default function App() {
               <div>
                 <h3 className="text-2xl font-bold text-[#263238] mb-3">About ZYTRONA Engineering</h3>
                 <p className="text-sm text-[#717171] leading-relaxed mb-4">
-                  ZYTRONA is a full-cycle software engineering and digital product agency. We engineer web platforms, mobile apps, and UI/UX design systems with transparent milestone execution.
+                  ZYTRONA is a full-cycle software engineering and digital product agency. We engineer web platforms, enterprise SaaS, and UI/UX design systems with transparent milestone execution.
                 </p>
                 <div className="space-y-2.5 mb-6">
                   <div className="flex items-center gap-2 text-sm text-[#263238]">

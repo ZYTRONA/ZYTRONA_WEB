@@ -21,7 +21,6 @@ export default defineConfig({
         '/privacy-policy',
         '/terms-of-service',
         '/service/website-development',
-        '/service/app-development',
         '/service/ui-designs',
         '/404',
       ],

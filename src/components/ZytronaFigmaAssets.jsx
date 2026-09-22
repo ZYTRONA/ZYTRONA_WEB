@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 // ZYTRONA Official Brand Logo using /Logo.png with Figma styling
-export function ZytronaLogo({ className = "h-9", light = false, showTagline = true }) {
+export function ZytronaLogo({ className = "h-9", light = false }) {
   return (
     <div className={`flex items-center gap-3 select-none ${className}`}>
       {/* Official ZYTRONA Logo Image */}
@@ -12,16 +12,9 @@ export function ZytronaLogo({ className = "h-9", light = false, showTagline = tr
         className="h-10 w-10 object-contain rounded-md border border-[#E0E0E0] dark:border-[#232936] shadow-sm bg-white dark:bg-[#15181E] p-0.5 shrink-0"
       />
 
-      <div className="flex flex-col">
-        <span className={`font-['Inter'] font-extrabold text-xl tracking-wider leading-none ${light ? 'text-white' : 'text-[#263238] dark:text-white'}`}>
-          ZYTRONA
-        </span>
-        {showTagline && (
-          <span className="text-[10px] font-bold tracking-widest text-[#4CAF4F] uppercase mt-0.5">
-            SYNERGY
-          </span>
-        )}
-      </div>
+      <span className={`font-['Inter'] font-extrabold text-xl tracking-wider leading-none ${light ? 'text-white' : 'text-[#263238] dark:text-white'}`}>
+        ZYTRONA
+      </span>
     </div>
   )
 }
@@ -197,46 +190,72 @@ export function ZytronaEngineeringIllustration({ className = "w-full max-w-[440p
   )
 }
 
-// Mobile & Security Architecture Illustration
-export function ZytronaMobileSecurityIllustration({ className = "w-full max-w-[440px]" }) {
+// Cloud & Microservices Architecture Illustration
+export function ZytronaCloudArchitectureIllustration({ className = "w-full max-w-[440px]" }) {
   return (
     <div className={`relative flex items-center justify-center ${className}`}>
       <svg viewBox="0 0 460 380" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
         <ellipse cx="230" cy="350" rx="190" ry="24" fill="#E8F5E9" fillOpacity="0.8" />
 
-        {/* Large Smartphone Mockup */}
-        <g transform="translate(160, 45)">
-          <rect x="0" y="0" width="140" height="270" rx="22" fill="#263238" />
-          <rect x="5" y="5" width="130" height="260" rx="18" fill="#FFFFFF" />
-          
-          <rect x="45" y="12" width="50" height="5" rx="2.5" fill="#CFD8DC" />
+        {/* Central Server Rack / Cloud Cluster */}
+        <g transform="translate(150, 45)">
+          <rect x="0" y="0" width="160" height="260" rx="14" fill="#263238" />
+          <rect x="6" y="6" width="148" height="248" rx="10" fill="#37474F" />
 
-          <rect x="18" y="32" width="104" height="24" rx="6" fill="#F5F7FA" />
-          <circle cx="30" cy="44" r="6" fill="#4CAF4F" />
-          <rect x="44" y="41" width="50" height="6" rx="3" fill="#BDBDBD" />
+          {/* Unit 1: API Gateway */}
+          <rect x="14" y="18" width="132" height="42" rx="6" fill="#263238" />
+          <circle cx="28" cy="39" r="5" fill="#4CAF4F" />
+          <circle cx="42" cy="39" r="3" fill="#81C784" />
+          <rect x="54" y="32" width="55" height="5" rx="2.5" fill="#FFFFFF" />
+          <rect x="54" y="41" width="35" height="4" rx="2" fill="#90A4AE" />
+          <rect x="118" y="32" width="18" height="14" rx="3" fill="#4CAF4F" fillOpacity="0.2" />
+          <text x="127" y="42" fill="#4CAF4F" fontSize="8" fontWeight="bold" textAnchor="middle">API</text>
 
-          {/* Central Security / Performance Card */}
-          <rect x="18" y="70" width="104" height="110" rx="10" fill="#E8F5E9" stroke="#C8E6C9" strokeWidth="1.5" />
-          <circle cx="70" cy="110" r="24" fill="#4CAF4F" />
-          <path d="M62 110 L68 116 L79 104" stroke="#FFFFFF" strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" />
-          <rect x="36" y="145" width="68" height="7" rx="3.5" fill="#2E7D32" />
-          <rect x="44" y="158" width="52" height="5" rx="2.5" fill="#81C784" />
+          {/* Unit 2: Microservices Cluster */}
+          <rect x="14" y="68" width="132" height="42" rx="6" fill="#263238" />
+          <circle cx="28" cy="89" r="5" fill="#4CAF4F" />
+          <circle cx="42" cy="89" r="3" fill="#81C784" />
+          <rect x="54" y="82" width="60" height="5" rx="2.5" fill="#FFFFFF" />
+          <rect x="54" y="91" width="40" height="4" rx="2" fill="#90A4AE" />
+          <rect x="118" y="82" width="18" height="14" rx="3" fill="#81C784" fillOpacity="0.2" />
+          <text x="127" y="92" fill="#81C784" fontSize="8" fontWeight="bold" textAnchor="middle">SVC</text>
 
-          <rect x="18" y="195" width="104" height="24" rx="4" fill="#4CAF4F" />
-          <rect x="45" y="204" width="50" height="6" rx="3" fill="#FFFFFF" />
+          {/* Unit 3: Database & Cache */}
+          <rect x="14" y="118" width="132" height="42" rx="6" fill="#263238" />
+          <circle cx="28" cy="139" r="5" fill="#4CAF4F" />
+          <circle cx="42" cy="139" r="3" fill="#81C784" />
+          <rect x="54" y="132" width="50" height="5" rx="2.5" fill="#FFFFFF" />
+          <rect x="54" y="141" width="45" height="4" rx="2" fill="#90A4AE" />
+          <rect x="118" y="132" width="18" height="14" rx="3" fill="#66BB6A" fillOpacity="0.2" />
+          <text x="127" y="142" fill="#66BB6A" fontSize="8" fontWeight="bold" textAnchor="middle">SQL</text>
 
-          <rect x="18" y="226" width="104" height="24" rx="4" fill="#F5F7FA" stroke="#E0E0E0" />
-          <rect x="45" y="235" width="50" height="6" rx="3" fill="#757575" />
+          {/* Unit 4: Telemetry & Monitoring */}
+          <rect x="14" y="168" width="132" height="42" rx="6" fill="#263238" />
+          <circle cx="28" cy="189" r="5" fill="#4CAF4F" />
+          <circle cx="42" cy="189" r="3" fill="#66BB6A" />
+          <rect x="54" y="182" width="45" height="5" rx="2.5" fill="#FFFFFF" />
+          <rect x="54" y="191" width="30" height="4" rx="2" fill="#90A4AE" />
+          <path d="M105 192 L112 186 L118 190 L126 182 L132 185" stroke="#4CAF4F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+
+          {/* Server Base Stand */}
+          <rect x="25" y="220" width="110" height="10" rx="3" fill="#263238" />
         </g>
 
-        {/* Green Shield on Top of Phone */}
-        <g transform="translate(255, 20)">
-          <circle cx="28" cy="28" r="24" fill="#4CAF4F" />
-          <path d="M22 24 V19 C22 15 34 15 34 19 V24 M18 24 H38 V36 H18 Z" stroke="#FFFFFF" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+        {/* Floating Cloud Node on Left */}
+        <g transform="translate(60, 60)">
+          <rect x="0" y="0" width="65" height="36" rx="8" fill="#4CAF4F" />
+          <path d="M18 24 C14 24 12 21 12 18 C12 15 15 13 18 13 C19 10 23 8 28 8 C33 8 37 11 38 14 C41 14 44 16 44 19 C44 22 41 24 38 24 Z" fill="#FFFFFF" />
         </g>
 
-        {/* Engineer on Left */}
-        <g transform="translate(85, 120)">
+        {/* Floating Uptime Badge on Right */}
+        <g transform="translate(325, 65)">
+          <rect x="0" y="0" width="85" height="34" rx="6" fill="#263238" />
+          <circle cx="16" cy="17" r="5" fill="#4CAF4F" />
+          <text x="28" y="21" fill="#FFFFFF" fontSize="11" fontWeight="bold">99.9% SLA</text>
+        </g>
+
+        {/* Systems Engineer on Left */}
+        <g transform="translate(70, 130)">
           <circle cx="40" cy="35" r="13" fill="#FFCC80" />
           <path d="M28 32 C28 16 52 16 52 32 C52 22 40 20 28 32 Z" fill="#263238" />
 
@@ -252,12 +271,16 @@ export function ZytronaMobileSecurityIllustration({ className = "w-full max-w-[4
           <ellipse cx="49" cy="212" rx="9" ry="4" fill="#263238" />
         </g>
 
-        {/* Plant on right */}
-        <g transform="translate(325, 190)">
-          <path d="M20 120 C10 80 50 60 50 40 C50 60 90 80 80 120 Z" fill="#4CAF4F" />
-          <path d="M10 120 C-5 90 25 75 30 60 C30 75 60 90 50 120 Z" fill="#66BB6A" />
-          <path d="M45 120 C40 85 70 70 85 50 C85 70 110 85 95 120 Z" fill="#81C784" />
-          <rect x="35" y="120" width="30" height="35" rx="4" fill="#B0BEC5" />
+        {/* Metrics Display Stand on Right */}
+        <g transform="translate(330, 160)">
+          <rect x="0" y="0" width="70" height="90" rx="8" fill="#ECEFF1" stroke="#CFD8DC" strokeWidth="1.5" />
+          <rect x="8" y="12" width="54" height="6" rx="3" fill="#4CAF4F" />
+          <rect x="8" y="24" width="40" height="5" rx="2.5" fill="#90A4AE" />
+          <rect x="8" y="34" width="48" height="5" rx="2.5" fill="#90A4AE" />
+          <rect x="8" y="48" width="54" height="24" rx="4" fill="#E8F5E9" />
+          <path d="M14 64 L22 56 L32 60 L42 52 L54 55" stroke="#388E3C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+          <rect x="30" y="90" width="10" height="40" fill="#B0BEC5" />
+          <ellipse cx="35" cy="130" rx="25" ry="7" fill="#90A4AE" />
         </g>
       </svg>
     </div>
@@ -303,7 +326,7 @@ export function ShowcaseBadge({ className = "w-full max-w-[320px]" }) {
     <div className={`aspect-square bg-[#0b1014] rounded-xl flex flex-col items-center justify-center p-5 sm:p-8 shadow-xl border border-neutral-800 text-center ${className}`}>
       <img 
         src="/Logo.png" 
-        alt="ZYTRONA Synergy" 
+        alt="ZYTRONA" 
         className="w-12 h-12 sm:w-16 sm:h-16 object-contain rounded-lg p-1 bg-white mb-3 sm:mb-4 shadow-md"
       />
       <span className="text-white font-extrabold text-lg sm:text-xl tracking-wider mb-1">ZYTRONA</span>

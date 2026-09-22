@@ -11,16 +11,15 @@ export const PRERENDER_ROUTES = [
   '/privacy-policy',
   '/terms-of-service',
   '/service/website-development',
-  '/service/app-development',
   '/service/ui-designs',
   '/404',
 ]
 
 const HOME_TITLE = 'ZYTRONA'
 const HOME_DESCRIPTION =
-  'ZYTRONA builds high-performance web platforms, mobile apps, and modern UI/UX design systems for startups and enterprises. High-performance delivery, 100% IP ownership.'
+  'ZYTRONA builds high-performance web platforms, enterprise SaaS, and modern UI/UX design systems for startups and enterprises. High-performance delivery, 100% IP ownership.'
 const HOME_KEYWORDS =
-  'web development, mobile app development, UI/UX design, React, Next.js, React Native, Flutter, full stack engineering, SaaS development, software studio, ZYTRONA'
+  'web development, SaaS platforms, UI/UX design, React, Next.js, full stack engineering, SaaS development, cloud software studio, ZYTRONA'
 
 const SERVICE_PAGES = {
   'website-development': {
@@ -31,20 +30,12 @@ const SERVICE_PAGES = {
       'web development, React web development, Next.js SaaS, full stack web apps, custom web software, responsive web design, ZYTRONA',
     serviceType: 'Web Development & SaaS Engineering',
   },
-  'app-development': {
-    title: 'Mobile App Engineering | ZYTRONA',
-    description:
-      'Native-quality iOS and Android apps with React Native and Flutter, offline-first sync, and App Store launch support.',
-    keywords:
-      'mobile app development, iOS app development, Android apps, React Native development, Flutter apps, cross platform mobile apps, ZYTRONA',
-    serviceType: 'Mobile Application Engineering',
-  },
   'ui-designs': {
     title: 'UI/UX & Product Design Systems | ZYTRONA',
     description:
       'Tokenized design systems, Figma prototypes, and conversion-focused product UI for SaaS and digital products.',
     keywords:
-      'UI/UX design, product design systems, Figma design, SaaS UI design, mobile app UI/UX, user experience design, ZYTRONA',
+      'UI/UX design, product design systems, Figma design, SaaS UI design, web product UI/UX, user experience design, ZYTRONA',
     serviceType: 'UI/UX & Product Design Systems',
   },
 }
@@ -103,12 +94,9 @@ function organizationSchema() {
     areaServed: 'Worldwide',
     knowsAbout: [
       'Web Development',
-      'Mobile App Engineering',
       'UI/UX Design Systems',
       'React',
       'Next.js',
-      'React Native',
-      'Flutter',
       'Cloud Architecture',
       'SaaS Platforms',
       'Full-Stack Development'
@@ -130,14 +118,6 @@ function organizationSchema() {
             '@type': 'Service',
             name: 'Website Development & SaaS Platforms',
             url: `${SITE_URL}/service/website-development`
-          }
-        },
-        {
-          '@type': 'Offer',
-          itemOffered: {
-            '@type': 'Service',
-            name: 'Mobile App Engineering',
-            url: `${SITE_URL}/service/app-development`
           }
         },
         {
@@ -220,7 +200,7 @@ export function getSeoForPath(url = '/') {
       canonical,
       title: 'About ZYTRONA | Senior Software Engineering Studio',
       description:
-        'ZYTRONA is a senior engineering studio building web, mobile, and UI/UX products with direct architect access and full source-code ownership.',
+        'ZYTRONA is a senior engineering studio building web, SaaS, and UI/UX products with direct architect access and full source-code ownership.',
       keywords: 'about ZYTRONA, software engineering studio, senior developers, direct architect access, custom software development',
       robots: 'index, follow',
       jsonLd: [

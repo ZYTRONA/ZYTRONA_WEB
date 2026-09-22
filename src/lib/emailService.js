@@ -31,10 +31,10 @@ export async function sendEmail(data = {}, customTemplateId = null) {
       (!templateId ? '  - VITE_EMAILJS_TEMPLATE_ID_OWNER\n' : '') +
       'Running in simulated mode. Add these variables to your .env file or Vercel dashboard to enable live email delivery.'
     )
-    
+
     // Simulate network delay for UX testing
     await new Promise((resolve) => setTimeout(resolve, 1200))
-    
+
     return {
       success: true,
       simulated: true,
@@ -48,6 +48,8 @@ export async function sendEmail(data = {}, customTemplateId = null) {
     reply_to: data.email || '',
     service_type: data.service || data.role || data.stage || data.talentNeeded || data.primaryDiscipline || 'General Inquiry',
     message: data.projectScope || data.scope || data.portfolio || data.message || 'No additional scope details provided',
+    type: data.type || data.inquiryType || 'Website Inquiry',
+    stage: data.stage || 'Not specified',
     budget: data.budget || 'Not specified',
     submission_date: new Date().toLocaleString('en-US', {
       timeZoneName: 'short',

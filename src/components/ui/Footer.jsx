@@ -27,7 +27,7 @@ export function Footer() {
             </Link>
             
             <p className="text-neutral-300 text-sm leading-relaxed max-w-sm mb-6">
-              Engineering high-performance web platforms, mobile applications, and conversion-driven UI/UX systems with 100% IP ownership.
+              Engineering high-performance web platforms, enterprise SaaS, and conversion-driven UI/UX systems with 100% IP ownership.
             </p>
 
             <div className="text-neutral-400 text-xs space-y-1">
@@ -85,9 +85,6 @@ export function Footer() {
           <ul className="space-y-3 text-neutral-300 text-sm">
             <li>
               <Link to="/service/website-development" className="hover:text-[#4CAF4F] transition-colors">Web Platforms</Link>
-            </li>
-            <li>
-              <Link to="/service/app-development" className="hover:text-[#4CAF4F] transition-colors">Mobile Engineering</Link>
             </li>
             <li>
               <Link to="/service/ui-designs" className="hover:text-[#4CAF4F] transition-colors">UI/UX Systems</Link>

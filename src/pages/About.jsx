@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'motion/react'
 import { ZytronaLogo, ZytronaEngineeringIllustration } from '@/components/ZytronaFigmaAssets'
+import { SiteNavbar } from '@/components/ui/resizable-navbar'
 import { Footer } from '@/components/ui/Footer'
 import { SpotlightCard } from '@/components/ui/SpotlightCard'
 import { CustomSelect } from '@/components/ui/CustomSelect'
@@ -51,7 +52,7 @@ const DIFFERENTIATORS = [
   {
     icon: <Cpu className="w-8 h-8 text-[#4CAF4F]" />,
     title: 'Specialized High-Impact Talent',
-    desc: 'We focus exclusively on modern software disciplines: React/Next.js, native mobile apps, tokenized UI/UX systems, and scalable cloud APIs.'
+    desc: 'We focus exclusively on modern software disciplines: React/Next.js platforms, tokenized UI/UX systems, microservices, and scalable cloud APIs.'
   },
   {
     icon: <HeartHandshake className="w-8 h-8 text-[#4CAF4F]" />,
@@ -134,10 +135,10 @@ const LEADERSHIP_TEAM = [
   },
   {
     name: 'Jeeva S',
-    role: 'App Developer',
-    specialty: 'React Native, Flutter, Native iOS & Android Sync',
-    bio: 'Engineers fluid 60fps mobile applications, real-time WebSockets synchronization, and offline-first local data architecture.',
-    tags: ['React Native', 'Flutter', 'iOS & Android', 'WebSockets'],
+    role: 'Cloud & Systems Engineer',
+    specialty: 'Distributed Systems, Cloud Microservices & Scalability',
+    bio: 'Architects resilient cloud microservices, real-time WebSockets synchronization, and high-throughput distributed database systems.',
+    tags: ['Docker', 'Kubernetes', 'Node.js', 'WebSockets'],
     initials: 'JS',
     linkedin: 'https://www.linkedin.com/company/zytrona'
   },
@@ -153,12 +154,10 @@ const LEADERSHIP_TEAM = [
 ]
 
 export default function About() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [modalType, setModalType] = useState(null) // 'hire' | 'freelancer'
   const [formSuccess, setFormSuccess] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [formError, setFormError] = useState(null)
-  const [scrolled, setScrolled] = useState(false)
   const [hireFormData, setHireFormData] = useState({
     fullName: '',
     email: '',
@@ -171,17 +170,89 @@ export default function About() {
     primaryDiscipline: 'Full-Stack Web Development',
     portfolio: ''
   })
+  const aboutModalRef = useRef(null)
+  const previousActiveElement = useRef(null)
+
+  // Lock both root and body scrolling + prevent layout shift when modal is open
+  useEffect(() => {
+    if (modalType) {
+      previousActiveElement.current = document.activeElement
+
+      const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth
+      const originalHtmlOverflow = document.documentElement.style.overflow
+      const originalBodyOverflow = document.body.style.overflow
+      const originalBodyPaddingRight = document.body.style.paddingRight
+      const originalHtmlOverscroll = document.documentElement.style.overscrollBehavior
+      const originalBodyOverscroll = document.body.style.overscrollBehavior
+
+      document.documentElement.style.overflow = 'hidden'
+      document.body.style.overflow = 'hidden'
+      document.documentElement.style.overscrollBehavior = 'none'
+      document.body.style.overscrollBehavior = 'none'
+      if (scrollBarWidth > 0) {
+        document.body.style.paddingRight = `${scrollBarWidth}px`
+      }
+
+      return () => {
+        document.documentElement.style.overflow = originalHtmlOverflow
+        document.body.style.overflow = originalBodyOverflow
+        document.body.style.paddingRight = originalBodyPaddingRight
+        document.documentElement.style.overscrollBehavior = originalHtmlOverscroll
+        document.body.style.overscrollBehavior = originalBodyOverscroll
+
+        if (previousActiveElement.current && typeof previousActiveElement.current.focus === 'function') {
+          setTimeout(() => previousActiveElement.current?.focus(), 10)
+        }
+      }
+    }
+  }, [modalType])
+
+  // Focus trap & Escape key handling
+  useEffect(() => {
+    if (!modalType) return
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault()
+        handleCloseModal()
+        return
+      }
+
+      if (e.key === 'Tab' && aboutModalRef.current) {
+        const focusable = Array.from(
+          aboutModalRef.current.querySelectorAll(
+            'a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+          )
+        ).filter((el) => el.offsetParent !== null)
+
+        if (focusable.length === 0) {
+          e.preventDefault()
+          return
+        }
+
+        const firstElement = focusable[0]
+        const lastElement = focusable[focusable.length - 1]
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement || !aboutModalRef.current.contains(document.activeElement)) {
+            e.preventDefault()
+            lastElement.focus()
+          }
+        } else {
+          if (document.activeElement === lastElement || !aboutModalRef.current.contains(document.activeElement)) {
+            e.preventDefault()
+            firstElement.focus()
+          }
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [modalType])
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
-  }, [])
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10)
-    }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   const handleOpenModal = (type) => {
@@ -234,121 +305,8 @@ export default function About() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#0B0D0F] text-[#4D4D4D] dark:text-[#94A3B8] font-['Inter',sans-serif]">
-      {/* 1. TOP NAVBAR (IDENTICAL ACROSS ALL PAGES) */}
-      <header className={`fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-[#0B0D0F]/95 backdrop-blur-md border-b border-[#E0E0E0] dark:border-[#232936] transition-all duration-200 ${scrolled ? 'shadow-md' : 'shadow-sm'}`}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-16 h-20 flex items-center justify-between">
-          {/* Official Brand Logo */}
-          <Link to="/" className="flex items-center">
-            <ZytronaLogo />
-          </Link>
-
-          {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center space-x-8 lg:space-x-12">
-            <Link 
-              to="/" 
-              className="text-[15px] font-medium text-[#18191F] dark:text-[#F8FAFC] hover:text-[#4CAF4F] transition-colors"
-            >
-              Home
-            </Link>
-            <Link 
-              to="/#services" 
-              className="text-[15px] font-medium text-[#18191F] dark:text-[#F8FAFC] hover:text-[#4CAF4F] transition-colors"
-            >
-              Services
-            </Link>
-            <Link 
-              to="/#architecture" 
-              className="text-[15px] font-medium text-[#18191F] dark:text-[#F8FAFC] hover:text-[#4CAF4F] transition-colors"
-            >
-              Engineering
-            </Link>
-            <Link 
-              to="/#insights" 
-              className="text-[15px] font-medium text-[#18191F] dark:text-[#F8FAFC] hover:text-[#4CAF4F] transition-colors"
-            >
-              Case Studies
-            </Link>
-            <Link 
-              to="/about" 
-              className="text-[15px] font-semibold text-[#4CAF4F] transition-colors"
-            >
-              About
-            </Link>
-          </nav>
-
-          {/* Right Action Button & Theme Toggle */}
-          <div className="hidden md:flex items-center gap-3">
-            <ThemeToggle />
-            <button 
-              onClick={() => handleOpenModal('hire')}
-              className="btn-nexcent-primary"
-            >
-              <span>Start a Project</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
-
-          {/* Mobile Right Controls: Theme Toggle & Menu Hamburger */}
-          <div className="flex md:hidden items-center gap-2">
-            <ThemeToggle size="sm" />
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-[#263238] dark:text-[#E2E8F0] hover:text-[#4CAF4F] focus:outline-none cursor-pointer"
-              aria-label="Toggle navigation menu"
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Dropdown */}
-        {mobileMenuOpen && (
-          <div className="md:hidden bg-white dark:bg-[#15181E] border-b border-[#E0E0E0] dark:border-[#232936] px-6 py-5 shadow-lg space-y-4 animate-in slide-in-from-top-2">
-            <Link 
-              to="/" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-base font-medium text-[#18191F] dark:text-[#F8FAFC] hover:text-[#4CAF4F]"
-            >
-              Home
-            </Link>
-            <Link 
-              to="/#services" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-base font-medium text-[#18191F] dark:text-[#F8FAFC] hover:text-[#4CAF4F]"
-            >
-              Services
-            </Link>
-            <Link 
-              to="/#architecture" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-base font-medium text-[#18191F] dark:text-[#F8FAFC] hover:text-[#4CAF4F]"
-            >
-              Engineering
-            </Link>
-            <Link 
-              to="/#insights" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-base font-medium text-[#18191F] dark:text-[#F8FAFC] hover:text-[#4CAF4F]"
-            >
-              Case Studies
-            </Link>
-            <Link 
-              to="/about" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-base font-semibold text-[#4CAF4F]"
-            >
-              About
-            </Link>
-            <button 
-              onClick={() => { setMobileMenuOpen(false); handleOpenModal('hire'); }}
-              className="w-full btn-nexcent-primary mt-2"
-            >
-              <span>Start a Project</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
-        )}
-      </header>
+      {/* 1. TOP NAVBAR (Unified Site Navbar) */}
+      <SiteNavbar onStartProject={() => handleOpenModal('hire')} />
 
       {/* SECTION 1: HERO / OPENING SECTION */}
       <section className="bg-[#F5F7FA] pt-32 pb-20 px-6 lg:px-16 border-b border-[#E0E0E0]">
@@ -582,7 +540,7 @@ export default function About() {
                     <div className="w-5 h-5 rounded-full bg-[#E8F5E9] flex items-center justify-center shrink-0 mt-0.5 text-[#4CAF4F]">
                       <Check className="w-3.5 h-3.5 stroke-[3]" />
                     </div>
-                    <span><strong className="text-[#263238]">Professional Growth:</strong> Work on production-grade web platforms and mobile applications.</span>
+                    <span><strong className="text-[#263238]">Professional Growth:</strong> Work on production-grade web platforms, distributed systems, and enterprise SaaS products.</span>
                   </li>
                 </ul>
               </div>
@@ -820,13 +778,28 @@ export default function About() {
       {/* INTERACTIVE MODALS */}
       <AnimatePresence>
         {modalType && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div 
+            onClick={(e) => {
+              if (e.target === e.currentTarget) handleCloseModal()
+            }}
+            onWheel={(e) => {
+              if (e.target === e.currentTarget) e.preventDefault()
+            }}
+            onTouchMove={(e) => {
+              if (e.target === e.currentTarget) e.preventDefault()
+            }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overscroll-contain"
+          >
             <motion.div 
+              ref={aboutModalRef}
+              role="dialog"
+              aria-modal="true"
+              tabIndex={-1}
               initial={{ opacity: 0, scale: 0.95, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 15 }}
               transition={{ duration: 0.2, ease: 'easeOut' }}
-              className="bg-white rounded-lg shadow-2xl border border-[#E0E0E0] max-w-md w-full p-6 sm:p-8 relative"
+              className="bg-white rounded-lg shadow-2xl border border-[#E0E0E0] max-w-md w-full p-6 sm:p-8 relative overscroll-contain outline-none max-h-[90vh] overflow-y-auto"
             >
               <button 
                 onClick={handleCloseModal}
@@ -889,9 +862,9 @@ export default function About() {
                           onChange={(val) => setHireFormData({ ...hireFormData, talentNeeded: val })}
                           options={[
                             'Full-Stack Web Engineers (React/Next.js)',
-                            'Mobile App Engineers (iOS / Android)',
                             'UI/UX Product Designers (Figma)',
-                            'Backend & Cloud Architects'
+                            'Backend & Cloud Architects',
+                            'DevOps & Infrastructure Engineers'
                           ]}
                         />
                       </div>
@@ -975,9 +948,9 @@ export default function About() {
                           onChange={(val) => setCareerFormData({ ...careerFormData, primaryDiscipline: val })}
                           options={[
                             'Full-Stack Web Development',
-                            'Mobile App Engineering',
                             'UI/UX & Product Design',
-                            'DevOps & Cloud Architecture'
+                            'DevOps & Cloud Architecture',
+                            'Backend & Systems Engineering'
                           ]}
                         />
                       </div>

@@ -1,15 +1,7 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { 
-  Navbar, 
-  NavBody, 
-  NavbarLogo, 
-  NavbarButton,
-  MobileNav,
-  MobileNavHeader
-} from '@/components/ui/resizable-navbar'
+import { SiteNavbar } from '@/components/ui/resizable-navbar'
 import { Footer } from '@/components/ui/Footer'
-import { ThemeToggle } from '@/components/ui/ThemeToggle'
 import { Home, ArrowRight, AlertCircle } from 'lucide-react'
 import '@/App.css'
 
@@ -20,36 +12,8 @@ export function NotFound() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#0B0D0F] text-[#4D4D4D] dark:text-[#94A3B8] font-['Inter',sans-serif]">
-      {/* Navbar */}
-      <Navbar>
-        <NavBody>
-          <NavbarLogo />
-          <div className="flex items-center gap-3">
-            <ThemeToggle />
-            <Link to="/">
-              <NavbarButton variant="secondary">← Back to Home</NavbarButton>
-            </Link>
-            <Link to="/#contact">
-              <NavbarButton variant="primary">Start a Project</NavbarButton>
-            </Link>
-          </div>
-        </NavBody>
-
-        <MobileNav>
-          <MobileNavHeader>
-            <NavbarLogo />
-            <div className="flex items-center gap-2">
-              <ThemeToggle size="sm" />
-              <Link to="/">
-                <NavbarButton variant="secondary" className="text-xs py-1.5 px-3">← Home</NavbarButton>
-              </Link>
-              <Link to="/#contact">
-                <NavbarButton variant="primary" className="text-xs py-1.5 px-3">Contact</NavbarButton>
-              </Link>
-            </div>
-          </MobileNavHeader>
-        </MobileNav>
-      </Navbar>
+      {/* Unified Site Navbar */}
+      <SiteNavbar />
 
       <div className="pt-36 pb-24 px-6 lg:px-16 flex items-center justify-center">
         <div className="max-w-lg w-full boxy-card p-10 sm:p-12 text-center space-y-6 bg-white">

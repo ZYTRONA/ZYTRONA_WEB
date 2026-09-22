@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
-import { Search, X, ArrowRight, Globe, Smartphone, Palette, FolderGit2, Sparkles, Building2 } from 'lucide-react';
+import { Search, X, ArrowRight, Globe, Palette, FolderGit2, Sparkles, Building2 } from 'lucide-react';
 
 const SEARCHABLE_ITEMS = [
   // Services
@@ -11,13 +11,6 @@ const SEARCHABLE_ITEMS = [
     desc: 'React 19, Next.js, Microservices & Sub-Second Core Web Vitals',
     link: '/service/website-development',
     icon: <Globe className="w-4 h-4 text-emerald-400" />
-  },
-  {
-    type: 'Service',
-    title: 'Mobile App Engineering',
-    desc: 'Fluid 60fps Native iOS & Android, React Native & Flutter',
-    link: '/service/app-development',
-    icon: <Smartphone className="w-4 h-4 text-emerald-400" />
   },
   {
     type: 'Service',
@@ -96,30 +89,103 @@ const SEARCHABLE_ITEMS = [
 export function SearchModal({ isOpen, onClose }) {
   const [query, setQuery] = useState('');
   const inputRef = useRef(null);
+  const containerRef = useRef(null);
+  const previousActiveElement = useRef(null);
   const navigate = useNavigate();
 
+  // Lock both root and body scrolling + prevent layout shift when modal is open
   useEffect(() => {
     if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 50);
+      previousActiveElement.current = document.activeElement;
+
+      const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth;
+      const originalHtmlOverflow = document.documentElement.style.overflow;
+      const originalBodyOverflow = document.body.style.overflow;
+      const originalBodyPaddingRight = document.body.style.paddingRight;
+      const originalHtmlOverscroll = document.documentElement.style.overscrollBehavior;
+      const originalBodyOverscroll = document.body.style.overscrollBehavior;
+
+      document.documentElement.style.overflow = 'hidden';
       document.body.style.overflow = 'hidden';
+      document.documentElement.style.overscrollBehavior = 'none';
+      document.body.style.overscrollBehavior = 'none';
+      if (scrollBarWidth > 0) {
+        document.body.style.paddingRight = `${scrollBarWidth}px`;
+      }
+
+      // Auto-focus input
+      const focusTimer = setTimeout(() => {
+        inputRef.current?.focus();
+      }, 50);
+
+      return () => {
+        clearTimeout(focusTimer);
+        document.documentElement.style.overflow = originalHtmlOverflow;
+        document.body.style.overflow = originalBodyOverflow;
+        document.body.style.paddingRight = originalBodyPaddingRight;
+        document.documentElement.style.overscrollBehavior = originalHtmlOverscroll;
+        document.body.style.overscrollBehavior = originalBodyOverscroll;
+
+        if (previousActiveElement.current && typeof previousActiveElement.current.focus === 'function') {
+          setTimeout(() => previousActiveElement.current?.focus(), 10);
+        }
+      };
     } else {
-      document.body.style.overflow = 'unset';
       setQuery('');
     }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
   }, [isOpen]);
 
+  // Focus trap & keyboard shortcuts
   useEffect(() => {
+    if (!isOpen) return;
+
     const handleKeyDown = (e) => {
-      if (e.key === 'Escape') onClose();
+      // Close on Escape
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        onClose();
+        return;
+      }
+
+      // Toggle shortcut Ctrl/Cmd + K
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
         e.preventDefault();
-        if (isOpen) onClose();
-        else onClose(); // parent handles toggle
+        onClose();
+        return;
+      }
+
+      // Trap Tab & Shift+Tab within modal alone
+      if (e.key === 'Tab' && containerRef.current) {
+        const focusable = Array.from(
+          containerRef.current.querySelectorAll(
+            'a[href], input:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+          )
+        ).filter((el) => el.offsetParent !== null);
+
+        if (focusable.length === 0) {
+          e.preventDefault();
+          return;
+        }
+
+        const firstElement = focusable[0];
+        const lastElement = focusable[focusable.length - 1];
+
+        if (e.shiftKey) {
+          // Shift + Tab (backward)
+          if (document.activeElement === firstElement || !containerRef.current.contains(document.activeElement)) {
+            e.preventDefault();
+            lastElement.focus();
+          }
+        } else {
+          // Tab (forward)
+          if (document.activeElement === lastElement || !containerRef.current.contains(document.activeElement)) {
+            e.preventDefault();
+            firstElement.focus();
+          }
+        }
       }
     };
+
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
@@ -151,23 +217,38 @@ export function SearchModal({ isOpen, onClose }) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-start justify-center pt-20 sm:pt-28 px-4">
-          {/* Backdrop */}
+        <div 
+          className="fixed inset-0 z-[100] flex items-start justify-center pt-20 sm:pt-28 px-4 overscroll-contain"
+          onWheel={(e) => {
+            if (e.target === e.currentTarget) e.preventDefault();
+          }}
+          onTouchMove={(e) => {
+            if (e.target === e.currentTarget) e.preventDefault();
+          }}
+        >
+          {/* Backdrop with wheel/touch blocking */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
+            onWheel={(e) => e.preventDefault()}
+            onTouchMove={(e) => e.preventDefault()}
             className="fixed inset-0 bg-[#07130f]/80 backdrop-blur-md"
           />
 
           {/* Dialog Container */}
           <motion.div
+            ref={containerRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Quick Search"
+            tabIndex={-1}
             initial={{ opacity: 0, scale: 0.96, y: -10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.96, y: -10 }}
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full max-w-2xl bg-[#0d271f] border border-[#1f4a3b] rounded-2xl shadow-2xl shadow-black/60 overflow-hidden z-10 text-white"
+            className="relative w-full max-w-2xl bg-[#0d271f] border border-[#1f4a3b] rounded-2xl shadow-2xl shadow-black/60 overflow-hidden z-10 text-white outline-none overscroll-contain"
           >
             {/* Input Header */}
             <div className="flex items-center gap-3 px-5 py-4 border-b border-[#1b3f32]">
@@ -182,7 +263,7 @@ export function SearchModal({ isOpen, onClose }) {
               />
               <button
                 onClick={onClose}
-                className="p-1.5 rounded-lg hover:bg-white/10 text-neutral-400 hover:text-white transition-colors"
+                className="p-1.5 rounded-lg hover:bg-white/10 text-neutral-400 hover:text-white transition-colors cursor-pointer"
                 aria-label="Close search"
               >
                 <X className="w-5 h-5" />
@@ -190,7 +271,7 @@ export function SearchModal({ isOpen, onClose }) {
             </div>
 
             {/* Results List */}
-            <div className="max-h-[60vh] overflow-y-auto p-3 divide-y divide-[#153428]/40">
+            <div className="max-h-[60vh] overflow-y-auto p-3 divide-y divide-[#153428]/40 overscroll-contain">
               {filtered.length === 0 ? (
                 <div className="py-12 text-center text-neutral-400 text-sm">
                   No matching services or case studies found for "{query}".
@@ -200,7 +281,7 @@ export function SearchModal({ isOpen, onClose }) {
                   <button
                     key={idx}
                     onClick={() => handleSelect(item.link)}
-                    className="w-full text-left p-3 rounded-xl hover:bg-white/[0.07] transition-all duration-150 flex items-center justify-between group gap-4 cursor-pointer"
+                    className="w-full text-left p-3 rounded-xl hover:bg-white/[0.07] transition-all duration-150 flex items-center justify-between group gap-4 cursor-pointer focus:bg-white/[0.09] focus:outline-none"
                   >
                     <div className="flex items-start gap-3 min-w-0">
                       <div className="p-2 rounded-lg bg-[#14392d] border border-[#215443] shrink-0 mt-0.5 group-hover:scale-105 transition-transform">
@@ -237,3 +318,4 @@ export function SearchModal({ isOpen, onClose }) {
     </AnimatePresence>
   );
 }
+

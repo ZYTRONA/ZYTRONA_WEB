@@ -97,6 +97,7 @@ export function RootApp() {
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/about" element={<About />} />
+        <Route path="/service/app-development" element={<Navigate to="/service/website-development" replace />} />
         <Route path="/service/:serviceId" element={<ServiceDetail />} />
         <Route path="/404" element={<NotFound />} />
         <Route path="/services" element={<Navigate to="/service/website-development" replace />} />

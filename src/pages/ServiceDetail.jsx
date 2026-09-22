@@ -1,8 +1,9 @@
 import { useParams, Link } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import NotFound from './NotFound.jsx'
 import { ZytronaLogo } from '@/components/ZytronaFigmaAssets'
+import { SiteNavbar } from '@/components/ui/resizable-navbar'
 import { Footer } from '@/components/ui/Footer'
 import { SpotlightCard } from '@/components/ui/SpotlightCard'
 import { CustomSelect } from '@/components/ui/CustomSelect'
@@ -239,120 +240,6 @@ const SERVICES_ENTERPRISE_DATA = {
     ]
   },
 
-  'app-development': {
-    id: 'app-development',
-    category: 'Mobile Applications & Native Systems',
-    title: 'Mobile App Engineering',
-    headline: 'Native-Quality, 60fps Mobile Applications for iOS & Android',
-    tagline: 'Engineered for fluid touch responsiveness, offline-first local data syncing, and frictionless App Store approvals.',
-    overview: 'We build enterprise mobile applications that combine native 60fps performance with single-codebase efficiency. From complex offline data caching and real-time WebSockets to biometric security and in-app purchase funnels, our mobile engineering ensures high user retention across both iOS and Android.',
-    metrics: [
-      { value: '60-120', label: 'FPS Smoothness', desc: 'Hardware accelerated UI' },
-      { value: '99.9%', label: 'Crash-Free Rate', desc: 'Battle-tested reliability' },
-      { value: '100%', label: 'Store Approval', desc: 'Guaranteed submission' },
-      { value: '90%', label: 'Code Sharing', desc: 'Fast time to market' }
-    ],
-    capabilities: [
-      {
-        title: 'React Native & Flutter Native Mastery',
-        desc: 'Single-source codebases delivering authentic native experiences on iOS and Android without sacrificing platform feel.',
-        tech: ['React Native', 'Flutter', 'TypeScript', 'Native Modules']
-      },
-      {
-        title: 'Offline-First SQLite & MMKV Caching',
-        desc: 'High-speed local key-value and relational database engines enabling full app functionality without active internet.',
-        tech: ['SQLite', 'MMKV', 'WatermelonDB', 'Sync Engine']
-      },
-      {
-        title: 'Rich Push Notifications & Background Tasks',
-        desc: 'Segmented user notification pipelines with silent background data sync, rich interactive actions, and badges.',
-        tech: ['APNs', 'FCM', 'OneSignal', 'Background Fetch']
-      },
-      {
-        title: 'In-App Purchases & Subscription Funnels',
-        desc: 'End-to-end integration with Apple StoreKit 2, Google Play Billing, and RevenueCat for seamless revenue generation.',
-        tech: ['StoreKit 2', 'Google Play Billing', 'RevenueCat', 'Stripe']
-      },
-      {
-        title: 'Native Camera & Hardware Sensor Bridge',
-        desc: 'Direct hardware interfaces for barcode/QR scanning, GPS geolocation telemetry, Bluetooth BLE, and accelerometer data.',
-        tech: ['CameraX', 'AVFoundation', 'CoreBluetooth', 'Geolocation']
-      },
-      {
-        title: 'App Store & Google Play Submission',
-        desc: 'End-to-end release management including provisioning profiles, privacy manifests, test tracks, and review resolution.',
-        tech: ['Fastlane', 'TestFlight', 'Google Play Console', 'App Privacy']
-      }
-    ],
-    techCategories: [
-      {
-        category: 'Mobile Frameworks & Runtimes',
-        skills: [
-          { name: 'React Native', desc: 'Single-Codebase 60fps Native UI', tag: 'Mobile Core', icon: <FaReact className="w-10 h-10 sm:w-11 sm:h-11 text-[#61DAFB]" /> },
-          { name: 'Flutter', desc: 'High-Performance Skia Graphics Engine', tag: 'Cross-Platform', icon: <SiFlutter className="w-10 h-10 sm:w-11 sm:h-11 text-[#02569B]" /> },
-          { name: 'TypeScript', desc: 'Strict Cross-Platform Type Safety', tag: 'Type System', icon: <SiTypescript className="w-10 h-10 sm:w-11 sm:h-11 text-[#3178C6]" /> },
-          { name: 'Swift (iOS)', desc: 'Native Apple Foundation & SwiftUI', tag: 'iOS Native', icon: <FaApple className="w-10 h-10 sm:w-11 sm:h-11 text-[#000000] dark:text-[#FFFFFF]" /> }
-        ]
-      },
-      {
-        category: 'Native Android & Architecture',
-        skills: [
-          { name: 'Kotlin', desc: 'Modern Android Architecture & Coroutines', tag: 'Android Native', icon: <SiKotlin className="w-10 h-10 sm:w-11 sm:h-11 text-[#7F52FF]" /> },
-          { name: 'Native Bridges', desc: 'Hardware Sensor & Camera JNI Binding', tag: 'Low-Level', icon: <Cpu className="w-10 h-10 sm:w-11 sm:h-11 text-[#8B5CF6]" /> },
-          { name: 'MMKV Storage', desc: 'Ultra-Fast Key-Value Storage Engine', tag: 'Persistent Cache', icon: <Database className="w-10 h-10 sm:w-11 sm:h-11 text-[#0EA5E9]" /> },
-          { name: 'SQLite DB', desc: 'ACID Compliant Local Offline Database', tag: 'Offline Engine', icon: <Database className="w-10 h-10 sm:w-11 sm:h-11 text-[#003B57] dark:text-[#38BDF8]" /> }
-        ]
-      },
-      {
-        category: 'Cloud Services & Push Pipelines',
-        skills: [
-          { name: 'Firebase', desc: 'Real-Time Firestore & Auth Pipelines', tag: 'BaaS Pipeline', icon: <SiFirebase className="w-10 h-10 sm:w-11 sm:h-11 text-[#FFCA28]" /> },
-          { name: 'Apple APNs', desc: 'Sub-Second iOS Push Notifications', tag: 'Push Messaging', icon: <FaApple className="w-10 h-10 sm:w-11 sm:h-11 text-[#000000] dark:text-[#FFFFFF]" /> },
-          { name: 'Google FCM', desc: 'Reliable Cloud Messaging for Android', tag: 'Push Messaging', icon: <SiFirebase className="w-10 h-10 sm:w-11 sm:h-11 text-[#FFA000]" /> },
-          { name: 'RevenueCat', desc: 'In-App Subscriptions & Paywalls', tag: 'Monetization', icon: <Zap className="w-10 h-10 sm:w-11 sm:h-11 text-[#F25F4C]" /> }
-        ]
-      },
-      {
-        category: 'Deployment & Mobile DevOps',
-        skills: [
-          { name: 'Fastlane', desc: 'Automated Build, Signing & Release', tag: 'Automation', icon: <GitBranch className="w-10 h-10 sm:w-11 sm:h-11 text-[#E53935]" /> },
-          { name: 'TestFlight', desc: 'Continuous Beta Distribution for iOS', tag: 'Beta Testing', icon: <FaApple className="w-10 h-10 sm:w-11 sm:h-11 text-[#007AFF]" /> },
-          { name: 'Play Console', desc: 'Staged Rollouts & Android Vitals', tag: 'Store Release', icon: <Globe className="w-10 h-10 sm:w-11 sm:h-11 text-[#01875F]" /> },
-          { name: 'Sentry Crashlytics', desc: 'Real-Time Crash Reporting & Breadcrumbs', tag: 'Monitoring', icon: <Activity className="w-10 h-10 sm:w-11 sm:h-11 text-[#362D59] dark:text-[#A78BFA]" /> }
-        ]
-      }
-    ],
-    deliverables: [
-      'Modular React Native / Flutter repository with clear separation of business logic and UI',
-      'Native Xcode (.xcworkspace) and Android Studio project configurations',
-      'Automated Fastlane scripts for continuous beta deployment to TestFlight and Play Store Internal',
-      'Comprehensive store asset package including App Store icons, splash screens, and localized screenshots',
-      'Offline sync engine documentation and API schema specifications',
-      '100% intellectual property deed transfer and commercial distribution rights'
-    ],
-    caseStudy: {
-      client: 'Blue Base Multi-Branch',
-      title: 'Service Exploration & Instant Booking App',
-      impact: 'Sub-Second Discovery • 4.9/5 Rating',
-      desc: 'Engineered a modern salon and wellness mobile platform with responsive service exploration, real-time staff scheduling, and frictionless booking.',
-      link: 'https://bluebase-family-spot.lovable.app'
-    },
-    faqs: [
-      {
-        q: 'Why choose React Native or Flutter over separate native apps?',
-        a: 'For over 95% of modern business applications, React Native and Flutter provide identical native 60fps performance and access to all device sensors while cutting initial development time and long-term maintenance cycles by nearly half.'
-      },
-      {
-        q: 'Do you manage the entire Apple App Store and Google Play approval?',
-        a: 'Yes. We manage certificates, provisioning profiles, privacy policy compliance, age ratings, and metadata. In the rare event of an App Review note, our engineers resolve it directly until your app is live.'
-      },
-      {
-        q: 'How does offline functionality work when the user has no signal?',
-        a: 'We architect apps with local SQLite or MMKV persistent storage. All actions are logged locally and automatically sync back to your cloud database in the background when connectivity is re-established.'
-      }
-    ]
-  },
-
   'ui-designs': {
     id: 'ui-designs',
     category: 'Product Design & Design Systems',
@@ -384,8 +271,8 @@ const SERVICES_ENTERPRISE_DATA = {
       },
       {
         title: 'Responsive Multi-Device Breakpoint Layouts',
-        desc: 'Fluid layouts tested across mobile, tablet, desktop, and ultra-wide displays with strict grid consistency.',
-        tech: ['12-Column Grids', 'Fluid Breakpoints', 'Mobile-First UI', 'Retina Assets']
+        desc: 'Fluid layouts tested across all screen viewports, tablets, desktops, and ultra-wide displays with strict grid consistency.',
+        tech: ['12-Column Grids', 'Fluid Breakpoints', 'Responsive UI', 'Retina Assets']
       },
       {
         title: 'Micro-Interactions & Animation Specs',
@@ -447,7 +334,7 @@ const SERVICES_ENTERPRISE_DATA = {
     caseStudy: {
       client: 'ZOCA Crimson Charm',
       title: 'High-Conversion Lifestyle Storefront',
-      impact: '+140% Mobile Conversion • Sub-Second Discovery',
+      impact: '+140% Conversion Rate • Sub-Second Discovery',
       desc: 'Designed a high-end luxury lifestyle e-commerce interface with fluid interactive lookbooks, responsive filtering, and seamless checkout.',
       link: 'https://zoca-crimson-charm.lovable.app'
     },
@@ -496,13 +383,11 @@ function TechScrollCard({ skill }) {
 
 export default function ServiceDetail() {
   const { serviceId } = useParams()
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
   const [formSuccess, setFormSuccess] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [formError, setFormError] = useState(null)
   const [activeFaq, setActiveFaq] = useState(null)
-  const [scrolled, setScrolled] = useState(false)
   const [activeTechCategory, setActiveTechCategory] = useState('all')
 
   const [formData, setFormData] = useState({
@@ -518,14 +403,6 @@ export default function ServiceDetail() {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
     setActiveTechCategory('all')
   }, [serviceId])
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 10)
-    }
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
 
   if (!service) {
     return <NotFound />
@@ -543,6 +420,87 @@ export default function ServiceDetail() {
   const selectedCategorySkills = activeTechCategory === 'all' 
     ? allSkills 
     : allSkills.filter(s => s.category === activeTechCategory)
+
+  const serviceModalRef = useRef(null)
+  const previousActiveElement = useRef(null)
+
+  // Lock both root and body scrolling + prevent layout shift when modal is open
+  useEffect(() => {
+    if (modalOpen) {
+      previousActiveElement.current = document.activeElement
+
+      const scrollBarWidth = window.innerWidth - document.documentElement.clientWidth
+      const originalHtmlOverflow = document.documentElement.style.overflow
+      const originalBodyOverflow = document.body.style.overflow
+      const originalBodyPaddingRight = document.body.style.paddingRight
+      const originalHtmlOverscroll = document.documentElement.style.overscrollBehavior
+      const originalBodyOverscroll = document.body.style.overscrollBehavior
+
+      document.documentElement.style.overflow = 'hidden'
+      document.body.style.overflow = 'hidden'
+      document.documentElement.style.overscrollBehavior = 'none'
+      document.body.style.overscrollBehavior = 'none'
+      if (scrollBarWidth > 0) {
+        document.body.style.paddingRight = `${scrollBarWidth}px`
+      }
+
+      return () => {
+        document.documentElement.style.overflow = originalHtmlOverflow
+        document.body.style.overflow = originalBodyOverflow
+        document.body.style.paddingRight = originalBodyPaddingRight
+        document.documentElement.style.overscrollBehavior = originalHtmlOverscroll
+        document.body.style.overscrollBehavior = originalBodyOverscroll
+
+        if (previousActiveElement.current && typeof previousActiveElement.current.focus === 'function') {
+          setTimeout(() => previousActiveElement.current?.focus(), 10)
+        }
+      }
+    }
+  }, [modalOpen])
+
+  // Focus trap & Escape key handling
+  useEffect(() => {
+    if (!modalOpen) return
+
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault()
+        handleCloseModal()
+        return
+      }
+
+      if (e.key === 'Tab' && serviceModalRef.current) {
+        const focusable = Array.from(
+          serviceModalRef.current.querySelectorAll(
+            'a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+          )
+        ).filter((el) => el.offsetParent !== null)
+
+        if (focusable.length === 0) {
+          e.preventDefault()
+          return
+        }
+
+        const firstElement = focusable[0]
+        const lastElement = focusable[focusable.length - 1]
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement || !serviceModalRef.current.contains(document.activeElement)) {
+            e.preventDefault()
+            lastElement.focus()
+          }
+        } else {
+          if (document.activeElement === lastElement || !serviceModalRef.current.contains(document.activeElement)) {
+            e.preventDefault()
+            firstElement.focus()
+          }
+        }
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [modalOpen])
 
   const handleOpenModal = () => {
     setModalOpen(true)
@@ -588,126 +546,8 @@ export default function ServiceDetail() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#0B0D0F] text-[#4D4D4D] dark:text-[#94A3B8] font-['Inter',sans-serif]">
-      {/* 1. TOP NAVBAR (PROPERLY IDENTICAL TO HOME PAGE NAVBAR) */}
-      <header className={`fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-[#0B0D0F]/95 backdrop-blur-md border-b border-[#E0E0E0] dark:border-[#232936] transition-all duration-200 ${scrolled ? 'shadow-md' : 'shadow-sm'}`}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-16 h-20 flex items-center justify-between">
-          {/* Official Brand Logo */}
-          <Link to="/" className="flex items-center">
-            <ZytronaLogo />
-          </Link>
-
-          {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center space-x-8 lg:space-x-12">
-            <Link 
-              to="/" 
-              className="text-[15px] font-medium text-[#18191F] dark:text-[#F8FAFC] hover:text-[#4CAF4F] transition-colors"
-            >
-              Home
-            </Link>
-            <Link 
-              to="/#services" 
-              className="text-[15px] font-semibold text-[#4CAF4F] transition-colors"
-            >
-              Services
-            </Link>
-            <Link 
-              to="/#architecture" 
-              className="text-[15px] font-medium text-[#18191F] dark:text-[#F8FAFC] hover:text-[#4CAF4F] transition-colors"
-            >
-              Engineering
-            </Link>
-            <Link 
-              to="/#insights" 
-              className="text-[15px] font-medium text-[#18191F] dark:text-[#F8FAFC] hover:text-[#4CAF4F] transition-colors"
-            >
-              Case Studies
-            </Link>
-            <Link 
-              to="/about" 
-              className="text-[15px] font-medium text-[#18191F] dark:text-[#F8FAFC] hover:text-[#4CAF4F] transition-colors"
-            >
-              About
-            </Link>
-          </nav>
-
-          {/* Right Action Button & Theme Toggle */}
-          <div className="hidden md:flex items-center gap-3">
-            <ThemeToggle />
-            <button 
-              onClick={handleOpenModal}
-              className="btn-nexcent-primary"
-            >
-              <span>Start a Project</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
-
-          {/* Mobile Right Controls: Theme Toggle & Menu Hamburger */}
-          <div className="flex md:hidden items-center gap-2">
-            <ThemeToggle size="sm" />
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 text-[#263238] dark:text-[#E2E8F0] hover:text-[#4CAF4F] focus:outline-none cursor-pointer"
-              aria-label="Toggle navigation menu"
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Dropdown */}
-        {mobileMenuOpen && (
-          <div className="md:hidden bg-white dark:bg-[#15181E] border-b border-[#E0E0E0] dark:border-[#232936] px-6 py-5 shadow-lg space-y-4 animate-in slide-in-from-top-2">
-            <Link 
-              to="/" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-base font-medium text-[#18191F] dark:text-[#F8FAFC] hover:text-[#4CAF4F]"
-            >
-              Home
-            </Link>
-            <Link 
-              to="/#services" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-base font-semibold text-[#4CAF4F]"
-            >
-              Services
-            </Link>
-            <Link 
-              to="/#architecture" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-base font-medium text-[#18191F] dark:text-[#F8FAFC] hover:text-[#4CAF4F]"
-            >
-              Engineering
-            </Link>
-            <Link 
-              to="/#insights" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-base font-medium text-[#18191F] dark:text-[#F8FAFC] hover:text-[#4CAF4F]"
-            >
-              Case Studies
-            </Link>
-            <Link 
-              to="/about" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-base font-medium text-[#18191F] dark:text-[#F8FAFC] hover:text-[#4CAF4F]"
-            >
-              About
-            </Link>
-            <div className="pt-2">
-              <button 
-                onClick={() => {
-                  setMobileMenuOpen(false)
-                  handleOpenModal()
-                }}
-                className="w-full btn-nexcent-primary py-2.5 text-sm"
-              >
-                <span>Start a Project</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-        )}
-      </header>
+      {/* 1. TOP NAVBAR (Unified Site Navbar) */}
+      <SiteNavbar onStartProject={handleOpenModal} />
 
       {/* 2. ENTERPRISE HERO SECTION */}
       <section id="overview" className="bg-[#F5F7FA] pt-32 pb-20 px-6 lg:px-16 border-b border-[#E0E0E0]">
@@ -1168,14 +1008,27 @@ export default function ServiceDetail() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+            onClick={(e) => {
+              if (e.target === e.currentTarget) handleCloseModal()
+            }}
+            onWheel={(e) => {
+              if (e.target === e.currentTarget) e.preventDefault()
+            }}
+            onTouchMove={(e) => {
+              if (e.target === e.currentTarget) e.preventDefault()
+            }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm overscroll-contain"
           >
             <motion.div 
+              ref={serviceModalRef}
+              role="dialog"
+              aria-modal="true"
+              tabIndex={-1}
               initial={{ scale: 0.95, opacity: 0, y: 15 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.95, opacity: 0, y: 15 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
-              className="bg-white rounded-lg shadow-2xl border border-[#E0E0E0] max-w-md w-full p-6 sm:p-8 relative"
+              className="bg-white rounded-lg shadow-2xl border border-[#E0E0E0] max-w-md w-full p-6 sm:p-8 relative overscroll-contain outline-none max-h-[90vh] overflow-y-auto"
             >
               <button 
                 onClick={handleCloseModal}

@@ -43,7 +43,7 @@ const AVATARS = [
     src: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=160&h=160&q=80',
     fallback: 'DS',
     name: 'Deepak S.',
-    role: 'Mobile Apps Lead',
+    role: 'Cloud Systems Lead',
   },
 ];
 
