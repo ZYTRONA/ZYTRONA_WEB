@@ -12,7 +12,6 @@ import {
   ZytronaHeroIllustration, 
   ZytronaEngineeringIllustration, 
   ZytronaCloudArchitectureIllustration, 
-  ZytronaClientLogosRow, 
   ShowcaseBadge 
 } from './components/ZytronaFigmaAssets'
 import { SiteNavbar } from './components/ui/resizable-navbar'
@@ -365,17 +364,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* 3. OUR CLIENTS SECTION */}
-      <section className="py-10 sm:py-14 px-5 sm:px-6 lg:px-16 bg-white">
-        <div className="max-w-7xl mx-auto text-center space-y-3 mb-10">
-          <h2 className="text-3xl font-bold text-[#263238]">Our Commercial & Production Platforms</h2>
-          <p className="text-[#717171] text-base">Trusted by high-growth startups and established enterprises across industries</p>
-        </div>
-
-        <div className="max-w-6xl mx-auto">
-          <ZytronaClientLogosRow />
-        </div>
-      </section>
 
       {/* 4. CORE SERVICES (3 Boxy Cards: Manage your entire ecosystem) */}
       <section id="services" className="py-12 sm:py-16 lg:py-20 px-5 sm:px-6 lg:px-16 bg-white">
@@ -391,7 +379,6 @@ export default function App() {
           {CORE_SERVICES.map((srv) => (
             <SpotlightCard 
               key={srv.id} 
-              spotlightColor="rgba(76, 175, 79, 0.12)"
               className="boxy-card p-6 sm:p-8 lg:p-10 h-full flex flex-col"
             >
               <div className="flex-1 flex flex-col items-center text-center">

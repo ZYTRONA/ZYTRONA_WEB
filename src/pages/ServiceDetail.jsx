@@ -388,7 +388,6 @@ export default function ServiceDetail() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [formError, setFormError] = useState(null)
   const [activeFaq, setActiveFaq] = useState(null)
-  const [activeTechCategory, setActiveTechCategory] = useState('all')
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -401,7 +400,6 @@ export default function ServiceDetail() {
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
-    setActiveTechCategory('all')
   }, [serviceId])
 
   if (!service) {
@@ -416,10 +414,6 @@ export default function ServiceDetail() {
   const halfLength = Math.ceil(allSkills.length / 2)
   const row1Skills = allSkills.slice(0, halfLength)
   const row2Skills = allSkills.slice(halfLength)
-
-  const selectedCategorySkills = activeTechCategory === 'all' 
-    ? allSkills 
-    : allSkills.filter(s => s.category === activeTechCategory)
 
   const serviceModalRef = useRef(null)
   const previousActiveElement = useRef(null)
@@ -801,57 +795,22 @@ export default function ServiceDetail() {
             </p>
           </div>
 
-          {/* Interactive Category Filter Pills */}
-          <div className="flex items-center justify-center gap-2 flex-wrap max-w-4xl mx-auto px-2">
-            <button
-              onClick={() => setActiveTechCategory('all')}
-              className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer select-none ${
-                activeTechCategory === 'all'
-                  ? 'bg-[#263238] dark:bg-white text-white dark:text-[#18191F] shadow-xs'
-                  : 'text-[#717171] dark:text-[#94A3B8] hover:text-black dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'
-              }`}
-            >
-              All ({allSkills.length})
-            </button>
-            {service.techCategories.map((cat, idx) => (
-              <button
-                key={idx}
-                onClick={() => setActiveTechCategory(cat.category)}
-                className={`px-4 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer select-none ${
-                  activeTechCategory === cat.category
-                    ? 'bg-[#263238] dark:bg-white text-white dark:text-[#18191F] shadow-xs'
-                    : 'text-[#717171] dark:text-[#94A3B8] hover:text-black dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.06]'
-                }`}
-              >
-                {cat.category}
-              </button>
-            ))}
-          </div>
-
-          {/* Dynamic Scroll UI */}
-          {activeTechCategory === 'all' ? (
-            <div className="space-y-4 pt-2">
-              {/* Row 1: Forward Marquee */}
-              <Marquee pauseOnHover duration="35s" repeat={3} gap="1.25rem" className="py-2 [--gap:1.25rem]">
-                {row1Skills.map((skill, idx) => (
-                  <TechScrollCard key={idx} skill={skill} />
-                ))}
-              </Marquee>
-
-              {/* Row 2: Reverse Marquee */}
-              <Marquee reverse pauseOnHover duration="38s" repeat={3} gap="1.25rem" className="py-2 [--gap:1.25rem]">
-                {row2Skills.map((skill, idx) => (
-                  <TechScrollCard key={idx} skill={skill} />
-                ))}
-              </Marquee>
-            </div>
-          ) : (
-            <div className="pt-4 flex flex-wrap items-center justify-center gap-4 sm:gap-6 max-w-4xl mx-auto">
-              {selectedCategorySkills.map((skill, idx) => (
+          {/* Dynamic Continuous Scroll UI (Never stops on cursor hover) */}
+          <div className="space-y-4 pt-2">
+            {/* Row 1: Forward Marquee */}
+            <Marquee duration="35s" repeat={3} gap="1.25rem" className="py-2 [--gap:1.25rem]">
+              {row1Skills.map((skill, idx) => (
                 <TechScrollCard key={idx} skill={skill} />
               ))}
-            </div>
-          )}
+            </Marquee>
+
+            {/* Row 2: Reverse Marquee */}
+            <Marquee reverse duration="38s" repeat={3} gap="1.25rem" className="py-2 [--gap:1.25rem]">
+              {row2Skills.map((skill, idx) => (
+                <TechScrollCard key={idx} skill={skill} />
+              ))}
+            </Marquee>
+          </div>
         </div>
       </section>
 

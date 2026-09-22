@@ -205,7 +205,7 @@ export function SiteNavbar({
                         onClick={closeDropdownImmediately}
                         className="p-2.5 rounded-md hover:bg-[#F5F7FA] dark:hover:bg-[#1E222A] transition-colors flex items-start gap-3 group"
                       >
-                        <div className="p-2 rounded-md bg-[#E8F5E9] dark:bg-[#4CAF4F]/10 text-[#4CAF4F] group-hover:bg-[#4CAF4F] group-hover:text-white transition-colors shrink-0">
+                        <div className="p-2 rounded-md bg-[#E8F5E9] dark:bg-[#4CAF4F]/15 text-[#4CAF4F] shrink-0">
                           {srv.icon}
                         </div>
                         <div className="flex-1 min-w-0">
