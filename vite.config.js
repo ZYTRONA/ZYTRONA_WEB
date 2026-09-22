@@ -85,6 +85,10 @@ export default defineConfig({
       drop: ['console', 'debugger'],
     },
     rollupOptions: {
+      onwarn(warning, defaultHandler) {
+        if (warning.code === 'SOURCEMAP_BROKEN') return
+        defaultHandler(warning)
+      },
       output: {
         manualChunks(id) {
           if (id.includes('node_modules/three')) return 'three'
